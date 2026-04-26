@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniSwap — Group 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--s2:#111111;--s3:#1a1a1a;--s4:#222;--gr:#7BEF6E;--bl:#4A8BF7;--pu:#B06DFF;--am:#F5C842;--re:#FF5C5C;--wh:#F2EEE8;--mu:#555;--bd:rgba(255,255,255,.07)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Syne',sans-serif;color:var(--wh)}
+.deck{position:relative;width:100vw;height:100vh}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .4s ease,transform .4s ease;transform:translateX(70px);display:flex;flex-direction:column;padding:48px 62px 34px;overflow:hidden}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+.slide.exit{opacity:0;transform:translateX(-70px)}
+/* nav */
+.nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:200;background:rgba(255,255,255,.04);border:1px solid var(--bd);backdrop-filter:blur(14px);padding:8px 18px;border-radius:50px}
+.nav button{background:none;border:none;color:var(--wh);font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;padding:5px 14px;border-radius:30px;transition:background .2s}
+.nav button:hover{background:rgba(255,255,255,.1)}
+.counter{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);min-width:40px;text-align:center}
+.dots{display:flex;gap:6px;align-items:center}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--mu);transition:all .3s;cursor:pointer}
+.dot.active{background:var(--gr);width:18px;border-radius:4px}
+/* shared */
+.lbl{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--mu);text-transform:uppercase;margin-bottom:8px}
+.ttl{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;line-height:1}
+.aline{height:2px;background:linear-gradient(90deg,var(--gr),transparent);width:56px;margin-bottom:18px}
+.tag{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;padding:3px 9px;border-radius:4px;font-weight:500;letter-spacing:.05em}
+.tv{background:rgba(123,239,110,.13);color:var(--gr);border:1px solid rgba(123,239,110,.28)}
+.tc{background:rgba(176,109,255,.13);color:var(--pu);border:1px solid rgba(176,109,255,.28)}
+.tp{background:rgba(255,92,92,.13);color:var(--re);border:1px solid rgba(255,92,92,.28)}
+.ti{background:rgba(245,200,66,.13);color:var(--am);border:1px solid rgba(245,200,66,.28)}
+.card{background:var(--s3);border:1px solid var(--bd);border-radius:11px;padding:20px}
+
+/* ── SLIDE 1 ── */
+#s1 .bgw{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:38vw;color:rgba(123,239,110,.025);bottom:-10%;right:-4%;line-height:1;pointer-events:none;z-index:0;letter-spacing:-.02em}
+#s1 .logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,9vw,148px);line-height:1;letter-spacing:.02em;margin-bottom:18px}
+#s1 .logo .u{color:var(--bl)}
+#s1 .logo .s{color:var(--gr)}
+#s1 .tl{font-size:17px;font-weight:400;color:rgba(242,238,232,.6);max-width:580px;line-height:1.55;border-left:3px solid var(--gr);padding-left:16px;margin-bottom:36px}
+#s1 .meta{display:flex;gap:20px;align-items:center}
+#s1 .badge{font-family:'DM Mono',monospace;font-size:12px;border:1px solid var(--bd);padding:7px 18px;border-radius:30px;color:var(--mu)}
+
+/* ── SLIDE 2 ── */
+#s2 .vpq{font-size:clamp(15px,1.9vw,24px);font-weight:700;line-height:1.4;color:var(--wh);border-left:4px solid var(--gr);padding:18px 24px;background:rgba(123,239,110,.05);border-radius:0 10px 10px 0;margin:14px 0 22px;font-style:italic}
+#s2 .evol{display:grid;grid-template-columns:1fr 36px 1fr;gap:0;align-items:start}
+#s2 .ec{background:var(--s3);border:1px solid var(--bd);border-radius:10px;padding:18px}
+#s2 .ec.d1{border-color:rgba(255,92,92,.2)}
+#s2 .ec.d10{border-color:rgba(123,239,110,.22)}
+#s2 .el{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+#s2 .ec.d1 .el{color:var(--re)}
+#s2 .ec.d10 .el{color:var(--gr)}
+#s2 .et{font-size:13px;line-height:1.5;color:rgba(242,238,232,.72);font-style:italic}
+#s2 .arr{display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--mu);padding-top:28px}
+#s2 .cr{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+#s2 .ci{background:var(--s3);border:1px solid rgba(176,109,255,.18);border-radius:9px;padding:14px;border-top:3px solid var(--pu)}
+#s2 .ci h4{font-size:12px;color:var(--pu);margin-bottom:5px;font-weight:700}
+#s2 .ci p{font-size:12px;color:rgba(242,238,232,.58);line-height:1.4}
+
+/* ── SLIDE 3 BMC ── */
+#s3 .bmc{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;flex:1;margin-top:12px}
+#s3 .bb{background:var(--s3);border:1px solid var(--bd);border-radius:11px;padding:18px;position:relative}
+#s3 .bb.bv{border-color:rgba(123,239,110,.26);border-top:3px solid var(--gr)}
+#s3 .bb.bc{border-color:rgba(176,109,255,.26);border-top:3px solid var(--pu)}
+#s3 .bh{font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+#s3 .bb.bv .bh{color:var(--gr)}
+#s3 .bb.bc .bh{color:var(--pu)}
+#s3 .bl{list-style:none;display:flex;flex-direction:column;gap:5px}
+#s3 .bl li{font-size:12.5px;line-height:1.4;color:rgba(242,238,232,.72);padding-left:13px;position:relative}
+#s3 .bl li::before{content:'—';position:absolute;left:0;color:var(--mu);font-size:11px}
+
+/* ── SLIDES 4-5 ── */
+.dg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1;margin-top:14px}
+.dc{background:var(--s3);border:1px solid var(--bd);border-radius:11px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.dct{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);padding-bottom:9px;border-bottom:1px solid var(--bd)}
+.dc p{font-size:13px;line-height:1.5;color:rgba(242,238,232,.72)}
+.qb{background:rgba(74,139,247,.07);border:1px solid rgba(74,139,247,.2);border-left:3px solid var(--bl);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:auto}
+.qb q{font-size:12.5px;line-height:1.5;color:var(--wh);font-style:italic;display:block}
+.qb cite{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:5px;display:block}
+.ptg{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.pt{background:rgba(255,92,92,.1);border:1px solid rgba(255,92,92,.2);color:var(--re);font-size:11px;padding:4px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.pg{display:grid;grid-template-columns:1fr auto 1fr;gap:0;flex:1;margin-top:14px;align-items:stretch}
+.pb{background:var(--s3);border:1px solid var(--bd);border-radius:11px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.pb.d1{border-top:3px solid var(--re)}
+.pb.d10{border-top:3px solid var(--gr)}
+.pl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.pb.d1 .pl{color:var(--re)}
+.pb.d10 .pl{color:var(--gr)}
+.pb ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.pb ul li{font-size:12.5px;color:rgba(242,238,232,.72);line-height:1.4;padding-left:13px;position:relative}
+.pb ul li::before{content:'›';position:absolute;left:0;color:var(--mu)}
+.pa{display:flex;align-items:center;justify-content:center;padding:0 16px;font-size:26px;color:var(--mu)}
+.pbot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.pbb{background:var(--s3);border:1px solid var(--bd);border-radius:9px;padding:16px}
+.pbb h4{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:7px}
+.pbb p{font-size:12.5px;color:rgba(242,238,232,.7);line-height:1.42}
+
+/* ── SLIDES 6-7 MVP ── */
+.mg{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;flex:1;margin-top:14px}
+.ml,.mr{display:flex;flex-direction:column;gap:12px}
+.mtc{background:var(--s3);border:1px solid rgba(176,109,255,.22);border-left:4px solid var(--pu);border-radius:9px;padding:16px}
+.mtc h4{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--pu);margin-bottom:7px}
+.mtc p{font-size:12.5px;line-height:1.48;color:rgba(242,238,232,.72)}
+.mac{background:rgba(245,200,66,.05);border:1px solid rgba(245,200,66,.2);border-radius:9px;padding:16px}
+.mac h4{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--am);margin-bottom:7px}
+.mac p{font-size:12.5px;line-height:1.48;color:rgba(242,238,232,.72);font-style:italic}
+.msc{background:var(--s4);border:1px solid var(--bd);border-radius:11px;flex:1;padding:18px;display:flex;flex-direction:column}
+.mbar{display:flex;align-items:center;gap:7px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.mbd{width:9px;height:9px;border-radius:50%}
+.murl{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);background:rgba(255,255,255,.04);padding:3px 10px;border-radius:4px;flex:1}
+.mmock{background:linear-gradient(135deg,rgba(123,239,110,.06),rgba(74,139,247,.06));border:1px solid rgba(123,239,110,.1);border-radius:8px;padding:16px;flex:1;display:flex;flex-direction:column;gap:8px}
+.mmh{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.03em;color:var(--gr);line-height:1}
+.mms{font-size:11px;color:rgba(242,238,232,.45)}
+.mmcta{display:inline-block;background:var(--gr);color:#000;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;padding:7px 16px;border-radius:5px;width:fit-content}
+.mmf{background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:5px;padding:7px 10px;font-size:10px;color:var(--mu);font-family:'DM Mono',monospace}
+.mmi{background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:5px;padding:7px 10px;font-size:11px;color:rgba(242,238,232,.6);display:flex;justify-content:space-between}
+.mmi .mp{color:var(--gr);font-family:'DM Mono',monospace;font-weight:500}
+.mbadge{display:inline-flex;align-items:center;gap:3px;background:rgba(123,239,110,.1);border:1px solid rgba(123,239,110,.2);color:var(--gr);font-size:9px;padding:2px 7px;border-radius:4px;font-family:'DM Mono',monospace}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.rs{background:var(--s3);border:1px solid var(--bd);border-radius:9px;padding:16px;text-align:center}
+.rs .rn{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,4vw,50px);line-height:1;margin-bottom:3px}
+.rs .rn.ng{color:var(--gr)}.rs .rn.nb{color:var(--bl)}.rs .rn.na{color:var(--am)}
+.rs .rl{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.07em}
+.rc{background:rgba(123,239,110,.07);border:1px solid rgba(123,239,110,.2);border-radius:9px;padding:16px;margin-top:12px}
+.rc h4{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;color:var(--gr);letter-spacing:.09em;margin-bottom:7px}
+.rc p{font-size:12.5px;color:rgba(242,238,232,.72);line-height:1.48}
+
+/* ── SLIDES 8-10 A/B ── */
+.abl{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;margin-top:14px}
+.abv{display:flex;flex-direction:column;gap:10px}
+.av{background:var(--s3);border:1px solid var(--bd);border-radius:9px;padding:16px}
+.av.va{border-top:3px solid var(--re)}.av.vb{border-top:3px solid var(--gr)}
+.avl{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:7px}
+.av.va .avl{color:var(--re)}.av.vb .avl{color:var(--gr)}
+.av p{font-size:12.5px;color:rgba(242,238,232,.72);line-height:1.42}
+.ahy{background:rgba(245,200,66,.05);border:1px solid rgba(245,200,66,.2);border-radius:9px;padding:14px}
+.ahy h4{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--am);margin-bottom:5px}
+.ahy p{font-size:12px;color:rgba(242,238,232,.68);line-height:1.42;font-style:italic}
+.abr2{display:flex;flex-direction:column;gap:10px}
+.ares{background:var(--s3);border:1px solid var(--bd);border-radius:9px;padding:14px}
+.ares h4{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:10px}
+.abar{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.abi{display:flex;align-items:center;gap:9px}
+.abi .al{font-family:'DM Mono',monospace;font-size:10px;width:13px;text-align:center}
+.abi.aa .al{color:var(--re)}.abi.ab .al{color:var(--gr)}
+.abt{flex:1;height:20px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden}
+.abf{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px}
+.abi.aa .abf{background:rgba(255,92,92,.22)}.abi.ab .abf{background:rgba(123,239,110,.22)}
+.abp{font-family:'DM Mono',monospace;font-size:10px;font-weight:500}
+.abi.aa .abp{color:var(--re)}.abi.ab .abp{color:var(--gr)}
+.adlt{font-family:'DM Mono',monospace;font-size:12px;color:var(--gr);margin-bottom:7px}
+.air{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.aib{background:var(--s4);border-radius:5px;padding:9px}
+.aib .ail{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);text-transform:uppercase;margin-bottom:2px}
+.aib .aiv{font-size:12px;color:var(--wh);font-weight:600}
+.adb{border-radius:8px;padding:11px 14px;display:flex;align-items:center;gap:10px;margin-top:auto}
+.adb.dp{background:rgba(123,239,110,.07);border:1px solid rgba(123,239,110,.22)}
+.adb.dv{background:rgba(255,92,92,.07);border:1px solid rgba(255,92,92,.22)}
+.adb.di{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22)}
+.adl{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em}
+.adb.dp .adl{color:var(--gr)}.adb.dv .adl{color:var(--re)}.adb.di .adl{color:var(--am)}
+.adb p{font-size:12px;color:rgba(242,238,232,.62);line-height:1.38}
+
+/* ── SLIDE 11 ── */
+#s11 .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+#s11 .ci{background:var(--s3);border:1px solid var(--bd);border-radius:11px;padding:20px;position:relative;overflow:hidden}
+#s11 .ci::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+#s11 .ci.c1::before{background:var(--pu)}
+#s11 .ci.c2::before{background:var(--re)}
+#s11 .ci.c3::before{background:var(--am)}
+#s11 .ci.c4::before{background:var(--gr)}
+#s11 .ci h3{font-size:14px;font-weight:700;margin-bottom:10px}
+#s11 .ba{display:grid;grid-template-columns:1fr 24px 1fr;gap:0;align-items:center}
+#s11 .bal{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin-bottom:3px}
+#s11 .bat{font-size:12px;color:rgba(242,238,232,.68);line-height:1.33}
+#s11 .baa{text-align:center;font-size:14px;color:var(--mu)}
+#s11 .cins{grid-column:1/-1;background:linear-gradient(135deg,rgba(123,239,110,.07),rgba(74,139,247,.07));border:1px solid rgba(123,239,110,.2);border-radius:11px;padding:20px 24px;display:flex;align-items:center;gap:16px}
+#s11 .cins .ico{font-size:26px}
+#s11 .cins p{font-size:15px;font-weight:700;line-height:1.4;color:var(--wh)}
+#s11 .cins p span{color:var(--gr)}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ══ SLIDE 1 ══ -->
+<section class="slide active" id="s1">
+  <div class="bgw">SWAP</div>
+  <div style="margin:auto 0;position:relative;z-index:1">
+    <div class="lbl">Group 12 · Entrepreneurship &amp; New Business Startup · Bocconi University · April 27, 2026</div>
+    <div class="logo"><span class="u">UNI</span><span class="s">SWAP</span></div>
+    <div class="tl">The campus-only verified marketplace where students buy &amp; sell second-hand goods — no scams, no ghosting, no friction.</div>
+    <div class="meta">
+      <span class="badge">Group 12</span>
+      <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);letter-spacing:.1em;text-transform:uppercase">10-Day Sprint · April 17 – 27</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 2 ══ -->
+<section class="slide" id="s2">
+  <div class="lbl">Slide 02 — Value Proposition</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(34px,4vw,54px)">VALUE PROPOSITION</div>
+  <div class="vpq">"A verified, campus-based marketplace that enables students to buy and sell second-hand goods with greater trust, reliability, and speed — through structured listings and a student-only network."</div>
+  <div class="evol">
+    <div class="ec d1">
+      <div class="el">Day 1 — Initial VP</div>
+      <div class="et">"A student-only marketplace that allows university students to buy and sell second-hand goods more safely and efficiently than existing platforms."</div>
+    </div>
+    <div class="arr">→</div>
+    <div class="ec d10">
+      <div class="el">Day 10 — Refined VP</div>
+      <div class="et">"A <strong>verified</strong>, campus-based marketplace enabling students to trade with greater <strong>trust, reliability &amp; speed</strong> through structured listings and a student-only network."</div>
+    </div>
+  </div>
+  <div class="cr">
+    <div class="ci"><h4>🔵 Trust-First Shift</h4><p>From "general marketplace improvement" → verification-driven platform. Trust, not efficiency, is the core value driver.</p></div>
+    <div class="ci"><h4>🟡 Speed &amp; Efficiency</h4><p>Highlights speed within platform usage &amp; delivery. Students need faster replies and structured, reliable listings.</p></div>
+    <div class="ci"><h4>🟣 Student Verification</h4><p>Greater emphasis on student-only access &amp; reliable platform structure as the primary market differentiator.</p></div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 3 ══ -->
+<section class="slide" id="s3">
+  <div class="lbl">Slide 03 — Right-Hand Business Model Canvas</div>
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:2px">
+    <div class="ttl" style="font-size:clamp(28px,3.4vw,46px)">RIGHT-HAND BMC</div>
+    <span class="tag tv" style="margin-left:8px">● Validated</span>
+    <span class="tag tc">● Changed</span>
+  </div>
+  <div class="bmc">
+    <div class="bb bv">
+      <div class="bh"><span>Customer Segments</span><span class="tag tv">Validated</span></div>
+      <ul class="bl">
+        <li>University students, aged 18–25, urban EU campuses</li>
+        <li><strong>Buyers</strong> — limited income, seeking affordable, reliable deals</li>
+        <li><strong>Sellers</strong> — leaving campus or upgrading; want quick, local sales</li>
+        <li>Switching from FB Marketplace &amp; WhatsApp requires clear value improvement</li>
+        <li>Core driver: <strong>trust &amp; reliability</strong>, not price alone</li>
+      </ul>
+    </div>
+    <div class="bb bc">
+      <div class="bh"><span>Channels</span><span class="tag tc">Changed</span></div>
+      <ul class="bl">
+        <li><strong>Awareness:</strong> WhatsApp groups + peer referrals (pivot from Instagram/TikTok)</li>
+        <li><strong>Evaluation:</strong> Peer validation, word-of-mouth, student communities</li>
+        <li><strong>Purchase:</strong> In-app structured listings + integrated messaging</li>
+        <li><strong>Delivery:</strong> On-campus in-person meetups → +15% transaction success</li>
+        <li><strong>After-sale:</strong> Ratings &amp; review system — essential for retention</li>
+      </ul>
+    </div>
+    <div class="bb bc">
+      <div class="bh"><span>Customer Relationships</span><span class="tag tc">Changed</span></div>
+      <ul class="bl">
+        <li><strong>Early stage:</strong> Campus ambassadors, direct seller onboarding, peer referrals</li>
+        <li><strong>Growth stage:</strong> Verified accounts, ratings system, structured listings, automated matching</li>
+        <li>Verification → −25% disputes &amp; higher engagement</li>
+        <li>Reliability signals → +10% listings, faster posting</li>
+        <li>Trust is the core driver of adoption, not a feature</li>
+      </ul>
+    </div>
+    <div class="bb bv">
+      <div class="bh"><span>Revenue Streams</span><span class="tag tv">Validated</span></div>
+      <ul class="bl">
+        <li><strong>Model:</strong> 5–10% transaction commission (marketplace model)</li>
+        <li><strong>CAC:</strong> €3–10/user via organic channels (WhatsApp, peer referrals)</li>
+        <li><strong>LTV:</strong> €15–25/user/year (3–5 transactions × ~€5 commission)</li>
+        <li>Students accept fees only when clear value improvement is demonstrated</li>
+        <li>Framing: "€1–2 for scam-free trade" beats "5% fee" by +30pp</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 4 ══ -->
+<section class="slide" id="s4">
+  <div class="lbl">Slide 04 — Customer Discovery (Segments &amp; Relationships)</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(28px,3.2vw,44px)">CUSTOMER DISCOVERY <span style="color:var(--bl);font-size:.55em;letter-spacing:.05em">— 8 INTERVIEWS</span></div>
+  <div class="dg">
+    <div class="dc">
+      <div class="dct">🧪 Riskiest Assumption</div>
+      <p>Students are <strong>dissatisfied enough</strong> with current platforms (FB Marketplace, WhatsApp) that they will switch to a verified, campus-only alternative.</p>
+      <div><span class="tag tc" style="font-size:11px">Customer Segments</span></div>
+      <p style="font-size:12px;color:var(--mu);margin-top:6px;line-height:1.45">8 discovery interviews · Asked about buying/selling habits, pain points &amp; reactions to a verified campus concept.</p>
+      <div class="ptg">
+        <span class="pt">Ghosting</span><span class="pt">Misleading listings</span><span class="pt">No accountability</span><span class="pt">Slow replies</span><span class="pt">Outdated posts</span>
+      </div>
+    </div>
+    <div class="dc">
+      <div class="dct">🔬 How We Tested It</div>
+      <p>Conducted <strong>8 semi-structured interviews</strong> across campus. Asked about:</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:4px">
+        <li style="font-size:12.5px;color:rgba(242,238,232,.7);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Current buying/selling habits &amp; platforms used</li>
+        <li style="font-size:12.5px;color:rgba(242,238,232,.7);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Pain points with existing platforms</li>
+        <li style="font-size:12.5px;color:rgba(242,238,232,.7);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Reactions to student-verified concept</li>
+        <li style="font-size:12.5px;color:rgba(242,238,232,.7);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Willingness to pay for trust features</li>
+      </ul>
+      <div class="qb" style="margin-top:auto">
+        <q>"I don't use Facebook Marketplace anymore because people just stop responding to me."</q>
+        <cite>— Undergraduate student, Bocconi</cite>
+      </div>
+    </div>
+    <div class="dc">
+      <div class="dct">✅ What We Found</div>
+      <p><strong style="color:var(--gr)">Validated with refinement.</strong> Unmet needs are real — but the core issue is <em>trust &amp; reliability</em>, not price.</p>
+      <p style="margin-top:6px">Switching is <strong>not automatic</strong>. Students need clear, demonstrable value to leave free platforms. Demand is for <strong>verified access</strong>, better filtering &amp; reliable comms.</p>
+      <div style="margin-top:auto;background:rgba(123,239,110,.07);border:1px solid rgba(123,239,110,.2);border-radius:8px;padding:12px">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:6px">Customer Rel. Finding</div>
+        <p style="font-size:12px;color:rgba(242,238,232,.7)">Verification → <strong style="color:var(--gr)">−25% disputes</strong> &amp; higher engagement<br>Reliability signals → <strong style="color:var(--gr)">+10% listings</strong>, faster posting</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 5 ══ -->
+<section class="slide" id="s5">
+  <div class="lbl">Slide 05 — Customer Discovery (Channels — Key Pivot)</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(26px,3vw,42px)">CHANNELS: OUR BIGGEST PIVOT</div>
+  <div style="font-size:12px;color:var(--re);font-family:'DM Mono',monospace;margin-bottom:12px;letter-spacing:.04em">Biggest channel assumption directly contradicted by interviews → Pivot applies most strongly to: <strong>Awareness</strong></div>
+  <div class="pg">
+    <div class="pb d1">
+      <div class="pl">Day 1 — Hypothesis (Not Validated)</div>
+      <ul>
+        <li>Instagram Reels + TikTok short-form content</li>
+        <li>Campus ambassador social posts</li>
+        <li>Assumed: students discover platforms via algorithm-driven feeds</li>
+        <li>Scalable &amp; low-cost to produce</li>
+        <li style="color:var(--re)">→ Not validated by interviews</li>
+      </ul>
+    </div>
+    <div class="pa">→</div>
+    <div class="pb d10">
+      <div class="pl">Day 10 — Evidence (Adopted)</div>
+      <ul>
+        <li><strong>WhatsApp groups + peer referrals</strong></li>
+        <li>Students rely on existing trusted communities</li>
+        <li>Direct recommendations carry far more weight than ads</li>
+        <li>Discovery is social &amp; trust-dependent, not algorithm-driven</li>
+        <li style="color:var(--gr)">Network effects = built-in, not paid for ✓</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pbot">
+    <div class="pbb">
+      <h4>Why It Changed</h4>
+      <p>Interviews revealed students don't trust platforms discovered through ads. They adopt tools recommended by someone they know — a classmate, a group chat, a friend selling furniture.</p>
+    </div>
+    <div class="pbb" style="border-color:rgba(255,92,92,.2);border-top:3px solid var(--re)">
+      <h4 style="color:var(--re)">Decision: PIVOT</h4>
+      <p>Drop Instagram/TikTok outreach entirely for launch. Invest in campus ambassador network and WhatsApp seeding. Deprioritise paid/organic social content.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 6 ══ -->
+<section class="slide" id="s6">
+  <div class="lbl">Slide 06 — MVP</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(28px,3.4vw,46px)">MVP — SMOKE TEST LANDING PAGE</div>
+  <div class="mg">
+    <div class="ml">
+      <div class="mtc">
+        <h4>Type of MVP</h4>
+        <p><strong style="color:var(--pu)">Smoke Test Landing Page</strong> (Figma prototype) — the simplest artefact to test whether students would sign up for a verified campus marketplace before building the product.</p>
+        <p style="margin-top:7px">Chosen over concierge/wizard-of-oz because we needed to test <strong>sign-up intent at scale</strong> quickly, with zero build time.</p>
+      </div>
+      <div class="mac">
+        <h4>Assumption Being Tested</h4>
+        <p>"If shown a landing page for a verified campus-only marketplace, at least <strong>40%</strong> of students will express sign-up intent — confirming demand exists before we build."</p>
+      </div>
+      <div class="card" style="border-color:rgba(74,139,247,.2)">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--bl);margin-bottom:7px">Method</div>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.7);line-height:1.45">Showed landing page mockup to <strong>20 students</strong> (Figma prototype) on campus. Question asked: <em>"Would you sign up for this today?"</em></p>
+      </div>
+    </div>
+    <div class="mr">
+      <div class="msc">
+        <div class="mbar">
+          <div class="mbd" style="background:#FF5C5C"></div>
+          <div class="mbd" style="background:#F5C842"></div>
+          <div class="mbd" style="background:#7BEF6E"></div>
+          <div class="murl">uniswap.app · MVP Landing Page (Figma Prototype)</div>
+        </div>
+        <div class="mmock">
+          <div class="mbadge">✓ Student Verified</div>
+          <div class="mmh">UNISWAP</div>
+          <div class="mms">Buy &amp; sell on campus. Only students. No scams.</div>
+          <div class="mmf">📧 Enter your university email...</div>
+          <div class="mmcta">Join the waitlist →</div>
+          <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
+            <div class="mmi"><span>📚 Calculus textbook — like new</span><span class="mp">€12</span></div>
+            <div class="mmi"><span>🪑 IKEA desk chair — good cond.</span><span class="mp">€30</span></div>
+            <div class="mmi"><span>💻 MacBook charger 65W</span><span class="mp">€20</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 7 ══ -->
+<section class="slide" id="s7">
+  <div class="lbl">Slide 07 — MVP Results &amp; Learnings</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(28px,3.4vw,46px)">MVP — RESULTS &amp; LEARNINGS</div>
+  <div class="rg">
+    <div class="rs"><div class="rn ng">20</div><div class="rl">Students Tested</div></div>
+    <div class="rs"><div class="rn nb">14</div><div class="rl">Positive Responses</div></div>
+    <div class="rs"><div class="rn na">70%</div><div class="rl">Conversion Rate</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;flex:1">
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div class="card" style="border-color:rgba(123,239,110,.2)">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:7px">Success Threshold</div>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.75)">Defined <em>before</em> testing: <strong style="color:var(--gr)">≥40%</strong> sign-up intent = assumption validated.</p>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.75);margin-top:5px">Result: <strong style="color:var(--gr)">70%</strong> → <span class="tag tv" style="font-size:11px">✓ VALIDATED</span></p>
+      </div>
+      <div class="card" style="border-color:rgba(255,92,92,.2)">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--re);margin-bottom:7px">Failure Threshold</div>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.75)">If result &lt;40%, we would have concluded students don't see enough value over existing free platforms to justify switching.</p>
+      </div>
+    </div>
+    <div class="rc" style="height:100%">
+      <h4>What This Result Tells Us</h4>
+      <p style="margin-bottom:8px">Demand is real: <strong>7 in 10 students</strong> would sign up when shown the trust-first concept.</p>
+      <p style="margin-bottom:8px">The <strong>verification framing</strong> ("student verified, no scams") was consistently cited as the reason for interest — not price.</p>
+      <p style="margin-bottom:8px">Confirms our VP refinement: verification &amp; reliability are the core value, not general marketplace convenience.</p>
+      <p><strong style="color:var(--gr)">Next step:</strong> Build waitlist &amp; recruit first 50 campus sellers manually (high-touch onboarding phase).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 8 ══ -->
+<section class="slide" id="s8">
+  <div class="lbl">Slide 08 — A/B Test #1</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(26px,3vw,42px)">A/B TEST #1 — VALUE PROPOSITION FRAMING</div>
+  <div class="abl">
+    <div class="abv">
+      <div class="av va"><div class="avl">Version A — Control</div><p>"Buy &amp; sell second-hand goods on campus"<br><span style="color:var(--mu);font-size:11px">Generic marketplace message. No trust language.</span></p></div>
+      <div class="av vb"><div class="avl">Version B — Variant</div><p>"Trade with verified students only — no scams, no ghosting"<br><span style="color:var(--mu);font-size:11px">Trust-first framing. Explicit safety promise.</span></p></div>
+      <div class="ahy"><h4>Hypothesis (drafted April 17 — before execution)</h4><p>"We believe Version B will outperform Version A on sign-up intent rate because students' primary pain point is trust, not access to a marketplace."</p></div>
+      <div class="adb dp"><div class="adl">✓ PERSEVERE</div><p>Lead with trust &amp; verification in all messaging. Generic framing is insufficient to drive adoption from students already using free platforms.</p></div>
+    </div>
+    <div class="abr2">
+      <div class="ares">
+        <h4>Results — Run April 18–19 · 10 students per version</h4>
+        <div class="abar">
+          <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" style="width:30%"><span class="abp">30%</span></div></div></div>
+          <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" style="width:70%"><span class="abp">70%</span></div></div></div>
+        </div>
+        <div class="adlt">↑ +40 percentage points in favour of Version B</div>
+        <div class="air">
+          <div class="aib"><div class="ail">Metric</div><div class="aiv">Sign-up intent %</div></div>
+          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
+          <div class="aib"><div class="ail">A: 3/10</div><div class="aiv" style="color:var(--re)">30%</div></div>
+          <div class="aib"><div class="ail">B: 7/10</div><div class="aiv" style="color:var(--gr)">70%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:7px">What This Tells Us</div>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.7);line-height:1.45">Language matters enormously. Students respond twice as strongly to explicit trust language. This reinforces our VP shift from "convenient" to "trustworthy." All subsequent messaging now leads with verification and safety as the primary hook.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 9 ══ -->
+<section class="slide" id="s9">
+  <div class="lbl">Slide 09 — A/B Test #2</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(26px,3vw,42px)">A/B TEST #2 — ACQUISITION CHANNEL</div>
+  <div class="abl">
+    <div class="abv">
+      <div class="av va"><div class="avl">Version A — Control</div><p>Cold Instagram DM outreach to students with the platform concept<br><span style="color:var(--mu);font-size:11px">Message from a stranger. Standard digital marketing approach.</span></p></div>
+      <div class="av vb"><div class="avl">Version B — Variant</div><p>WhatsApp group seeding via a campus ambassador (trusted peer)<br><span style="color:var(--mu);font-size:11px">Recommendation within an existing trusted community.</span></p></div>
+      <div class="ahy"><h4>Hypothesis (drafted April 18 — before execution)</h4><p>"We believe Version B will generate a higher 24h response rate because it leverages existing trust networks rather than cold outreach to strangers."</p></div>
+      <div class="adb dv"><div class="adl">🔴 PIVOT</div><p>Drop Instagram DM outreach entirely for launch. All acquisition through WhatsApp seeding &amp; campus ambassador network. Deprioritise social media.</p></div>
+    </div>
+    <div class="abr2">
+      <div class="ares">
+        <h4>Results — Run April 19–21 · 15 students per version</h4>
+        <div class="abar">
+          <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" style="width:20%"><span class="abp">20%</span></div></div></div>
+          <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" style="width:73%"><span class="abp">73%</span></div></div></div>
+        </div>
+        <div class="adlt">↑ +53 percentage points in favour of Version B</div>
+        <div class="air">
+          <div class="aib"><div class="ail">Metric</div><div class="aiv">24h response rate</div></div>
+          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
+          <div class="aib"><div class="ail">A: 3/15</div><div class="aiv" style="color:var(--re)">20%</div></div>
+          <div class="aib"><div class="ail">B: 11/15</div><div class="aiv" style="color:var(--gr)">73%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:7px">What This Tells Us</div>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.7);line-height:1.45">The most impactful finding of our 10 days. Discovery is social and trust-dependent — not algorithm-driven. Students adopt tools recommended by someone they know: a classmate, a group chat, a friend selling furniture. Network effects are built-in, not paid for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 10 ══ -->
+<section class="slide" id="s10">
+  <div class="lbl">Slide 10 — A/B Test #3</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(26px,3vw,42px)">A/B TEST #3 — PRICING COMMUNICATION</div>
+  <div class="abl">
+    <div class="abv">
+      <div class="av va"><div class="avl">Version A — Control</div><p>Abstract percentage: <strong>"5% transaction fee"</strong><br><span style="color:var(--mu);font-size:11px">Standard marketplace language. No context on what you get for it.</span></p></div>
+      <div class="av vb"><div class="avl">Version B — Variant</div><p>Value-anchored: <strong>"€1–2 for a verified, scam-free transaction"</strong><br><span style="color:var(--mu);font-size:11px">Connects cost to a specific, tangible benefit.</span></p></div>
+      <div class="ahy"><h4>Hypothesis (drafted April 19 — before execution)</h4><p>"We believe Version B will increase willingness to pay because anchoring on concrete value (safety guarantee) reduces fee aversion vs. an abstract percentage."</p></div>
+      <div class="adb di"><div class="adl">🟡 ITERATE</div><p>Price communication matters as much as price level. Always anchor on value delivered. Re-test with premium seller tools framing in next sprint.</p></div>
+    </div>
+    <div class="abr2">
+      <div class="ares">
+        <h4>Results — Run April 20–22 · 10 students per version</h4>
+        <div class="abar">
+          <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" style="width:40%"><span class="abp">40%</span></div></div></div>
+          <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" style="width:70%"><span class="abp">70%</span></div></div></div>
+        </div>
+        <div class="adlt">↑ +30 percentage points in favour of Version B</div>
+        <div class="air">
+          <div class="aib"><div class="ail">Metric</div><div class="aiv">Willingness to pay</div></div>
+          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
+          <div class="aib"><div class="ail">A: 4/10</div><div class="aiv" style="color:var(--re)">40%</div></div>
+          <div class="aib"><div class="ail">B: 7/10</div><div class="aiv" style="color:var(--gr)">70%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:7px">What This Tells Us</div>
+        <p style="font-size:12.5px;color:rgba(242,238,232,.7);line-height:1.45">Students on free platforms have high fee sensitivity. But when they understand the specific value — no scams, verified users — they accept the cost. How you frame the price is as important as the price itself. Confirms the trust-first value proposition throughout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 11 ══ -->
+<section class="slide" id="s11">
+  <div class="lbl">Slide 11 — What Changed?</div>
+  <div class="aline"></div>
+  <div class="ttl" style="font-size:clamp(30px,3.6vw,50px)">WHAT CHANGED? DAY 1 → DAY 10</div>
+  <div class="cg">
+    <div class="ci c1">
+      <h3>🔵 Value Proposition</h3>
+      <div class="ba">
+        <div><div class="bal">Day 1</div><div class="bat">"Safer, more efficient marketplace for students"</div></div>
+        <div class="baa">→</div>
+        <div><div class="bal" style="color:var(--pu)">Day 10</div><div class="bat" style="color:var(--wh)">"Verified, trust-first, campus-only — structured listings &amp; student-only network"</div></div>
+      </div>
+    </div>
+    <div class="ci c2">
+      <h3>🔴 Awareness Channel</h3>
+      <div class="ba">
+        <div><div class="bal">Day 1</div><div class="bat">Instagram Reels + TikTok + campus ambassador social posts</div></div>
+        <div class="baa">→</div>
+        <div><div class="bal" style="color:var(--re)">Day 10 — PIVOT</div><div class="bat" style="color:var(--wh)">WhatsApp group seeding + peer referrals + campus ambassador direct outreach</div></div>
+      </div>
+    </div>
+    <div class="ci c3">
+      <h3>🟡 Revenue Communication</h3>
+      <div class="ba">
+        <div><div class="bal">Day 1</div><div class="bat">"5% transaction fee" — abstract, no context on value</div></div>
+        <div class="baa">→</div>
+        <div><div class="bal" style="color:var(--am)">Day 10 — ITERATE</div><div class="bat" style="color:var(--wh)">"€1–2 for verified, scam-free transaction" — value-anchored framing</div></div>
+      </div>
+    </div>
+    <div class="ci c4">
+      <h3>🟢 Customer Relations</h3>
+      <div class="ba">
+        <div><div class="bal">Day 1</div><div class="bat">Assumed automated systems sufficient for early growth</div></div>
+        <div class="baa">→</div>
+        <div><div class="bal" style="color:var(--gr)">Day 10 — VALIDATED</div><div class="bat" style="color:var(--wh)">Manual onboarding &amp; campus ambassador trust-building confirmed critical before any automation</div></div>
+      </div>
+    </div>
+    <div class="cins">
+      <div class="ico">💡</div>
+      <p>Core insight from 10 days of evidence: <span>Students don't switch platforms for convenience. They switch for trust.</span> Every pivot, every validation, every number points back to this single truth.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<nav class="nav">
+  <button onclick="go(-1)">←</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="ctr">1 / 11</span>
+  <button onclick="go(1)">→</button>
+</nav>
+<div style="position:fixed;bottom:24px;right:30px;font-family:'DM Mono',monospace;font-size:10px;color:var(--mu)">← → to navigate · F for fullscreen</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+const ctr=document.getElementById('ctr');
+let cur=0;
+slides.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d)});
+function goTo(n){const p=cur;cur=Math.max(0,Math.min(slides.length-1,n));if(p===cur)return;slides[p].classList.remove('active');slides[p].classList.add('exit');setTimeout(()=>slides[p].classList.remove('exit'),420);slides[cur].classList.add('active');document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===cur));ctr.textContent=(cur+1)+' / '+slides.length}
+function go(d){goTo(cur+d)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.()});
+</script>
+</body>
+</html>
