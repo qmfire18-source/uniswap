@@ -6,474 +6,487 @@
 <title>UniSwap — Group 12</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
+/* ── RESET & ROOT ── */
 :root{
-  --bg:#07070a;--s1:#0f0f13;--s2:#16161c;--s3:#1e1e26;--s4:#26262f;
+  --bg:#07070a;--s1:#0f0f14;--s2:#16161e;--s3:#1e1e28;--s4:#26262f;
   --gr:#5ddb6b;--bl:#5b9cf8;--pu:#c084fc;--am:#fcd34d;--re:#f87171;--cy:#22d3ee;
-  --wh:#f0ece5;--mu:#4a4a58;--bd:rgba(255,255,255,.07);
+  --wh:#f0ece5;--mu:#6b7280;--bd:rgba(255,255,255,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Syne',sans-serif;color:var(--wh)}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
+  font-family:'Syne',sans-serif;color:var(--wh);cursor:none}
 
-/* ── GRID + NOISE BG ── */
+/* ── CUSTOM CURSOR ── */
+#cur{position:fixed;width:14px;height:14px;background:var(--gr);
+  border-radius:50%;pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s,opacity .2s;
+  mix-blend-mode:difference}
+#cur2{position:fixed;width:36px;height:36px;border:1.5px solid rgba(93,219,107,.5);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);transition:transform .08s linear,width .25s,height .25s,opacity .25s}
+body:has(.card:hover) #cur,body:has(a:hover) #cur,body:has(button:hover) #cur{
+  width:22px;height:22px;background:var(--am)}
+body:has(.card:hover) #cur2,body:has(a:hover) #cur2,body:has(button:hover) #cur2{
+  width:56px;height:56px;border-color:rgba(252,211,77,.5)}
+
+/* ── GRID BG ── */
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-  background-size:52px 52px}
+  background-image:linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
+  background-size:60px 60px}
 
 /* ── PROGRESS ── */
-#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gr),var(--bl));
-  transition:width .5s ease;z-index:500;box-shadow:0 0 12px var(--gr)}
+#prog{position:fixed;top:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--gr),var(--bl),var(--pu));
+  transition:width .5s ease;z-index:500;box-shadow:0 0 14px var(--gr);border-radius:0 2px 2px 0}
+
+/* ── SLIDE NUMBER ── */
+#slidenum{position:fixed;top:18px;right:24px;font-family:'DM Mono',monospace;
+  font-size:13px;color:var(--mu);z-index:500;letter-spacing:.1em}
 
 /* ── DECK ── */
 .deck{position:relative;width:100vw;height:100vh;z-index:1}
-
-/* ── SLIDES ── */
 .slide{
   position:absolute;inset:0;opacity:0;pointer-events:none;
   transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);
-  transform:translateY(28px) scale(.985);
+  transform:translateY(30px) scale(.982);
   display:flex;flex-direction:column;
-  /* CRITICAL FIX: leave 70px at bottom for nav */
-  padding:40px 56px 80px;
-  overflow:hidden;
+  padding:36px 52px 72px;overflow:hidden;
 }
 .slide.active{opacity:1;transform:none;pointer-events:all}
-.slide.exit{opacity:0;transform:translateY(-28px) scale(.985)}
+.slide.exit{opacity:0;transform:translateY(-30px) scale(.982)}
 
-/* ── ANIMATED ELEMENTS WHEN SLIDE ACTIVATES ── */
-.slide.active .fade-in{animation:fadeUp .55s ease forwards}
-.fade-in{opacity:0}
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.d1{animation-delay:.05s}.d2{animation-delay:.12s}.d3{animation-delay:.2s}
-.d4{animation-delay:.28s}.d5{animation-delay:.36s}.d6{animation-delay:.44s}
+/* staggered children */
+.slide.active .fi{animation:fadeUp .55s ease forwards;opacity:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.d1{animation-delay:.04s}.d2{animation-delay:.1s}.d3{animation-delay:.17s}
+.d4{animation-delay:.24s}.d5{animation-delay:.32s}.d6{animation-delay:.4s}
 
-/* ── NAV — always above content ── */
-.nav{
-  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+/* ── NAV ── */
+.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
   display:flex;align-items:center;gap:10px;z-index:600;
-  background:rgba(7,7,10,.85);border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(20px);padding:8px 18px;border-radius:50px;
-  box-shadow:0 4px 24px rgba(0,0,0,.5);
-}
-.nav button{background:none;border:none;color:var(--wh);font-size:18px;font-weight:700;
-  cursor:pointer;padding:4px 12px;border-radius:22px;transition:background .18s;font-family:'Syne',sans-serif}
+  background:rgba(7,7,10,.88);border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(22px);padding:8px 18px;border-radius:50px;
+  box-shadow:0 4px 28px rgba(0,0,0,.6)}
+.nav button{background:none;border:none;color:var(--wh);font-size:19px;font-weight:700;
+  cursor:none;padding:4px 12px;border-radius:22px;transition:background .18s;
+  font-family:'Syne',sans-serif}
 .nav button:hover{background:rgba(255,255,255,.1)}
-.ctr{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);min-width:44px;text-align:center}
+.ctr{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);
+  min-width:44px;text-align:center}
 .dots{display:flex;gap:5px;align-items:center}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--mu);cursor:pointer;
-  transition:all .3s;border:none;padding:0}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--mu);
+  cursor:none;transition:all .3s;border:none;padding:0}
 .dot.active{background:var(--gr);width:22px;border-radius:3px}
-.hint{position:fixed;bottom:18px;right:24px;font-family:'DM Mono',monospace;
-  font-size:10px;color:var(--mu);z-index:600;letter-spacing:.06em}
 
-/* ── SHARED COMPONENTS ── */
-.lbl{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;
+/* ── SHARED ── */
+.lbl{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;
   color:var(--mu);text-transform:uppercase;margin-bottom:8px}
-.ttl{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;line-height:.95}
-.aln{width:52px;height:3px;background:linear-gradient(90deg,var(--gr),transparent);
+.ttl{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;line-height:.94}
+.aln{width:56px;height:3px;background:linear-gradient(90deg,var(--gr),transparent);
   margin-bottom:18px;border-radius:2px}
 
 .tag{display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;
-  font-size:11px;padding:3px 9px;border-radius:5px;font-weight:500;letter-spacing:.05em;white-space:nowrap}
-.tv{background:rgba(93,219,107,.13);color:var(--gr);border:1px solid rgba(93,219,107,.3)}
-.tc{background:rgba(192,132,252,.13);color:var(--pu);border:1px solid rgba(192,132,252,.3)}
-.tp{background:rgba(248,113,113,.13);color:var(--re);border:1px solid rgba(248,113,113,.3)}
-.ti{background:rgba(252,211,77,.13);color:var(--am);border:1px solid rgba(252,211,77,.3)}
-.tb{background:rgba(91,156,248,.13);color:var(--bl);border:1px solid rgba(91,156,248,.3)}
+  font-size:12px;padding:4px 10px;border-radius:5px;font-weight:500;
+  letter-spacing:.05em;white-space:nowrap}
+.tv{background:rgba(93,219,107,.13);color:var(--gr);border:1px solid rgba(93,219,107,.32)}
+.tc{background:rgba(192,132,252,.13);color:var(--pu);border:1px solid rgba(192,132,252,.32)}
+.tp{background:rgba(248,113,113,.13);color:var(--re);border:1px solid rgba(248,113,113,.32)}
+.ti{background:rgba(252,211,77,.13);color:var(--am);border:1px solid rgba(252,211,77,.32)}
+.tb{background:rgba(91,156,248,.13);color:var(--bl);border:1px solid rgba(91,156,248,.32)}
 
 /* interactive card */
-.card{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:20px;
-  transition:border-color .25s,transform .25s,box-shadow .25s}
-.card:hover{border-color:rgba(93,219,107,.3);transform:translateY(-3px);
-  box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 0 1px rgba(93,219,107,.1)}
+.card{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:22px;
+  transition:border-color .22s,transform .22s,box-shadow .22s,background .22s}
+.card:hover{border-color:rgba(93,219,107,.35);transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(0,0,0,.55),0 0 0 1px rgba(93,219,107,.12);
+  background:rgba(22,22,30,.95)}
 
 /* glow orb */
-.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px)}
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(72px)}
 
-/* ══════════════════════════════════════════
-   SLIDE 1 — TITLE
-══════════════════════════════════════════ */
-#s1 .o1{width:500px;height:500px;background:radial-gradient(circle,rgba(93,219,107,.12),transparent 70%);
-  top:-10%;left:20%;animation:breathe 5s ease-in-out infinite}
-#s1 .o2{width:300px;height:300px;background:radial-gradient(circle,rgba(91,156,248,.1),transparent 70%);
-  bottom:0;right:10%;animation:breathe 7s ease-in-out infinite reverse}
-@keyframes breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
-#s1 .bgw{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:38vw;
-  color:rgba(93,219,107,.025);bottom:-15%;right:-5%;line-height:1;pointer-events:none;
-  letter-spacing:-.02em;animation:float 9s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-#s1 .logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,10vw,160px);
-  line-height:1;letter-spacing:.02em;margin-bottom:18px;position:relative}
-#s1 .u{color:var(--bl)}.sw{color:var(--gr)}
-#s1 .tagline{font-size:clamp(16px,1.6vw,22px);font-weight:400;
-  color:rgba(240,236,229,.65);max-width:600px;line-height:1.6;
-  border-left:3px solid var(--gr);padding-left:18px;margin-bottom:32px}
+/* blink dot */
+.blink{width:8px;height:8px;border-radius:50%;background:var(--gr);
+  animation:blink 1.4s ease-in-out infinite;display:inline-block}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 8px var(--gr)}50%{opacity:.25;box-shadow:none}}
+
+/* mvp link */
+.mvpbtn{font-family:'DM Mono',monospace;font-size:13px;
+  background:rgba(93,219,107,.11);border:1px solid rgba(93,219,107,.38);
+  color:var(--gr);padding:8px 18px;border-radius:26px;cursor:none;
+  text-decoration:none;transition:background .2s,transform .2s;
+  display:inline-flex;align-items:center;gap:8px}
+.mvpbtn:hover{background:rgba(93,219,107,.22);transform:translateY(-2px)}
+
+/* ══════════ S1 — TITLE ══════════ */
+#s1{justify-content:flex-end;padding-bottom:80px}
+#s1 .o1{width:620px;height:620px;background:radial-gradient(circle,rgba(93,219,107,.1),transparent 70%);
+  top:-15%;left:15%;animation:breathe 5s ease-in-out infinite}
+#s1 .o2{width:380px;height:380px;background:radial-gradient(circle,rgba(91,156,248,.09),transparent 70%);
+  bottom:-5%;right:8%;animation:breathe 7s ease-in-out infinite reverse}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.12);opacity:1}}
+#s1 .bgw{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:42vw;
+  color:rgba(93,219,107,.022);bottom:-18%;right:-6%;line-height:1;
+  pointer-events:none;letter-spacing:-.02em;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+#s1 .logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(100px,13vw,200px);
+  line-height:.92;letter-spacing:.02em;margin-bottom:18px}
+#s1 .u{color:var(--bl)}
+#s1 .sw{color:var(--gr)}
+#s1 .tagline{font-size:clamp(20px,2.2vw,32px);font-weight:500;
+  color:rgba(240,236,229,.7);max-width:780px;line-height:1.5;
+  border-left:4px solid var(--gr);padding-left:20px;margin-bottom:36px}
 #s1 .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-#s1 .bdg{font-family:'DM Mono',monospace;font-size:12px;border:1px solid var(--bd);
-  padding:7px 18px;border-radius:24px;color:var(--mu);
+#s1 .bdg{font-family:'DM Mono',monospace;font-size:13px;border:1px solid var(--bd);
+  padding:8px 20px;border-radius:26px;color:var(--mu);
   transition:border-color .2s,color .2s,transform .2s}
 #s1 .bdg:hover{border-color:var(--gr);color:var(--gr);transform:translateY(-2px)}
-.mvpbtn{font-family:'DM Mono',monospace;font-size:12px;
-  background:rgba(93,219,107,.12);border:1px solid rgba(93,219,107,.35);
-  color:var(--gr);padding:7px 16px;border-radius:24px;cursor:pointer;
-  text-decoration:none;transition:background .2s,transform .2s;
-  display:inline-flex;align-items:center;gap:7px}
-.mvpbtn:hover{background:rgba(93,219,107,.22);transform:translateY(-2px)}
-.blink{width:8px;height:8px;border-radius:50%;background:var(--gr);
-  animation:blink 1.4s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--gr)}50%{opacity:.3;box-shadow:none}}
 
-/* ══════════════════════════════════════════
-   SLIDE 2 — VP
-══════════════════════════════════════════ */
-#s2 .vpq{font-size:clamp(16px,1.9vw,26px);font-weight:700;line-height:1.45;
-  color:var(--wh);border-left:4px solid var(--gr);padding:18px 24px;
-  background:rgba(93,219,107,.06);border-radius:0 12px 12px 0;
-  margin:12px 0 20px;font-style:italic;
-  transition:background .3s,transform .2s;cursor:default}
-#s2 .vpq:hover{background:rgba(93,219,107,.1);transform:translateX(4px)}
-#s2 .evol{display:grid;grid-template-columns:1fr 38px 1fr;gap:0;align-items:stretch;margin-bottom:16px}
-#s2 .ec{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:18px;
-  transition:transform .22s}
-#s2 .ec:hover{transform:scale(1.015)}
-#s2 .ec.d1{border-top:3px solid var(--re)}
-#s2 .ec.d10{border-top:3px solid var(--gr)}
-#s2 .el{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:8px}
-#s2 .ec.d1 .el{color:var(--re)}
-#s2 .ec.d10 .el{color:var(--gr)}
-#s2 .et{font-size:14px;line-height:1.55;color:rgba(240,236,229,.72);font-style:italic}
-#s2 .arr{display:flex;align-items:center;justify-content:center;
-  font-size:22px;color:var(--mu)}
+/* ══════════ S2 — VP ══════════ */
+#s2 .vpq{font-size:clamp(20px,2.5vw,34px);font-weight:700;line-height:1.42;
+  color:var(--wh);border-left:5px solid var(--gr);padding:20px 26px;
+  background:rgba(93,219,107,.06);border-radius:0 14px 14px 0;
+  margin:12px 0 18px;font-style:italic;
+  transition:background .3s,transform .2s,border-left-width .2s}
+#s2 .vpq:hover{background:rgba(93,219,107,.11);transform:translateX(6px);border-left-width:8px}
+#s2 .evol{display:grid;grid-template-columns:1fr 42px 1fr;gap:0;margin-bottom:16px}
+#s2 .ec{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:20px;
+  transition:transform .22s,box-shadow .22s}
+#s2 .ec:hover{transform:scale(1.016);box-shadow:0 10px 32px rgba(0,0,0,.5)}
+#s2 .ec.d1b{border-top:3px solid var(--re)}
+#s2 .ec.d10b{border-top:3px solid var(--gr)}
+#s2 .el{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:10px}
+#s2 .ec.d1b .el{color:var(--re)}
+#s2 .ec.d10b .el{color:var(--gr)}
+#s2 .et{font-size:clamp(16px,1.6vw,20px);line-height:1.5;color:rgba(240,236,229,.78);font-style:italic}
+#s2 .arr{display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--mu)}
 #s2 .cr{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-#s2 .ci{background:var(--s2);border:1px solid rgba(192,132,252,.2);
-  border-radius:11px;padding:14px;border-top:3px solid var(--pu);
-  transition:transform .22s,border-color .22s}
-#s2 .ci:hover{transform:translateY(-3px);border-color:var(--pu);
-  box-shadow:0 8px 28px rgba(192,132,252,.15)}
-#s2 .ci h4{font-size:13px;color:var(--pu);margin-bottom:5px;font-weight:700}
-#s2 .ci p{font-size:13px;color:rgba(240,236,229,.62);line-height:1.45}
+#s2 .ci{background:var(--s2);border:1px solid rgba(192,132,252,.22);
+  border-radius:12px;padding:18px;border-top:3px solid var(--pu);
+  transition:transform .22s,border-color .22s,box-shadow .22s}
+#s2 .ci:hover{transform:translateY(-4px);border-color:var(--pu);
+  box-shadow:0 10px 32px rgba(192,132,252,.15)}
+#s2 .ci h4{font-size:clamp(14px,1.4vw,18px);color:var(--pu);margin-bottom:7px;font-weight:700}
+#s2 .ci p{font-size:clamp(14px,1.3vw,17px);color:rgba(240,236,229,.72);line-height:1.5}
 
-/* ══════════════════════════════════════════
-   SLIDE 3 — BMC
-══════════════════════════════════════════ */
+/* ══════════ S3 — BMC ══════════ */
 #s3 .bmc{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
   gap:12px;flex:1;margin-top:10px}
-#s3 .bb{background:var(--s2);border:1px solid var(--bd);border-radius:13px;padding:18px;
+#s3 .bb{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:20px;
   transition:transform .22s,box-shadow .22s,border-color .22s}
-#s3 .bb:hover{transform:scale(1.018);
-  box-shadow:0 10px 36px rgba(0,0,0,.5)}
+#s3 .bb:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,.55)}
 #s3 .bb.bv{border-top:3px solid var(--gr)}
-#s3 .bb.bv:hover{border-color:rgba(93,219,107,.4)}
+#s3 .bb.bv:hover{border-color:rgba(93,219,107,.45)}
 #s3 .bb.bc{border-top:3px solid var(--pu)}
-#s3 .bb.bc:hover{border-color:rgba(192,132,252,.4)}
-#s3 .bh{font-size:12px;font-family:'DM Mono',monospace;letter-spacing:.09em;
-  text-transform:uppercase;margin-bottom:10px;display:flex;
+#s3 .bb.bc:hover{border-color:rgba(192,132,252,.45)}
+#s3 .bh{font-size:13px;font-family:'DM Mono',monospace;letter-spacing:.09em;
+  text-transform:uppercase;margin-bottom:12px;display:flex;
   justify-content:space-between;align-items:center}
 #s3 .bb.bv .bh{color:var(--gr)}
 #s3 .bb.bc .bh{color:var(--pu)}
-#s3 .bl{list-style:none;display:flex;flex-direction:column;gap:5px}
-#s3 .bl li{font-size:13.5px;line-height:1.45;color:rgba(240,236,229,.75);
-  padding-left:14px;position:relative}
-#s3 .bl li::before{content:'—';position:absolute;left:0;color:var(--mu);font-size:11px}
+#s3 .bl{list-style:none;display:flex;flex-direction:column;gap:7px}
+#s3 .bl li{font-size:clamp(15px,1.45vw,19px);line-height:1.42;
+  color:rgba(240,236,229,.78);padding-left:16px;position:relative}
+#s3 .bl li::before{content:'—';position:absolute;left:0;color:var(--mu);font-size:12px;top:3px}
 
-/* ══════════════════════════════════════════
-   SLIDES 4-5 — CUSTOMER DISCOVERY
-══════════════════════════════════════════ */
-.dg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;flex:1;margin-top:13px}
-.dc{background:var(--s2);border:1px solid var(--bd);border-radius:13px;
-  padding:18px;display:flex;flex-direction:column;gap:8px;
-  transition:border-color .25s,transform .22s}
-.dc:hover{border-color:rgba(91,156,248,.3);transform:translateY(-2px)}
-.dct{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.09em;
+/* ══════════ S4 — DISCOVERY ══════════ */
+.dg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;flex:1;margin-top:12px}
+.dc{background:var(--s2);border:1px solid var(--bd);border-radius:14px;
+  padding:20px;display:flex;flex-direction:column;gap:10px;
+  transition:border-color .25s,transform .22s,box-shadow .22s}
+.dc:hover{border-color:rgba(91,156,248,.35);transform:translateY(-3px);
+  box-shadow:0 10px 32px rgba(0,0,0,.45)}
+.dct{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.09em;
   text-transform:uppercase;color:var(--mu);padding-bottom:10px;
   border-bottom:1px solid var(--bd)}
-.dc p{font-size:14px;line-height:1.55;color:rgba(240,236,229,.75)}
+.dc p{font-size:clamp(15px,1.45vw,19px);line-height:1.55;color:rgba(240,236,229,.78)}
 .qb{background:rgba(91,156,248,.07);border:1px solid rgba(91,156,248,.22);
-  border-left:3px solid var(--bl);border-radius:0 9px 9px 0;
-  padding:13px 15px;margin-top:auto;
-  transition:background .2s,transform .2s}
-.qb:hover{background:rgba(91,156,248,.12);transform:translateX(3px)}
-.qb q{font-size:13.5px;line-height:1.55;color:var(--wh);font-style:italic;display:block}
-.qb cite{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);
-  margin-top:5px;display:block}
-.ptg{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
-.pt{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.22);
-  color:var(--re);font-size:11px;padding:4px 11px;border-radius:20px;
+  border-left:4px solid var(--bl);border-radius:0 10px 10px 0;
+  padding:14px 18px;margin-top:auto;transition:background .2s,transform .2s}
+.qb:hover{background:rgba(91,156,248,.13);transform:translateX(4px)}
+.qb q{font-size:clamp(15px,1.5vw,20px);line-height:1.5;color:var(--wh);font-style:italic;display:block}
+.qb cite{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);margin-top:6px;display:block}
+.ptg{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.pt{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);
+  color:var(--re);font-size:13px;padding:5px 13px;border-radius:22px;
   font-family:'DM Mono',monospace;transition:background .2s,transform .15s}
-.pt:hover{background:rgba(248,113,113,.2);transform:scale(1.05)}
+.pt:hover{background:rgba(248,113,113,.22);transform:scale(1.07)}
 
-/* pivot layout */
+/* ══════════ S5 — CHANNELS ══════════ */
 .pg{display:grid;grid-template-columns:1fr auto 1fr;gap:0;flex:1;
   margin-top:12px;align-items:stretch}
-.pb{background:var(--s2);border:1px solid var(--bd);border-radius:13px;
-  padding:20px;display:flex;flex-direction:column;gap:8px;
+.pb{background:var(--s2);border:1px solid var(--bd);border-radius:14px;
+  padding:22px;display:flex;flex-direction:column;gap:9px;
   transition:transform .22s,box-shadow .22s}
-.pb:hover{transform:scale(1.01);box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.pb:hover{transform:scale(1.012);box-shadow:0 10px 32px rgba(0,0,0,.45)}
 .pb.pd1{border-top:3px solid var(--re)}
 .pb.pd10{border-top:3px solid var(--gr)}
-.pl{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.09em;
-  text-transform:uppercase;margin-bottom:5px}
+.pl{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.09em;
+  text-transform:uppercase;margin-bottom:6px}
 .pb.pd1 .pl{color:var(--re)}
 .pb.pd10 .pl{color:var(--gr)}
-.pb ul{list-style:none;display:flex;flex-direction:column;gap:7px}
-.pb ul li{font-size:13.5px;color:rgba(240,236,229,.75);line-height:1.45;
-  padding-left:13px;position:relative}
-.pb ul li::before{content:'›';position:absolute;left:0;color:var(--mu);font-size:14px}
+.pb ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pb ul li{font-size:clamp(15px,1.5vw,20px);color:rgba(240,236,229,.78);
+  line-height:1.4;padding-left:14px;position:relative}
+.pb ul li::before{content:'›';position:absolute;left:0;color:var(--mu);font-size:16px}
 .pa{display:flex;align-items:center;justify-content:center;
-  padding:0 16px;font-size:26px;color:var(--mu)}
+  padding:0 18px;font-size:30px;color:var(--mu)}
 .pbot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.pbb{background:var(--s2);border:1px solid var(--bd);border-radius:11px;
-  padding:16px;transition:border-color .22s,transform .2s}
-.pbb:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px)}
-.pbb h4{font-size:11px;font-family:'DM Mono',monospace;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--mu);margin-bottom:7px}
-.pbb p{font-size:13.5px;color:rgba(240,236,229,.7);line-height:1.45}
+.pbb{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+  padding:18px;transition:border-color .22s,transform .2s}
+.pbb:hover{border-color:rgba(255,255,255,.18);transform:translateY(-2px)}
+.pbb h4{font-size:13px;font-family:'DM Mono',monospace;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--mu);margin-bottom:8px}
+.pbb p{font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);line-height:1.48}
 
-/* ══════════════════════════════════════════
-   SLIDES 6-7 — MVP
-══════════════════════════════════════════ */
+/* ══════════ S6-7 — MVP ══════════ */
 .mg{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;flex:1;margin-top:12px}
-.ml,.mr{display:flex;flex-direction:column;gap:11px}
-.mtc{background:var(--s2);border:1px solid rgba(192,132,252,.22);
-  border-left:4px solid var(--pu);border-radius:11px;padding:16px;
-  transition:border-left-color .22s,transform .2s}
-.mtc:hover{border-left-color:var(--bl);transform:translateX(3px)}
-.mtc h4{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--pu);margin-bottom:7px}
-.mtc p{font-size:13.5px;line-height:1.5;color:rgba(240,236,229,.75)}
-.mac{background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.22);
-  border-radius:11px;padding:16px;transition:background .2s}
-.mac:hover{background:rgba(252,211,77,.1)}
-.mac h4{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--am);margin-bottom:7px}
-.mac p{font-size:13.5px;line-height:1.5;color:rgba(240,236,229,.75);font-style:italic}
-.msc{background:var(--s3);border:1px solid var(--bd);border-radius:13px;
-  flex:1;padding:16px;display:flex;flex-direction:column}
-.mbar{display:flex;align-items:center;gap:7px;margin-bottom:10px;
+.ml,.mr{display:flex;flex-direction:column;gap:12px}
+.mtc{background:var(--s2);border:1px solid rgba(192,132,252,.24);
+  border-left:5px solid var(--pu);border-radius:12px;padding:18px;
+  transition:border-left-width .2s,transform .2s}
+.mtc:hover{border-left-width:8px;transform:translateX(4px)}
+.mtc h4{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--pu);margin-bottom:8px}
+.mtc p{font-size:clamp(15px,1.45vw,19px);line-height:1.5;color:rgba(240,236,229,.78)}
+.mac{background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.24);
+  border-radius:12px;padding:18px;transition:background .2s}
+.mac:hover{background:rgba(252,211,77,.11)}
+.mac h4{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--am);margin-bottom:8px}
+.mac p{font-size:clamp(15px,1.45vw,19px);line-height:1.5;color:rgba(240,236,229,.78);font-style:italic}
+.msc{background:var(--s3);border:1px solid var(--bd);border-radius:14px;
+  flex:1;padding:18px;display:flex;flex-direction:column}
+.mbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;
   padding-bottom:10px;border-bottom:1px solid var(--bd)}
-.mbd{width:9px;height:9px;border-radius:50%}
-.murl{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);
-  background:rgba(255,255,255,.04);padding:3px 10px;border-radius:4px;flex:1}
+.mbd{width:10px;height:10px;border-radius:50%}
+.murl{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);
+  background:rgba(255,255,255,.04);padding:4px 11px;border-radius:5px;flex:1}
 .mmock{background:linear-gradient(135deg,rgba(93,219,107,.06),rgba(91,156,248,.06));
-  border:1px solid rgba(93,219,107,.12);border-radius:9px;
-  padding:15px;flex:1;display:flex;flex-direction:column;gap:8px}
-.mmh{font-family:'Bebas Neue',sans-serif;font-size:26px;
-  letter-spacing:.03em;color:var(--gr);line-height:1}
-.mms{font-size:12px;color:rgba(240,236,229,.45)}
+  border:1px solid rgba(93,219,107,.12);border-radius:10px;
+  padding:16px;flex:1;display:flex;flex-direction:column;gap:9px}
+.mmh{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.03em;
+  color:var(--gr);line-height:1}
+.mms{font-size:13px;color:rgba(240,236,229,.45)}
 .mmcta{display:inline-flex;align-items:center;gap:6px;background:var(--gr);
-  color:#000;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
-  padding:8px 16px;border-radius:6px;width:fit-content;text-decoration:none;
-  transition:opacity .2s,transform .2s;box-shadow:0 4px 16px rgba(93,219,107,.3)}
-.mmcta:hover{opacity:.88;transform:translateY(-1px)}
+  color:#000;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  padding:9px 18px;border-radius:7px;width:fit-content;text-decoration:none;
+  transition:opacity .2s,transform .2s;
+  box-shadow:0 4px 18px rgba(93,219,107,.35)}
+.mmcta:hover{opacity:.88;transform:translateY(-2px)}
 .mmf{background:rgba(255,255,255,.05);border:1px solid var(--bd);
-  border-radius:5px;padding:7px 10px;font-size:11px;color:var(--mu);
+  border-radius:6px;padding:8px 12px;font-size:12px;color:var(--mu);
   font-family:'DM Mono',monospace}
 .mmi{background:rgba(255,255,255,.04);border:1px solid var(--bd);
-  border-radius:6px;padding:7px 11px;font-size:12px;
+  border-radius:7px;padding:8px 12px;font-size:13px;
   color:rgba(240,236,229,.65);display:flex;justify-content:space-between;
   transition:background .18s,transform .15s}
-.mmi:hover{background:rgba(255,255,255,.08);transform:translateX(2px)}
-.mmi .mp{color:var(--gr);font-family:'DM Mono',monospace;font-weight:500}
+.mmi:hover{background:rgba(255,255,255,.09);transform:translateX(3px)}
+.mmi .mp{color:var(--gr);font-family:'DM Mono',monospace;font-weight:600}
 .mbadge{display:inline-flex;align-items:center;gap:3px;
   background:rgba(93,219,107,.1);border:1px solid rgba(93,219,107,.22);
-  color:var(--gr);font-size:10px;padding:3px 8px;border-radius:4px;
+  color:var(--gr);font-size:11px;padding:3px 9px;border-radius:5px;
   font-family:'DM Mono',monospace}
 
-/* MVP results */
-.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:13px}
-.rs{background:var(--s2);border:1px solid var(--bd);border-radius:11px;
-  padding:16px;text-align:center;transition:transform .22s,box-shadow .22s}
-.rs:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.5)}
+/* result stats */
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:13px}
+.rs{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+  padding:18px;text-align:center;transition:transform .22s,box-shadow .22s}
+.rs:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,0,0,.55)}
 .rs.gb{border-top:3px solid var(--gr)}.rs.bb2{border-top:3px solid var(--bl)}
 .rs.ab{border-top:3px solid var(--am)}
-.rn{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4.5vw,60px);
-  line-height:1;margin-bottom:4px}
+.rn{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,80px);
+  line-height:1;margin-bottom:5px}
 .ng{color:var(--gr)}.nb{color:var(--bl)}.na{color:var(--am)}
-.rl{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);
-  text-transform:uppercase;letter-spacing:.08em}
-.rc{background:rgba(93,219,107,.07);border:1px solid rgba(93,219,107,.2);
-  border-radius:11px;padding:16px;margin-top:12px}
-.rc h4{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  color:var(--gr);letter-spacing:.09em;margin-bottom:7px}
-.rc p{font-size:13.5px;color:rgba(240,236,229,.75);line-height:1.5}
-.mvp-live{display:inline-flex;align-items:center;gap:7px;
-  background:rgba(93,219,107,.1);border:1px solid rgba(93,219,107,.3);
-  color:var(--gr);font-family:'DM Mono',monospace;font-size:12px;
-  padding:9px 16px;border-radius:9px;text-decoration:none;
+.rl{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);
+  text-transform:uppercase;letter-spacing:.09em}
+.rc{background:rgba(93,219,107,.07);border:1px solid rgba(93,219,107,.22);
+  border-radius:12px;padding:18px;margin-top:13px}
+.rc h4{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  color:var(--gr);letter-spacing:.09em;margin-bottom:8px}
+.rc p{font-size:clamp(15px,1.5vw,20px);color:rgba(240,236,229,.78);line-height:1.52}
+.mvplive{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(93,219,107,.1);border:1px solid rgba(93,219,107,.32);
+  color:var(--gr);font-family:'DM Mono',monospace;font-size:13px;
+  padding:10px 18px;border-radius:10px;text-decoration:none;
   transition:background .2s,transform .2s;font-weight:500}
-.mvp-live:hover{background:rgba(93,219,107,.2);transform:translateY(-2px)}
+.mvplive:hover{background:rgba(93,219,107,.22);transform:translateY(-2px)}
 
-/* ══════════════════════════════════════════
-   SLIDES 8-10 — A/B TESTS
-══════════════════════════════════════════ */
-.abl{display:grid;grid-template-columns:1fr 1fr;gap:13px;flex:1;margin-top:12px}
-.abv{display:flex;flex-direction:column;gap:9px}
-.av{background:var(--s2);border:1px solid var(--bd);border-radius:11px;
-  padding:16px;transition:transform .2s,box-shadow .2s}
-.av:hover{transform:scale(1.012);box-shadow:0 6px 22px rgba(0,0,0,.4)}
+/* ══════════ A/B SLIDES ══════════ */
+.abl{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;margin-top:12px}
+.abv{display:flex;flex-direction:column;gap:10px}
+.av{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+  padding:18px;transition:transform .2s,box-shadow .2s}
+.av:hover{transform:scale(1.014);box-shadow:0 8px 26px rgba(0,0,0,.45)}
 .av.va{border-top:3px solid var(--re)}.av.vb{border-top:3px solid var(--gr)}
-.avl{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  letter-spacing:.09em;margin-bottom:7px}
+.avl{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.09em;margin-bottom:8px}
 .av.va .avl{color:var(--re)}.av.vb .avl{color:var(--gr)}
-.av p{font-size:13.5px;color:rgba(240,236,229,.75);line-height:1.45}
-.ahy{background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.22);
-  border-radius:11px;padding:14px;transition:background .2s}
-.ahy:hover{background:rgba(252,211,77,.1)}
-.ahy h4{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--am);margin-bottom:6px}
-.ahy p{font-size:13px;color:rgba(240,236,229,.68);line-height:1.45;font-style:italic}
-.achips{display:flex;gap:7px;flex-wrap:wrap;margin-top:2px}
-.achip{font-family:'DM Mono',monospace;font-size:11px;background:var(--s3);
-  border:1px solid var(--bd);padding:4px 9px;border-radius:5px;color:var(--mu)}
-.abr2{display:flex;flex-direction:column;gap:9px}
-.ares{background:var(--s2);border:1px solid var(--bd);border-radius:11px;padding:15px}
-.ares h4{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--mu);margin-bottom:10px}
-.abar{display:flex;flex-direction:column;gap:8px;margin-bottom:9px}
-.abi{display:flex;align-items:center;gap:9px}
-.abi .al{font-family:'DM Mono',monospace;font-size:12px;
-  width:14px;text-align:center;font-weight:700}
+.av p{font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.78);line-height:1.45}
+.ahy{background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.24);
+  border-radius:12px;padding:16px;transition:background .2s}
+.ahy:hover{background:rgba(252,211,77,.11)}
+.ahy h4{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--am);margin-bottom:7px}
+.ahy p{font-size:clamp(14px,1.4vw,18px);color:rgba(240,236,229,.72);line-height:1.48;font-style:italic}
+.achips{display:flex;gap:7px;flex-wrap:wrap}
+.achip{font-family:'DM Mono',monospace;font-size:12px;background:var(--s3);
+  border:1px solid var(--bd);padding:5px 10px;border-radius:6px;color:var(--mu)}
+.abr2{display:flex;flex-direction:column;gap:10px}
+.ares{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px}
+.ares h4{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--mu);margin-bottom:11px}
+.abar{display:flex;flex-direction:column;gap:9px;margin-bottom:10px}
+.abi{display:flex;align-items:center;gap:10px}
+.abi .al{font-family:'DM Mono',monospace;font-size:14px;
+  width:16px;text-align:center;font-weight:700}
 .abi.aa .al{color:var(--re)}.abi.ab .al{color:var(--gr)}
-.abt{flex:1;height:28px;background:rgba(255,255,255,.05);
-  border-radius:5px;overflow:hidden;position:relative}
-.abf{height:100%;border-radius:5px;display:flex;align-items:center;
-  padding-left:10px;width:0;transition:width 1.1s cubic-bezier(.4,0,.2,1)}
-.abi.aa .abf{background:linear-gradient(90deg,rgba(248,113,113,.25),rgba(248,113,113,.15))}
-.abi.ab .abf{background:linear-gradient(90deg,rgba(93,219,107,.3),rgba(93,219,107,.15))}
-.abp{font-family:'DM Mono',monospace;font-size:12px;font-weight:700}
+.abt{flex:1;height:32px;background:rgba(255,255,255,.05);
+  border-radius:6px;overflow:hidden}
+.abf{height:100%;border-radius:6px;display:flex;align-items:center;
+  padding-left:12px;width:0;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.abi.aa .abf{background:linear-gradient(90deg,rgba(248,113,113,.3),rgba(248,113,113,.12))}
+.abi.ab .abf{background:linear-gradient(90deg,rgba(93,219,107,.35),rgba(93,219,107,.12))}
+.abp{font-family:'DM Mono',monospace;font-size:13px;font-weight:700}
 .abi.aa .abp{color:var(--re)}.abi.ab .abp{color:var(--gr)}
-.adlt{font-family:'DM Mono',monospace;font-size:13px;color:var(--gr);
-  margin-bottom:8px;font-weight:500}
-.air{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.aib{background:var(--s3);border-radius:7px;padding:10px}
-.aib .ail{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);
+.adlt{font-family:'DM Mono',monospace;font-size:14px;color:var(--gr);
+  margin-bottom:9px;font-weight:500}
+.air{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.aib{background:var(--s3);border-radius:8px;padding:11px}
+.aib .ail{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);
   text-transform:uppercase;margin-bottom:3px}
-.aib .aiv{font-size:13.5px;color:var(--wh);font-weight:700}
-.adb{border-radius:10px;padding:12px 16px;display:flex;align-items:center;
-  gap:10px;transition:transform .2s}
-.adb:hover{transform:scale(1.01)}
+.aib .aiv{font-size:clamp(14px,1.4vw,18px);color:var(--wh);font-weight:700}
+.adb{border-radius:10px;padding:13px 18px;display:flex;align-items:center;
+  gap:12px;transition:transform .2s}
+.adb:hover{transform:scale(1.012)}
 .adb.dp{background:rgba(93,219,107,.08);border:1px solid rgba(93,219,107,.25)}
 .adb.dv{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25)}
 .adb.di{background:rgba(252,211,77,.08);border:1px solid rgba(252,211,77,.25)}
-.adl{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;
+.adl{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;
   text-transform:uppercase;letter-spacing:.09em;white-space:nowrap}
 .adb.dp .adl{color:var(--gr)}.adb.dv .adl{color:var(--re)}.adb.di .adl{color:var(--am)}
-.adb p{font-size:13px;color:rgba(240,236,229,.65);line-height:1.4}
-.ainfo{background:var(--s2);border:1px solid var(--bd);border-radius:11px;
-  padding:14px;transition:border-color .22s}
-.ainfo:hover{border-color:rgba(255,255,255,.18)}
-.ainfo .ail2{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--mu);margin-bottom:7px}
-.ainfo p{font-size:13.5px;color:rgba(240,236,229,.72);line-height:1.5}
+.adb p{font-size:clamp(14px,1.38vw,18px);color:rgba(240,236,229,.68);line-height:1.4}
+.ainfo{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+  padding:16px;transition:border-color .22s}
+.ainfo:hover{border-color:rgba(255,255,255,.2)}
+.ainfo .ail2{font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--mu);margin-bottom:8px}
+.ainfo p{font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);line-height:1.5}
 
-/* ══════════════════════════════════════════
-   SLIDE 11 — WHAT CHANGED
-══════════════════════════════════════════ */
-#s11 .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
-#s11 .ci{background:var(--s2);border:1px solid var(--bd);border-radius:13px;
-  padding:18px;position:relative;overflow:hidden;
+/* ══════════ S11 — WHAT CHANGED ══════════ */
+#s11 .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+#s11 .ci{background:var(--s2);border:1px solid var(--bd);border-radius:14px;
+  padding:20px;position:relative;overflow:hidden;
   transition:transform .22s,box-shadow .22s}
-#s11 .ci:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.5)}
+#s11 .ci:hover{transform:translateY(-5px);box-shadow:0 14px 42px rgba(0,0,0,.55)}
 #s11 .ci::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 #s11 .ci.c1::before{background:var(--pu)}
 #s11 .ci.c2::before{background:var(--re)}
 #s11 .ci.c3::before{background:var(--am)}
 #s11 .ci.c4::before{background:var(--gr)}
-#s11 .ci h3{font-size:14px;font-weight:700;margin-bottom:10px}
-#s11 .ba{display:grid;grid-template-columns:1fr 24px 1fr;gap:0;align-items:center}
-#s11 .bal{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;
+#s11 .ci h3{font-size:clamp(15px,1.5vw,20px);font-weight:700;margin-bottom:11px}
+#s11 .ba{display:grid;grid-template-columns:1fr 26px 1fr;gap:0;align-items:center}
+#s11 .bal{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
   letter-spacing:.08em;color:var(--mu);margin-bottom:4px}
-#s11 .bat{font-size:13px;color:rgba(240,236,229,.7);line-height:1.38}
-#s11 .baa{text-align:center;font-size:16px;color:var(--mu)}
-#s11 .cins{
-  grid-column:1/-1;
+#s11 .bat{font-size:clamp(14px,1.38vw,18px);color:rgba(240,236,229,.72);line-height:1.38}
+#s11 .baa{text-align:center;font-size:18px;color:var(--mu)}
+#s11 .cins{grid-column:1/-1;
   background:linear-gradient(135deg,rgba(93,219,107,.08),rgba(91,156,248,.08));
-  border:1px solid rgba(93,219,107,.25);border-radius:13px;
-  padding:20px 26px;display:flex;align-items:center;gap:16px;
+  border:1px solid rgba(93,219,107,.25);border-radius:14px;
+  padding:22px 28px;display:flex;align-items:center;gap:18px;
   transition:transform .22s,box-shadow .22s}
-#s11 .cins:hover{transform:scale(1.008);box-shadow:0 8px 32px rgba(93,219,107,.1)}
-#s11 .cins p{font-size:16px;font-weight:700;line-height:1.4;color:var(--wh)}
+#s11 .cins:hover{transform:scale(1.009);box-shadow:0 10px 36px rgba(93,219,107,.12)}
+#s11 .cins p{font-size:clamp(17px,1.8vw,24px);font-weight:700;line-height:1.4;color:var(--wh)}
 #s11 .cins p span{color:var(--gr)}
 
-/* ══════════════════════════════════════════
-   SLIDE 12 — CONCLUSION
-══════════════════════════════════════════ */
+/* ══════════ S12 — CONCLUSION ══════════ */
 #s12{justify-content:center;align-items:center;text-align:center}
-#s12 .go1{width:550px;height:550px;background:radial-gradient(circle,rgba(91,156,248,.08),transparent 70%);
+#s12 .go1{width:600px;height:600px;
+  background:radial-gradient(circle,rgba(91,156,248,.09),transparent 70%);
   top:50%;left:50%;transform:translate(-50%,-50%);animation:breathe 6s ease-in-out infinite}
-#s12 .go2{width:300px;height:300px;background:radial-gradient(circle,rgba(93,219,107,.07),transparent 70%);
-  bottom:5%;right:5%}
-#s12 .clogo{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vw,130px);
-  line-height:1;letter-spacing:.02em;margin-bottom:12px}
-#s12 .ctag{font-size:clamp(14px,1.5vw,20px);color:rgba(240,236,229,.6);
-  max-width:540px;line-height:1.6;margin:0 auto 22px}
+#s12 .go2{width:320px;height:320px;
+  background:radial-gradient(circle,rgba(93,219,107,.08),transparent 70%);
+  bottom:2%;right:3%}
+#s12 .clogo{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(72px,10vw,148px);line-height:.92;letter-spacing:.02em;margin-bottom:14px}
+#s12 .cu{color:var(--bl)}
+#s12 .csw{color:var(--gr)}
+#s12 .ctag{font-size:clamp(16px,1.7vw,24px);color:rgba(240,236,229,.62);
+  max-width:580px;line-height:1.55;margin:0 auto 20px}
 #s12 .ins{background:linear-gradient(135deg,rgba(93,219,107,.08),rgba(91,156,248,.08));
-  border:1px solid rgba(93,219,107,.22);border-radius:12px;
-  padding:18px 26px;max-width:640px;margin:0 auto 22px;
-  font-size:15px;font-weight:700;line-height:1.5;color:var(--wh);font-style:italic;
-  transition:transform .22s}
-#s12 .ins:hover{transform:scale(1.01)}
+  border:1px solid rgba(93,219,107,.24);border-radius:14px;
+  padding:20px 28px;max-width:680px;margin:0 auto 20px;
+  font-size:clamp(16px,1.65vw,22px);font-weight:700;line-height:1.5;
+  color:var(--wh);font-style:italic;transition:transform .22s}
+#s12 .ins:hover{transform:scale(1.012)}
 #s12 .ins span{color:var(--gr)}
-#s12 .stats{display:flex;gap:14px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
-#s12 .st{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+#s12 .stats{display:flex;gap:13px;justify-content:center;margin-bottom:22px;flex-wrap:wrap}
+#s12 .st{background:var(--s2);border:1px solid var(--bd);border-radius:13px;
   padding:14px 22px;text-align:center;
   transition:transform .22s,border-color .22s,box-shadow .22s}
-#s12 .st:hover{transform:translateY(-4px);border-color:rgba(93,219,107,.3);
-  box-shadow:0 10px 32px rgba(93,219,107,.1)}
-#s12 .st .sn{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.5vw,46px);
-  line-height:1;color:var(--gr)}
-#s12 .st .sl{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);
-  text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
-#s12 .links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-#s12 .lbtn{font-family:'DM Mono',monospace;font-size:12px;padding:9px 20px;
-  border-radius:26px;text-decoration:none;
+#s12 .st:hover{transform:translateY(-5px);border-color:rgba(93,219,107,.32);
+  box-shadow:0 12px 36px rgba(93,219,107,.12)}
+#s12 .sn{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(34px,4.5vw,58px);line-height:1;color:var(--gr)}
+#s12 .sl{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);
+  text-transform:uppercase;letter-spacing:.09em;margin-top:4px}
+#s12 .links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+#s12 .lbtn{font-family:'DM Mono',monospace;font-size:13px;padding:10px 22px;
+  border-radius:28px;text-decoration:none;
   transition:transform .2s,opacity .2s,box-shadow .2s;
-  display:inline-flex;align-items:center;gap:7px}
-#s12 .lbtn:hover{transform:translateY(-2px)}
+  display:inline-flex;align-items:center;gap:8px;cursor:none}
+#s12 .lbtn:hover{transform:translateY(-3px)}
 #s12 .lbtn.pr{background:var(--gr);color:#000;font-weight:700;
-  box-shadow:0 4px 20px rgba(93,219,107,.3)}
-#s12 .lbtn.pr:hover{box-shadow:0 8px 28px rgba(93,219,107,.4)}
+  box-shadow:0 4px 22px rgba(93,219,107,.35)}
+#s12 .lbtn.pr:hover{box-shadow:0 8px 32px rgba(93,219,107,.5)}
 #s12 .lbtn.sc{background:var(--s2);border:1px solid var(--bd);color:var(--wh)}
-#s12 .byline{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);
-  letter-spacing:.05em}
+#s12 .byline{font-family:'DM Mono',monospace;font-size:13px;color:var(--mu);letter-spacing:.05em}
+
+/* ── MAGNETIC EFFECT on cards ── */
+.mag{will-change:transform;transition:transform .3s cubic-bezier(.25,.46,.45,.94)}
 </style>
 </head>
 <body>
+
+<!-- Custom cursor -->
+<div id="cur"></div>
+<div id="cur2"></div>
 <div id="prog"></div>
+<div id="slidenum">1 / 12</div>
+
 <div class="deck" id="deck">
 
 <!-- ══ S1 TITLE ══ -->
 <section class="slide active" id="s1">
   <div class="orb o1"></div><div class="orb o2"></div>
   <div class="bgw">SWAP</div>
-  <div style="margin:auto 0;position:relative;z-index:1">
-    <div class="lbl fade-in d1">Group 12 · Entrepreneurship &amp; New Business Startup · Bocconi · April 27, 2026</div>
-    <div class="logo fade-in d2"><span class="u">UNI</span><span class="sw">SWAP</span></div>
-    <div class="tagline fade-in d3">The campus-only verified marketplace where students buy &amp; sell second-hand goods —<br>no scams, no ghosting, no friction.</div>
-    <div class="meta fade-in d4">
+  <div style="margin:auto 0 0;position:relative;z-index:1">
+    <div class="lbl fi d1">Group 12 · Entrepreneurship &amp; New Business Startup · Bocconi University · April 27, 2026</div>
+    <div class="logo fi d2"><span class="u">UNI</span><span class="sw">SWAP</span></div>
+    <div class="tagline fi d3">The campus-only verified marketplace where students buy &amp; sell second-hand goods — no scams, no ghosting, no friction.</div>
+    <div class="meta fi d4">
       <span class="bdg">Group 12</span>
       <span class="bdg">10-Day Sprint · April 17–27</span>
-      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvpbtn">
-        <span class="blink"></span> Live MVP
-      </a>
+      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvpbtn"><span class="blink"></span> Live MVP</a>
     </div>
   </div>
 </section>
 
-<!-- ══ S2 VALUE PROPOSITION ══ -->
+<!-- ══ S2 VP ══ -->
 <section class="slide" id="s2">
   <div class="lbl">Slide 02 — Value Proposition</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(36px,4.2vw,58px)">VALUE PROPOSITION</div>
-  <div class="vpq fade-in d2">"A verified, campus-based marketplace that enables students to buy and sell second-hand goods with greater <strong>trust, reliability, and speed</strong> — through structured listings and a student-only network."</div>
-  <div class="evol fade-in d3">
-    <div class="ec d1"><div class="el">Day 1 — Initial VP</div><div class="et">"A student-only marketplace that allows university students to buy and sell second-hand goods more safely and efficiently than existing platforms."</div></div>
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(38px,4.5vw,62px)">VALUE PROPOSITION</div>
+  <div class="vpq fi d2">"A verified, campus-based marketplace that enables students to buy and sell second-hand goods with greater <strong>trust, reliability, and speed</strong> — through structured listings and a student-only network."</div>
+  <div class="evol fi d3">
+    <div class="ec d1b"><div class="el">Day 1 — Initial VP</div><div class="et">"A student-only marketplace that allows university students to buy and sell second-hand goods more safely and efficiently than existing platforms."</div></div>
     <div class="arr">→</div>
-    <div class="ec d10"><div class="el">Day 10 — Refined VP ✓</div><div class="et">"A <strong>verified</strong>, campus-based marketplace enabling students to trade with greater <strong>trust, reliability &amp; speed</strong> through structured listings and a student-only network."</div></div>
+    <div class="ec d10b"><div class="el">Day 10 — Refined VP ✓</div><div class="et">"A <strong>verified</strong>, campus-based marketplace enabling students to trade with greater <strong>trust, reliability &amp; speed</strong> through structured listings and a student-only network."</div></div>
   </div>
-  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin:14px 0 10px" class="fade-in d4">Key changes — what drove them</div>
-  <div class="cr fade-in d5">
+  <div style="font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin:14px 0 10px" class="fi d4">Key changes — what drove them</div>
+  <div class="cr fi d5">
     <div class="ci"><h4>🔵 Trust-First Shift</h4><p>From "general marketplace improvement" → verification-driven platform. Trust, not efficiency, is the core value.</p></div>
     <div class="ci"><h4>🟡 Speed &amp; Reliability</h4><p>Highlights speed within platform usage &amp; delivery. Students need faster replies and structured listings.</p></div>
     <div class="ci"><h4>🟣 Student Verification</h4><p>Greater emphasis on student-only access &amp; reliable platform structure as the primary differentiator.</p></div>
@@ -483,26 +496,26 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ══ S3 BMC ══ -->
 <section class="slide" id="s3">
   <div class="lbl">Slide 03 — Right-Hand Business Model Canvas</div>
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px" class="fade-in d1">
-    <div class="ttl" style="font-size:clamp(28px,3.4vw,48px)">RIGHT-HAND BMC</div>
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:4px" class="fi d1">
+    <div class="ttl" style="font-size:clamp(30px,3.6vw,52px)">RIGHT-HAND BMC</div>
     <span class="tag tv">● Validated</span>
     <span class="tag tc">● Changed after testing</span>
   </div>
-  <div class="bmc fade-in d2">
+  <div class="bmc fi d2">
     <div class="bb bv">
       <div class="bh"><span>Customer Segments</span><span class="tag tv">Validated</span></div>
       <ul class="bl">
         <li>University students, aged 18–25, urban EU campuses</li>
         <li><strong>Buyers</strong> — limited income, seeking affordable &amp; reliable deals</li>
         <li><strong>Sellers</strong> — leaving campus or upgrading; want quick, local sales</li>
-        <li>Switching from FB Marketplace &amp; WhatsApp requires clear value improvement</li>
+        <li>Switching requires clear value improvement over free platforms</li>
         <li>Core driver: <strong>trust &amp; reliability</strong>, not price alone</li>
       </ul>
     </div>
     <div class="bb bc">
       <div class="bh"><span>Channels</span><span class="tag tc">Changed</span></div>
       <ul class="bl">
-        <li><strong>Awareness:</strong> WhatsApp groups + peer referrals <em>(pivot from Instagram/TikTok)</em></li>
+        <li><strong>Awareness:</strong> WhatsApp groups + peer referrals <em>(pivot from TikTok/Insta)</em></li>
         <li><strong>Evaluation:</strong> Peer validation, word-of-mouth, student communities</li>
         <li><strong>Purchase:</strong> In-app structured listings + integrated messaging</li>
         <li><strong>Delivery:</strong> On-campus in-person meetups → +15% transaction success</li>
@@ -513,9 +526,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="bh"><span>Customer Relationships</span><span class="tag tc">Changed</span></div>
       <ul class="bl">
         <li><strong>Early stage:</strong> Campus ambassadors, direct seller onboarding, peer referrals</li>
-        <li><strong>Growth stage:</strong> Verified accounts, ratings, structured listings, automated matching</li>
+        <li><strong>Growth stage:</strong> Verified accounts, ratings, structured listings, matching</li>
         <li>Verification → −25% disputes, higher engagement</li>
-        <li>Reliability signals → +10% listings, faster posting behaviour</li>
+        <li>Reliability signals → +10% listings, faster posting</li>
         <li>Trust is the <strong>core driver</strong> of adoption, not a feature</li>
       </ul>
     </div>
@@ -523,36 +536,36 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="bh"><span>Revenue Streams</span><span class="tag tv">Validated</span></div>
       <ul class="bl">
         <li><strong>Model:</strong> 5–10% transaction commission (marketplace)</li>
-        <li><strong>CAC:</strong> €3–10/user via organic channels (WhatsApp, peer referrals)</li>
-        <li><strong>LTV:</strong> €15–25/user/year (3–5 transactions × ~€5 commission)</li>
-        <li>Students accept fees only when clear value improvement is demonstrated</li>
-        <li>"€1–2 for scam-free trade" beats "5% fee" by +30 pp (A/B Test #3)</li>
+        <li><strong>CAC:</strong> €3–10/user via organic (WhatsApp, peer referrals)</li>
+        <li><strong>LTV:</strong> €15–25/user/year (3–5 transactions × ~€5)</li>
+        <li>Students accept fees only when clear value is demonstrated</li>
+        <li>"€1–2 for scam-free trade" beats "5% fee" by +30 pp</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ══ S4 CUSTOMER DISCOVERY ══ -->
+<!-- ══ S4 DISCOVERY ══ -->
 <section class="slide" id="s4">
-  <div class="lbl">Slide 04 — Customer Discovery (Segments &amp; Customer Relationships)</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(28px,3.2vw,46px)">CUSTOMER DISCOVERY <span style="color:var(--bl);font-size:.52em;letter-spacing:.05em">— 8 INTERVIEWS</span></div>
-  <div class="dg fade-in d2">
+  <div class="lbl">Slide 04 — Customer Discovery (Segments &amp; Relationships)</div>
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(30px,3.4vw,50px)">CUSTOMER DISCOVERY <span style="color:var(--bl);font-size:.5em;letter-spacing:.05em">— 8 INTERVIEWS</span></div>
+  <div class="dg fi d2">
     <div class="dc">
       <div class="dct">🧪 Riskiest Assumption (Segments)</div>
       <p>Students are <strong>dissatisfied enough</strong> with current platforms (FB Marketplace, WhatsApp) that they will switch to a verified, campus-only alternative.</p>
-      <div style="margin-top:4px"><span class="tag tc">Customer Segments</span></div>
-      <p style="font-size:12.5px;color:var(--mu);margin-top:7px;line-height:1.45">8 semi-structured interviews · Students asked about habits, pain points &amp; reactions to a verified campus concept.</p>
+      <span class="tag tc" style="width:fit-content">Customer Segments</span>
+      <p style="font-size:13px;color:var(--mu);line-height:1.45">8 semi-structured interviews · asked about habits, pain points &amp; reactions to a verified campus concept.</p>
       <div class="ptg"><span class="pt">Ghosting</span><span class="pt">Misleading listings</span><span class="pt">No accountability</span><span class="pt">Slow replies</span><span class="pt">Outdated posts</span></div>
     </div>
     <div class="dc">
       <div class="dct">🔬 How We Tested It</div>
       <p><strong>8 semi-structured interviews</strong> on campus. We asked about:</p>
-      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:6px">
-        <li style="font-size:13.5px;color:rgba(240,236,229,.72);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Current buying/selling platforms &amp; habits</li>
-        <li style="font-size:13.5px;color:rgba(240,236,229,.72);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Pain points with existing platforms</li>
-        <li style="font-size:13.5px;color:rgba(240,236,229,.72);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Reactions to a student-verified concept</li>
-        <li style="font-size:13.5px;color:rgba(240,236,229,.72);padding-left:13px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Willingness to pay for trust features</li>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:6px">
+        <li style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Current buying/selling platforms &amp; habits</li>
+        <li style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Pain points with existing platforms</li>
+        <li style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Reactions to a student-verified concept</li>
+        <li style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--bl)">→</span>Willingness to pay for trust features</li>
       </ul>
       <div class="qb" style="margin-top:auto">
         <q>"I don't use Facebook Marketplace anymore because people just stop responding to me."</q>
@@ -562,22 +575,22 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="dc">
       <div class="dct">✅ What We Found</div>
       <p><strong style="color:var(--gr)">Validated with refinement.</strong> Unmet needs are real — but the core issue is <em>trust &amp; reliability</em>, not price.</p>
-      <p style="margin-top:7px">Switching is <strong>not automatic</strong>. Students need clear, demonstrable value to leave free platforms. Demand is for <strong>verified access</strong>, better filtering &amp; efficient comms.</p>
-      <div style="margin-top:auto;background:rgba(93,219,107,.07);border:1px solid rgba(93,219,107,.2);border-radius:9px;padding:12px">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:6px">Customer Rel. Finding (Riskiest Assumption)</div>
-        <p style="font-size:13px;color:rgba(240,236,229,.75)">Verified student-only system increases trust &amp; engagement.<br><strong style="color:var(--gr)">−25% disputes</strong> with verification · <strong style="color:var(--gr)">+10% listings</strong> with reliability signals</p>
+      <p style="margin-top:8px">Switching is <strong>not automatic</strong>. Students need clear value to leave free platforms. Demand is for <strong>verified access</strong>, better filtering &amp; efficient comms.</p>
+      <div style="margin-top:auto;background:rgba(93,219,107,.07);border:1px solid rgba(93,219,107,.22);border-radius:10px;padding:14px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:8px">Customer Rel. Finding</div>
+        <p style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.78)"><strong style="color:var(--gr)">−25% disputes</strong> with verification<br><strong style="color:var(--gr)">+10% listings</strong> with reliability signals</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ S5 CHANNELS PIVOT ══ -->
+<!-- ══ S5 CHANNELS ══ -->
 <section class="slide" id="s5">
   <div class="lbl">Slide 05 — Customer Discovery (Channels — Key Pivot)</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(26px,3vw,44px)">CHANNELS: OUR BIGGEST PIVOT</div>
-  <div style="font-size:13px;color:var(--re);font-family:'DM Mono',monospace;margin-bottom:12px;letter-spacing:.04em" class="fade-in d2">Biggest channel assumption directly contradicted by interviews → Pivot applies most strongly to: <strong>Awareness</strong></div>
-  <div class="pg fade-in d3">
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(28px,3.2vw,46px)">CHANNELS: OUR BIGGEST PIVOT</div>
+  <div style="font-size:clamp(14px,1.4vw,18px);color:var(--re);font-family:'DM Mono',monospace;margin-bottom:10px;letter-spacing:.04em" class="fi d2">Biggest channel assumption directly contradicted by interviews → Pivot: <strong>Awareness</strong></div>
+  <div class="pg fi d3">
     <div class="pb pd1">
       <div class="pl">Day 1 — Hypothesis (Not Validated)</div>
       <ul>
@@ -594,47 +607,39 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <ul>
         <li><strong>WhatsApp groups + peer referrals</strong></li>
         <li>Students rely on existing trusted communities</li>
-        <li>Direct recommendations carry far more weight than ads</li>
-        <li>Discovery is social &amp; trust-dependent, not algorithm-driven</li>
+        <li>Direct recommendations &gt; algorithm discovery</li>
+        <li>Discovery is social &amp; trust-dependent, not ad-driven</li>
         <li style="color:var(--gr)">Network effects = built-in, not paid for ✓</li>
       </ul>
     </div>
   </div>
-  <div class="pbot fade-in d4">
-    <div class="pbb">
-      <h4>Why It Changed</h4>
-      <p>Interviews revealed students don't trust platforms discovered through ads. They adopt tools recommended by someone they know — a classmate, a group chat, a friend selling furniture.</p>
-    </div>
-    <div class="pbb" style="border-color:rgba(248,113,113,.2);border-top:3px solid var(--re)">
-      <h4 style="color:var(--re)">Decision: PIVOT</h4>
-      <p>Drop Instagram/TikTok outreach entirely for launch. Invest in campus ambassador network and WhatsApp seeding. Deprioritise paid/organic social content.</p>
-    </div>
+  <div class="pbot fi d4">
+    <div class="pbb"><h4>Why It Changed</h4><p>Interviews revealed students don't trust platforms discovered through ads. They adopt tools recommended by someone they know — a classmate, a group chat, a friend selling furniture.</p></div>
+    <div class="pbb" style="border-color:rgba(248,113,113,.22);border-top:3px solid var(--re)"><h4 style="color:var(--re)">Decision: PIVOT</h4><p>Drop Instagram/TikTok outreach entirely for launch. Invest in campus ambassador network and WhatsApp seeding. Deprioritise paid/organic social content.</p></div>
   </div>
 </section>
 
 <!-- ══ S6 MVP ══ -->
 <section class="slide" id="s6">
   <div class="lbl">Slide 06 — MVP</div>
-  <div class="aln"></div>
-  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:4px" class="fade-in d1">
-    <div class="ttl" style="font-size:clamp(26px,3.2vw,46px)">MVP — SMOKE TEST LANDING PAGE</div>
-    <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvp-live">
-      <span class="blink"></span> entrepreneurship-class.vercel.app
-    </a>
+  <div class="aln fi d1"></div>
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:4px" class="fi d1">
+    <div class="ttl" style="font-size:clamp(28px,3.3vw,48px)">MVP — SMOKE TEST LANDING PAGE</div>
+    <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvplive"><span class="blink"></span> entrepreneurship-class.vercel.app</a>
   </div>
-  <div class="mg fade-in d2">
+  <div class="mg fi d2">
     <div class="ml">
       <div class="mtc">
         <h4>Type of MVP &amp; Rationale</h4>
-        <p><strong style="color:var(--pu)">Smoke Test Landing Page</strong> — simplest artefact to test whether students would sign up <em>before</em> building the product. Chosen over concierge/wizard-of-oz to test <strong>sign-up intent at scale</strong> with minimal build time.</p>
+        <p><strong style="color:var(--pu)">Smoke Test Landing Page</strong> — simplest artefact to test whether students would sign up <em>before</em> building the product. Chosen over concierge/wizard-of-oz to test sign-up intent at scale with minimal build time.</p>
       </div>
       <div class="mac">
         <h4>Specific Assumption Being Tested</h4>
         <p>"If shown a landing page for a verified campus-only marketplace, at least <strong>40%</strong> of students will express sign-up intent — confirming demand exists before we build."</p>
       </div>
-      <div style="background:var(--s2);border:1px solid rgba(91,156,248,.22);border-radius:11px;padding:15px">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--bl);margin-bottom:7px">Method</div>
-        <p style="font-size:13.5px;color:rgba(240,236,229,.72);line-height:1.5">Showed prototype to <strong>20 students</strong> on campus.<br>Question: <em>"Would you sign up for this today?"</em><br>Success threshold set <em>before</em> running: ≥40%</p>
+      <div style="background:var(--s2);border:1px solid rgba(91,156,248,.24);border-radius:12px;padding:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--bl);margin-bottom:8px">Method</div>
+        <p style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);line-height:1.5">Showed prototype to <strong>20 students</strong> on campus.<br>Question: <em>"Would you sign up for this today?"</em><br>Success threshold set before running: ≥40%</p>
       </div>
     </div>
     <div class="mr">
@@ -651,7 +656,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="mms">Buy &amp; sell on campus. Only students. No scams.</div>
           <div class="mmf">📧 Enter your university email...</div>
           <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mmcta">Join the waitlist →</a>
-          <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;flex-direction:column;gap:6px">
             <div class="mmi"><span>📚 Calculus textbook — like new</span><span class="mp">€12</span></div>
             <div class="mmi"><span>🪑 IKEA desk chair — good cond.</span><span class="mp">€30</span></div>
             <div class="mmi"><span>💻 MacBook charger 65W</span><span class="mp">€20</span></div>
@@ -665,51 +670,49 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ══ S7 MVP RESULTS ══ -->
 <section class="slide" id="s7">
   <div class="lbl">Slide 07 — MVP Results &amp; Learnings</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(28px,3.4vw,48px)">MVP — RESULTS &amp; LEARNINGS</div>
-  <div class="rg fade-in d2">
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(30px,3.5vw,52px)">MVP — RESULTS &amp; LEARNINGS</div>
+  <div class="rg fi d2">
     <div class="rs gb"><div class="rn ng">20</div><div class="rl">Students Tested</div></div>
     <div class="rs bb2"><div class="rn nb">14</div><div class="rl">Positive Responses</div></div>
     <div class="rs ab"><div class="rn na">70%</div><div class="rl">Conversion Rate</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:13px;flex:1" class="fade-in d3">
-    <div style="display:flex;flex-direction:column;gap:11px">
-      <div class="card" style="border-color:rgba(93,219,107,.22)">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:7px">Success Threshold (defined before testing)</div>
-        <p style="font-size:13.5px;color:rgba(240,236,229,.78)">≥40% sign-up intent = assumption validated<br>Failure threshold: &lt;40% → assumption invalidated → rethink VP</p>
-        <p style="font-size:13.5px;margin-top:7px">Result: <strong style="color:var(--gr)">70%</strong> &nbsp;<span class="tag tv">✓ VALIDATED</span></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:13px;flex:1" class="fi d3">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="border-color:rgba(93,219,107,.24)">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:8px">Success Threshold (defined before testing)</div>
+        <p style="font-size:clamp(15px,1.5vw,20px);color:rgba(240,236,229,.82)">≥40% sign-up intent = assumption validated<br>Failure: &lt;40% → rethink VP &amp; positioning</p>
+        <p style="font-size:clamp(15px,1.5vw,20px);margin-top:8px">Result: <strong style="color:var(--gr)">70%</strong> &nbsp;<span class="tag tv">✓ VALIDATED</span></p>
       </div>
-      <div class="card" style="border-color:rgba(248,113,113,.22)">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--re);margin-bottom:7px">Failure Threshold</div>
-        <p style="font-size:13.5px;color:rgba(240,236,229,.75)">If result was &lt;40%, we would have concluded students don't see enough value over existing free platforms to justify switching costs.</p>
+      <div class="card" style="border-color:rgba(248,113,113,.24)">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--re);margin-bottom:8px">Failure Threshold</div>
+        <p style="font-size:clamp(15px,1.5vw,20px);color:rgba(240,236,229,.78)">If result was &lt;40%, we would have concluded students don't see enough value over free platforms to justify switching costs.</p>
       </div>
-      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvp-live" style="justify-content:center">
-        <span class="blink"></span> View Live MVP — entrepreneurship-class.vercel.app
-      </a>
+      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvplive" style="justify-content:center"><span class="blink"></span> View Live MVP</a>
     </div>
-    <div class="rc" style="height:100%;display:flex;flex-direction:column;gap:10px">
+    <div class="rc" style="height:100%;display:flex;flex-direction:column;gap:11px">
       <h4>What This Tells Us &amp; Next Steps</h4>
-      <p>Demand is real: <strong>7 in 10 students</strong> would sign up when shown the trust-first concept.</p>
-      <p>The <strong>verification framing</strong> was consistently cited as the reason — not price or convenience.</p>
-      <p>Confirms VP refinement: verification &amp; reliability are the core value, not general convenience.</p>
-      <p>Did it change the canvas? <strong style="color:var(--gr)">Yes.</strong> Strengthened trust-first messaging across all blocks.</p>
+      <p><strong>7 in 10 students</strong> would sign up when shown the trust-first concept.</p>
+      <p>The <strong>verification framing</strong> ("student verified, no scams") was consistently cited as the reason — not price.</p>
+      <p>Confirms VP refinement: verification &amp; reliability are the core value.</p>
+      <p>Changed the canvas? <strong style="color:var(--gr)">Yes.</strong> Strengthened trust-first messaging across all blocks.</p>
       <p><strong style="color:var(--gr)">Next step:</strong> Build waitlist &amp; recruit first 50 campus sellers manually.</p>
     </div>
   </div>
 </section>
 
-<!-- ══ S8 A/B TEST 1 ══ -->
+<!-- ══ S8 A/B #1 ══ -->
 <section class="slide" id="s8">
   <div class="lbl">Slide 08 — A/B Test #1</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(24px,2.8vw,42px)">A/B TEST #1 — VALUE PROPOSITION FRAMING</div>
-  <div class="abl fade-in d2">
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,44px)">A/B TEST #1 — VALUE PROPOSITION FRAMING</div>
+  <div class="abl fi d2">
     <div class="abv">
-      <div class="av va"><div class="avl">Version A — Control</div><p>"Buy &amp; sell second-hand goods on campus"<br><span style="color:var(--mu);font-size:12px">Generic marketplace message. No trust language.</span></p></div>
-      <div class="av vb"><div class="avl">Version B — Variant (one change only)</div><p>"Trade with verified students only — no scams, no ghosting"<br><span style="color:var(--mu);font-size:12px">Trust-first framing. Explicit safety promise.</span></p></div>
+      <div class="av va"><div class="avl">Version A — Control</div><p>"Buy &amp; sell second-hand goods on campus"<br><span style="color:var(--mu);font-size:13px">Generic marketplace message. No trust language.</span></p></div>
+      <div class="av vb"><div class="avl">Version B — Variant (one change only)</div><p>"Trade with verified students only — no scams, no ghosting"<br><span style="color:var(--mu);font-size:13px">Trust-first framing. Explicit safety promise.</span></p></div>
       <div class="ahy"><h4>Hypothesis — written &amp; dated April 17, before execution</h4><p>"We believe Version B will outperform Version A on sign-up intent rate because students' primary pain point is trust, not access to a marketplace."</p></div>
       <div class="achips"><span class="achip">📅 Designed: Apr 17</span><span class="achip">▶ Run: Apr 18–19</span><span class="achip">👥 10 students/version</span><span class="achip">📊 Sign-up intent %</span></div>
-      <div class="adb dp"><div class="adl">✓ PERSEVERE</div><p>Lead with trust &amp; verification in all messaging. Generic framing is insufficient to drive adoption.</p></div>
+      <div class="adb dp"><div class="adl">✓ PERSEVERE</div><p>Lead with trust &amp; verification in all messaging. Generic framing is insufficient.</p></div>
     </div>
     <div class="abr2">
       <div class="ares">
@@ -726,23 +729,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
         </div>
       </div>
-      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>Language matters enormously. Students respond twice as strongly to explicit trust language. This reinforces our VP shift from "convenient" to "trustworthy." All subsequent messaging now leads with verification and safety as the primary hook.</p></div>
+      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>Language matters enormously. Students respond twice as strongly to explicit trust language. All subsequent messaging now leads with verification and safety as the primary hook.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ══ S9 A/B TEST 2 ══ -->
+<!-- ══ S9 A/B #2 ══ -->
 <section class="slide" id="s9">
   <div class="lbl">Slide 09 — A/B Test #2</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(24px,2.8vw,42px)">A/B TEST #2 — ACQUISITION CHANNEL</div>
-  <div class="abl fade-in d2">
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,44px)">A/B TEST #2 — ACQUISITION CHANNEL</div>
+  <div class="abl fi d2">
     <div class="abv">
-      <div class="av va"><div class="avl">Version A — Control</div><p>Cold Instagram DM outreach to students with the platform concept<br><span style="color:var(--mu);font-size:12px">Message from a stranger. Standard digital marketing.</span></p></div>
-      <div class="av vb"><div class="avl">Version B — Variant (one change only: channel)</div><p>WhatsApp group seeding via campus ambassador (trusted peer)<br><span style="color:var(--mu);font-size:12px">Recommendation within an existing trusted community.</span></p></div>
+      <div class="av va"><div class="avl">Version A — Control</div><p>Cold Instagram DM outreach to students<br><span style="color:var(--mu);font-size:13px">Message from a stranger. Standard digital marketing.</span></p></div>
+      <div class="av vb"><div class="avl">Version B — Variant (one change only: channel)</div><p>WhatsApp group seeding via campus ambassador (trusted peer)<br><span style="color:var(--mu);font-size:13px">Recommendation within an existing trusted community.</span></p></div>
       <div class="ahy"><h4>Hypothesis — written &amp; dated April 18, before execution</h4><p>"We believe Version B will generate a higher 24h response rate because it leverages existing trust networks rather than cold outreach to strangers."</p></div>
       <div class="achips"><span class="achip">📅 Designed: Apr 18</span><span class="achip">▶ Run: Apr 19–21</span><span class="achip">👥 15 students/version</span><span class="achip">📊 24h response rate</span></div>
-      <div class="adb dv"><div class="adl">🔴 PIVOT</div><p>Drop Instagram DM outreach entirely. All acquisition through WhatsApp seeding &amp; campus ambassadors.</p></div>
+      <div class="adb dv"><div class="adl">🔴 PIVOT</div><p>Drop Instagram DM entirely. All acquisition through WhatsApp seeding &amp; campus ambassadors.</p></div>
     </div>
     <div class="abr2">
       <div class="ares">
@@ -759,23 +762,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
         </div>
       </div>
-      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>The most impactful finding of our 10 days. Discovery is social and trust-dependent — not algorithm-driven. Students adopt tools recommended by someone they know. Network effects are built-in, not paid for. Fundamentally changed our Channels block and go-to-market strategy.</p></div>
+      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>The most impactful finding of our 10 days. Discovery is social and trust-dependent — not algorithm-driven. Students adopt tools recommended by someone they know. Network effects are built-in, not paid for.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ══ S10 A/B TEST 3 ══ -->
+<!-- ══ S10 A/B #3 ══ -->
 <section class="slide" id="s10">
   <div class="lbl">Slide 10 — A/B Test #3</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(24px,2.8vw,42px)">A/B TEST #3 — PRICING COMMUNICATION</div>
-  <div class="abl fade-in d2">
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,44px)">A/B TEST #3 — PRICING COMMUNICATION</div>
+  <div class="abl fi d2">
     <div class="abv">
-      <div class="av va"><div class="avl">Version A — Control</div><p>Abstract percentage: <strong>"5% transaction fee"</strong><br><span style="color:var(--mu);font-size:12px">Standard marketplace language. No context on the value received.</span></p></div>
-      <div class="av vb"><div class="avl">Version B — Variant (one change only: framing)</div><p>Value-anchored: <strong>"€1–2 for a verified, scam-free transaction"</strong><br><span style="color:var(--mu);font-size:12px">Connects cost to a specific, tangible benefit.</span></p></div>
-      <div class="ahy"><h4>Hypothesis — written &amp; dated April 19, before execution</h4><p>"We believe Version B will increase willingness to pay because anchoring on concrete value (safety guarantee) reduces fee aversion vs. an abstract percentage."</p></div>
+      <div class="av va"><div class="avl">Version A — Control</div><p>Abstract percentage: <strong>"5% transaction fee"</strong><br><span style="color:var(--mu);font-size:13px">Standard marketplace language. No value context.</span></p></div>
+      <div class="av vb"><div class="avl">Version B — Variant (one change only: framing)</div><p>Value-anchored: <strong>"€1–2 for a verified, scam-free transaction"</strong><br><span style="color:var(--mu);font-size:13px">Connects cost to a specific, tangible benefit.</span></p></div>
+      <div class="ahy"><h4>Hypothesis — written &amp; dated April 19, before execution</h4><p>"We believe Version B will increase willingness to pay because anchoring on concrete value reduces fee aversion vs. an abstract percentage."</p></div>
       <div class="achips"><span class="achip">📅 Designed: Apr 19</span><span class="achip">▶ Run: Apr 20–22</span><span class="achip">👥 10 students/version</span><span class="achip">📊 Willingness to pay %</span></div>
-      <div class="adb di"><div class="adl">🟡 ITERATE</div><p>Price communication matters as much as price level. Always anchor on value. Re-test with premium seller tools framing.</p></div>
+      <div class="adb di"><div class="adl">🟡 ITERATE</div><p>Price communication matters as much as price level. Always anchor on value delivered.</p></div>
     </div>
     <div class="abr2">
       <div class="ares">
@@ -792,7 +795,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
         </div>
       </div>
-      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>Students on free platforms have high fee sensitivity. But when they understand the specific value — no scams, verified users — they accept the cost. How you frame the price is as important as the price itself. Confirms trust-first revenue strategy throughout.</p></div>
+      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>Students have high fee sensitivity but accept the cost when they understand the value — no scams, verified users. How you frame the price is as important as the price itself. Confirms trust-first strategy throughout.</p></div>
     </div>
   </div>
 </section>
@@ -800,9 +803,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ══ S11 WHAT CHANGED ══ -->
 <section class="slide" id="s11">
   <div class="lbl">Slide 11 — What Changed?</div>
-  <div class="aln"></div>
-  <div class="ttl fade-in d1" style="font-size:clamp(30px,3.6vw,52px)">WHAT CHANGED? DAY 1 → DAY 10</div>
-  <div class="cg fade-in d2">
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(32px,3.8vw,56px)">WHAT CHANGED? DAY 1 → DAY 10</div>
+  <div class="cg fi d2">
     <div class="ci c1">
       <h3>🔵 Value Proposition</h3>
       <div class="ba">
@@ -836,7 +839,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
     </div>
     <div class="cins">
-      <div style="font-size:28px">💡</div>
+      <div style="font-size:30px">💡</div>
       <p>Core insight from 10 days of evidence: <span>Students don't switch platforms for convenience. They switch for trust.</span> Every pivot, every validation, every number points back to this.</p>
     </div>
   </div>
@@ -846,90 +849,110 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s12">
   <div class="orb go1"></div><div class="orb go2"></div>
   <div style="position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center">
-    <div class="lbl fade-in d1" style="margin-bottom:8px">Slide 12 · Group 12 · Thank You</div>
-    <div class="clogo fade-in d2"><span class="u">UNI</span><span class="sw">SWAP</span></div>
-    <div class="ctag fade-in d3">10 days. Real students. Real evidence.<br>A trust-first campus marketplace validated from the ground up.</div>
-    <div class="ins fade-in d4">"<span>Students don't switch for convenience.<br>They switch for trust.</span>"<br><span style="font-size:12px;color:var(--mu);font-style:normal">— Core insight from 8 customer discovery interviews + 3 A/B tests</span></div>
-    <div class="stats fade-in d5">
+    <div class="lbl fi d1" style="margin-bottom:10px">Slide 12 · Group 12 · Thank You</div>
+    <div class="clogo fi d2"><span class="cu">UNI</span><span class="csw">SWAP</span></div>
+    <div class="ctag fi d3">10 days. Real students. Real evidence.<br>A trust-first campus marketplace validated from the ground up.</div>
+    <div class="ins fi d4">"<span>Students don't switch for convenience.<br>They switch for trust.</span>"<br><span style="font-size:13px;color:var(--mu);font-style:normal">— Core insight from 8 customer discovery interviews + 3 A/B tests</span></div>
+    <div class="stats fi d5">
       <div class="st"><div class="sn">8</div><div class="sl">Interviews</div></div>
       <div class="st"><div class="sn">70%</div><div class="sl">MVP Conversion</div></div>
       <div class="st"><div class="sn">3</div><div class="sl">A/B Tests</div></div>
       <div class="st"><div class="sn">+53pp</div><div class="sl">Best A/B Result</div></div>
       <div class="st"><div class="sn">€15–25</div><div class="sl">LTV / user / yr</div></div>
     </div>
-    <div class="links fade-in d6">
-      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="lbtn pr"><span class="blink"></span>Live MVP — entrepreneurship-class.vercel.app</a>
+    <div class="links fi d6">
+      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="lbtn pr"><span class="blink"></span> Live MVP — entrepreneurship-class.vercel.app</a>
       <span class="lbtn sc">Group 12 · Bocconi · April 2026</span>
     </div>
-    <div class="byline fade-in d6">Ready for Q&amp;A — we can defend every number with evidence, not conviction.</div>
+    <div class="byline fi d6">Ready for Q&amp;A — we defend every number with evidence, not conviction.</div>
   </div>
 </section>
 
 </div><!-- /deck -->
 
 <nav class="nav">
-  <button onclick="go(-1)" aria-label="Previous">←</button>
+  <button onclick="go(-1)" aria-label="Prev">←</button>
   <div class="dots" id="dots"></div>
   <span class="ctr" id="ctr">1 / 12</span>
   <button onclick="go(1)" aria-label="Next">→</button>
 </nav>
-<div class="hint">← → navigate · F fullscreen</div>
 
 <script>
+/* ── CUSTOM CURSOR ── */
+const c1 = document.getElementById('cur');
+const c2 = document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+function animCursor(){
+  cx += (mx-cx)*.18; cy += (my-cy)*.18;
+  c1.style.left=mx+'px'; c1.style.top=my+'px';
+  c2.style.left=cx+'px'; c2.style.top=cy+'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+/* ── MAGNETIC CARDS ── */
+document.querySelectorAll('.card,.bb,.dc,.pb,.av,.rs,.ci,.st').forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX-r.left-r.width/2)/r.width*12;
+    const y = (e.clientY-r.top-r.height/2)/r.height*12;
+    el.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${-y}deg) translateZ(4px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = '';
+  });
+});
+
+/* ── SLIDE SYSTEM ── */
 const slides = document.querySelectorAll('.slide');
 const dotsEl = document.getElementById('dots');
 const ctrEl  = document.getElementById('ctr');
 const prog   = document.getElementById('prog');
+const snum   = document.getElementById('slidenum');
 let cur = 0;
 
-/* build dots */
 slides.forEach((_, i) => {
   const d = document.createElement('button');
-  d.className = 'dot' + (i === 0 ? ' active' : '');
-  d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+  d.className = 'dot' + (i===0?' active':'');
+  d.setAttribute('aria-label','Slide '+(i+1));
   d.onclick = () => goTo(i);
   dotsEl.appendChild(d);
 });
 
-function updateProg() {
-  prog.style.width = (cur / (slides.length - 1) * 100) + '%';
-}
-
-function animateBars(slide) {
+function animBars(slide){
   slide.querySelectorAll('.abf[data-w]').forEach(b => {
-    b.style.width = '0%';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      b.style.width = b.dataset.w + '%';
+    b.style.width='0%';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      b.style.width = b.dataset.w+'%';
     }));
   });
 }
 
-function goTo(n) {
-  const prev = cur;
-  cur = Math.max(0, Math.min(slides.length - 1, n));
-  if (prev === cur) return;
-  slides[prev].classList.remove('active');
-  slides[prev].classList.add('exit');
-  setTimeout(() => slides[prev].classList.remove('exit'), 520);
+function goTo(n){
+  const p = cur;
+  cur = Math.max(0,Math.min(slides.length-1,n));
+  if(p===cur) return;
+  slides[p].classList.remove('active');
+  slides[p].classList.add('exit');
+  setTimeout(()=>slides[p].classList.remove('exit'), 520);
   slides[cur].classList.add('active');
-  dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-  ctrEl.textContent = (cur + 1) + ' / ' + slides.length;
-  updateProg();
-  animateBars(slides[cur]);
+  dotsEl.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+  ctrEl.textContent = (cur+1)+' / '+slides.length;
+  snum.textContent  = (cur+1)+' / '+slides.length;
+  prog.style.width  = (cur/(slides.length-1)*100)+'%';
+  animBars(slides[cur]);
 }
 
-function go(d) { goTo(cur + d); }
+function go(d){ goTo(cur+d); }
 
-/* keyboard */
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
-  if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(-1);
+  if(e.key==='f'||e.key==='F') document.documentElement.requestFullscreen?.();
 });
 
-/* init progress */
-updateProg();
-animateBars(slides[0]);
+animBars(slides[0]);
 </script>
 </body>
 </html>
