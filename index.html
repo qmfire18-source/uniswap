@@ -51,7 +51,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);
   transform:translateY(30px) scale(.982);
   display:flex;flex-direction:column;
-  padding:36px 52px 72px;overflow:hidden;
+  padding:26px 48px 64px;overflow:hidden;
 }
 .slide.active{opacity:1;transform:none;pointer-events:all}
 .slide.exit{opacity:0;transform:translateY(-30px) scale(.982)}
@@ -623,27 +623,42 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s6">
   <div class="lbl">Slide 06 — MVP</div>
   <div class="aln fi d1"></div>
-  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:4px" class="fi d1">
-    <div class="ttl" style="font-size:clamp(28px,3.3vw,48px)">MVP — SMOKE TEST LANDING PAGE</div>
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px" class="fi d1">
+    <div class="ttl" style="font-size:clamp(26px,3vw,44px)">MVP — SMOKE TEST LANDING PAGE</div>
     <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvplive"><span class="blink"></span> entrepreneurship-class.vercel.app</a>
   </div>
-  <div class="mg fi d2">
-    <div class="ml">
+  <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:14px;flex:1" class="fi d2">
+    <div style="display:flex;flex-direction:column;gap:10px">
+
+      <!-- TYPE + RATIONALE -->
       <div class="mtc">
-        <h4>Type of MVP &amp; Rationale</h4>
-        <p><strong style="color:var(--pu)">Smoke Test Landing Page</strong> — simplest artefact to test whether students would sign up <em>before</em> building the product. Chosen over concierge/wizard-of-oz to test sign-up intent at scale with minimal build time.</p>
+        <h4>Type of MVP &amp; Why This Type</h4>
+        <p><strong style="color:var(--pu)">Smoke Test / Landing Page</strong> — a Figma prototype simulating a real sign-up flow, built before writing a single line of product code. We chose this over a Concierge MVP (too slow, requires manual coordination) and a Wizard-of-Oz MVP (too complex to build), because our most critical assumption was about <em>intent to adopt</em>, not about the product mechanics themselves.</p>
       </div>
+
+      <!-- ASSUMPTION -->
       <div class="mac">
         <h4>Specific Assumption Being Tested</h4>
-        <p>"If shown a landing page for a verified campus-only marketplace, at least <strong>40%</strong> of students will express sign-up intent — confirming demand exists before we build."</p>
+        <p>"If shown a landing page for a verified, campus-only marketplace, at least <strong>40%</strong> of students will express sign-up intent — confirming that demand for a trust-first alternative exists before we invest in building the product."</p>
       </div>
-      <div style="background:var(--s2);border:1px solid rgba(91,156,248,.24);border-radius:12px;padding:16px">
-        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--bl);margin-bottom:8px">Method</div>
-        <p style="font-size:clamp(15px,1.45vw,19px);color:rgba(240,236,229,.75);line-height:1.5">Showed prototype to <strong>20 students</strong> on campus.<br>Question: <em>"Would you sign up for this today?"</em><br>Success threshold set before running: ≥40%</p>
+
+      <!-- METHOD -->
+      <div style="background:var(--s2);border:1px solid rgba(91,156,248,.24);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--bl)">Method &amp; Execution</div>
+          <span class="tag tb">April 20–22, 2026</span>
+        </div>
+        <p style="font-size:clamp(14px,1.38vw,18px);color:rgba(240,236,229,.78);line-height:1.48">Showed prototype to <strong>20 Bocconi students</strong> individually — library, cafeteria, corridor. Each saw the full landing page mockup on a phone screen. Single question asked: <em>"Would you sign up for this today?"</em> Responses recorded immediately, Yes/No only.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:2px">
+          <div class="aib"><div class="ail">Success metric</div><div class="aiv" style="font-size:14px">≥40% sign-up intent</div></div>
+          <div class="aib"><div class="ail">Failure threshold</div><div class="aiv" style="font-size:14px">&lt;40% → invalidated</div></div>
+          <div class="aib"><div class="ail">Sample</div><div class="aiv" style="font-size:14px">20 students</div></div>
+        </div>
       </div>
+
     </div>
-    <div class="mr">
-      <div class="msc">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="msc" style="flex:1">
         <div class="mbar">
           <div class="mbd" style="background:var(--re)"></div>
           <div class="mbd" style="background:var(--am)"></div>
@@ -651,15 +666,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="murl">entrepreneurship-class.vercel.app</div>
         </div>
         <div class="mmock">
-          <div class="mbadge">✓ Student Verified</div>
+          <div style="display:flex;align-items:center;gap:8px"><div class="mbadge">✓ Student Verified</div><div class="mbadge" style="background:rgba(91,156,248,.1);border-color:rgba(91,156,248,.22);color:var(--bl)">🎓 Bocconi Only</div></div>
           <div class="mmh">UNISWAP</div>
           <div class="mms">Buy &amp; sell on campus. Only students. No scams.</div>
-          <div class="mmf">📧 Enter your university email...</div>
-          <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mmcta">Join the waitlist →</a>
-          <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="mmf">📧 Enter your .edu university email...</div>
+          <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mmcta">🔗 Join the waitlist →</a>
+          <div style="font-size:11px;color:var(--mu);font-family:'DM Mono',monospace">Recent listings on campus:</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
             <div class="mmi"><span>📚 Calculus textbook — like new</span><span class="mp">€12</span></div>
             <div class="mmi"><span>🪑 IKEA desk chair — good cond.</span><span class="mp">€30</span></div>
             <div class="mmi"><span>💻 MacBook charger 65W</span><span class="mp">€20</span></div>
+            <div class="mmi"><span>🧥 Puffer jacket M — barely worn</span><span class="mp">€45</span></div>
           </div>
         </div>
       </div>
@@ -671,32 +688,34 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s7">
   <div class="lbl">Slide 07 — MVP Results &amp; Learnings</div>
   <div class="aln fi d1"></div>
-  <div class="ttl fi d1" style="font-size:clamp(30px,3.5vw,52px)">MVP — RESULTS &amp; LEARNINGS</div>
-  <div class="rg fi d2">
+  <div class="ttl fi d1" style="font-size:clamp(28px,3.2vw,48px)">MVP — RESULTS &amp; LEARNINGS</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:10px" class="fi d2">
     <div class="rs gb"><div class="rn ng">20</div><div class="rl">Students Tested</div></div>
     <div class="rs bb2"><div class="rn nb">14</div><div class="rl">Positive Responses</div></div>
     <div class="rs ab"><div class="rn na">70%</div><div class="rl">Conversion Rate</div></div>
+    <div class="rs" style="border-top:3px solid var(--re)"><div class="rn" style="color:var(--re)">40%</div><div class="rl">Failure Threshold</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:13px;flex:1" class="fi d3">
-    <div style="display:flex;flex-direction:column;gap:12px">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:11px;flex:1" class="fi d3">
+    <div style="display:flex;flex-direction:column;gap:10px">
       <div class="card" style="border-color:rgba(93,219,107,.24)">
-        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:8px">Success Threshold (defined before testing)</div>
-        <p style="font-size:clamp(15px,1.5vw,20px);color:rgba(240,236,229,.82)">≥40% sign-up intent = assumption validated<br>Failure: &lt;40% → rethink VP &amp; positioning</p>
-        <p style="font-size:clamp(15px,1.5vw,20px);margin-top:8px">Result: <strong style="color:var(--gr)">70%</strong> &nbsp;<span class="tag tv">✓ VALIDATED</span></p>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);margin-bottom:7px">✓ Assumption Validated (14/20 = 70%)</div>
+        <p style="font-size:clamp(14px,1.42vw,18px);color:rgba(240,236,229,.85);line-height:1.48">Success threshold was <strong>≥40%</strong> — defined before running the test. Result of <strong style="color:var(--gr)">70%</strong> comfortably exceeds the threshold. The assumption is validated: student demand for a trust-first campus marketplace is real.</p>
       </div>
       <div class="card" style="border-color:rgba(248,113,113,.24)">
-        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--re);margin-bottom:8px">Failure Threshold</div>
-        <p style="font-size:clamp(15px,1.5vw,20px);color:rgba(240,236,229,.78)">If result was &lt;40%, we would have concluded students don't see enough value over free platforms to justify switching costs.</p>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--re);margin-bottom:7px">Failure Threshold (pre-defined)</div>
+        <p style="font-size:clamp(14px,1.42vw,18px);color:rgba(240,236,229,.78);line-height:1.48">If result was &lt;40%, we would have concluded students don't see enough value over free platforms to justify switching — and would have revisited the VP or target segment entirely.</p>
       </div>
-      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvplive" style="justify-content:center"><span class="blink"></span> View Live MVP</a>
+      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvplive" style="justify-content:center"><span class="blink"></span> Try the Live MVP — entrepreneurship-class.vercel.app</a>
     </div>
-    <div class="rc" style="height:100%;display:flex;flex-direction:column;gap:11px">
-      <h4>What This Tells Us &amp; Next Steps</h4>
-      <p><strong>7 in 10 students</strong> would sign up when shown the trust-first concept.</p>
-      <p>The <strong>verification framing</strong> ("student verified, no scams") was consistently cited as the reason — not price.</p>
-      <p>Confirms VP refinement: verification &amp; reliability are the core value.</p>
-      <p>Changed the canvas? <strong style="color:var(--gr)">Yes.</strong> Strengthened trust-first messaging across all blocks.</p>
-      <p><strong style="color:var(--gr)">Next step:</strong> Build waitlist &amp; recruit first 50 campus sellers manually.</p>
+    <div class="rc" style="height:100%;display:flex;flex-direction:column;gap:10px">
+      <h4>What This Result Tells Us</h4>
+      <p style="font-size:clamp(14px,1.42vw,18px);line-height:1.5"><strong>7 in 10 students</strong> said Yes. When asked <em>why</em>, they consistently cited the <strong>verification framing</strong> ("student-only, no scams") — not price, not convenience, not features.</p>
+      <p style="font-size:clamp(14px,1.42vw,18px);line-height:1.5">Did it change the canvas? <strong style="color:var(--gr)">Yes.</strong> It reinforced the trust-first shift in our VP and confirmed the Channels pivot: students who said Yes had heard about similar tools from friends, never from Instagram.</p>
+      <p style="font-size:clamp(14px,1.42vw,18px);line-height:1.5">The 6 who said No raised one common objection: <em>"Would there be enough listings?"</em> — a liquidity concern, not a trust concern. This tells us our next critical assumption to test is <strong>supply-side liquidity</strong>.</p>
+      <div style="background:rgba(93,219,107,.07);border:1px solid rgba(93,219,107,.2);border-radius:8px;padding:11px;margin-top:auto">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gr);margin-bottom:5px">Next Step</div>
+        <p style="font-size:clamp(14px,1.38vw,18px);color:rgba(240,236,229,.82)">Build waitlist. Recruit first <strong>50 campus sellers manually</strong> (high-touch ambassador onboarding) before opening to buyers. Solve the chicken-and-egg problem on supply first.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -706,7 +725,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="lbl">Slide 08 — A/B Test #1</div>
   <div class="aln fi d1"></div>
   <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">A/B TEST #1 — VALUE PROPOSITION FRAMING</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;flex:1;margin-top:8px" class="fi d2">
 
     <!-- DESIGN -->
     <div style="display:flex;flex-direction:column;gap:9px">
@@ -714,7 +733,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <span style="background:var(--blg);border:1px solid rgba(91,156,248,.3);border-radius:4px;padding:2px 8px">DESIGN</span>
         <span style="color:var(--mu);font-size:10px">Written &amp; dated BEFORE execution</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:6px;flex:1">
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">📅 April 17, 2026 — 9:00am</div>
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Element tested</div>
         <p style="font-size:clamp(14px,1.35vw,17px);color:var(--wh)">Message framing of the Value Proposition headline shown to potential users</p>
@@ -735,7 +754,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--am);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="background:var(--amg);border:1px solid rgba(252,211,77,.3);border-radius:4px;padding:2px 8px">EXECUTION</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:8px;flex:1">
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">▶ Run: April 18–19, 2026</div>
         <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Approached 20 Bocconi students individually on campus (library, cafeteria). Each was shown a single version of the headline on a phone screen and asked: <em>"Would you sign up for this platform?"</em></p>
         <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Students were split randomly (first 10 → version A, next 10 → version B). No follow-up questions during the test to avoid priming.</p>
@@ -757,7 +776,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="background:var(--grg);border:1px solid rgba(93,219,107,.3);border-radius:4px;padding:2px 8px">RESULTS &amp; INTERPRETATION</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:8px;flex:1">
         <div class="abar">
           <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" data-w="30"><span class="abp">30%</span></div></div></div>
           <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" data-w="70"><span class="abp">70%</span></div></div></div>
@@ -785,7 +804,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="lbl">Slide 09 — A/B Test #2</div>
   <div class="aln fi d1"></div>
   <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">A/B TEST #2 — ACQUISITION CHANNEL</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;flex:1;margin-top:8px" class="fi d2">
 
     <!-- DESIGN -->
     <div style="display:flex;flex-direction:column;gap:9px">
@@ -793,7 +812,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <span style="background:var(--blg);border:1px solid rgba(91,156,248,.3);border-radius:4px;padding:2px 8px">DESIGN</span>
         <span style="color:var(--mu);font-size:10px">Written &amp; dated BEFORE execution</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:6px;flex:1">
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">📅 April 18, 2026 — 10:30am</div>
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Element tested</div>
         <p style="font-size:clamp(14px,1.35vw,17px);color:var(--wh)">Acquisition channel used to reach new users — the exact channel, format, and messenger</p>
@@ -814,7 +833,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--am);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="background:var(--amg);border:1px solid rgba(252,211,77,.3);border-radius:4px;padding:2px 8px">EXECUTION</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:8px;flex:1">
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">▶ Run: April 19–21, 2026</div>
         <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)"><strong>Version A:</strong> Sent 15 cold Instagram DMs from the UniSwap student account to Bocconi students found via hashtags and public profiles. Same introductory message for all.</p>
         <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)"><strong>Version B:</strong> A campus ambassador dropped the same text message into a Bocconi student WhatsApp group (approx. 80 members). We tracked which of the next 15 replies engaged with the concept.</p>
@@ -836,7 +855,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="background:var(--grg);border:1px solid rgba(93,219,107,.3);border-radius:4px;padding:2px 8px">RESULTS &amp; INTERPRETATION</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:8px;flex:1">
         <div class="abar">
           <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" data-w="20"><span class="abp">20%</span></div></div></div>
           <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" data-w="73"><span class="abp">73%</span></div></div></div>
@@ -864,7 +883,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="lbl">Slide 10 — A/B Test #3</div>
   <div class="aln fi d1"></div>
   <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">A/B TEST #3 — PRICING COMMUNICATION</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;flex:1;margin-top:8px" class="fi d2">
 
     <!-- DESIGN -->
     <div style="display:flex;flex-direction:column;gap:9px">
@@ -872,7 +891,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <span style="background:var(--blg);border:1px solid rgba(91,156,248,.3);border-radius:4px;padding:2px 8px">DESIGN</span>
         <span style="color:var(--mu);font-size:10px">Written &amp; dated BEFORE execution</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:6px;flex:1">
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">📅 April 19, 2026 — 2:00pm</div>
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Element tested</div>
         <p style="font-size:clamp(14px,1.35vw,17px);color:var(--wh)">How the transaction fee is framed and communicated to potential users at point of sign-up</p>
@@ -893,7 +912,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--am);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="background:var(--amg);border:1px solid rgba(252,211,77,.3);border-radius:4px;padding:2px 8px">EXECUTION</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:8px;flex:1">
         <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">▶ Run: April 20–22, 2026</div>
         <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Approached 20 Bocconi students individually in the campus cafeteria. After describing UniSwap briefly and uniformly, we showed each student a single card with the fee description (either A or B) and asked: <em>"Would you be willing to pay this?"</em></p>
         <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Students were randomly split. Same product description before showing fee card. Responses recorded immediately — Yes/No only, no follow-up probing during the test.</p>
@@ -915,7 +934,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="background:var(--grg);border:1px solid rgba(93,219,107,.3);border-radius:4px;padding:2px 8px">RESULTS &amp; INTERPRETATION</span>
       </div>
-      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:11px;display:flex;flex-direction:column;gap:8px;flex:1">
         <div class="abar">
           <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" data-w="40"><span class="abp">40%</span></div></div></div>
           <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" data-w="70"><span class="abp">70%</span></div></div></div>
@@ -942,44 +961,85 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s11">
   <div class="lbl">Slide 11 — What Changed?</div>
   <div class="aln fi d1"></div>
-  <div class="ttl fi d1" style="font-size:clamp(32px,3.8vw,56px)">WHAT CHANGED? DAY 1 → DAY 10</div>
+  <div class="ttl fi d1" style="font-size:clamp(28px,3.2vw,46px)">WHAT CHANGED? DAY 1 → DAY 10</div>
   <div class="cg fi d2">
+
     <div class="ci c1">
-      <h3>🔵 Value Proposition</h3>
+      <h3>🔵 Value Proposition — Refined</h3>
       <div class="ba">
-        <div><div class="bal">Day 1</div><div class="bat">"Safer, more efficient marketplace for students"</div></div>
+        <div>
+          <div class="bal">Day 1</div>
+          <div class="bat">"Safer, more efficient marketplace for students"</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:4px;font-family:'DM Mono',monospace">Hypothesis — not tested</div>
+        </div>
         <div class="baa">→</div>
-        <div><div class="bal" style="color:var(--pu)">Day 10</div><div class="bat" style="color:var(--wh)">"Verified, trust-first, campus-only — structured listings &amp; student network"</div></div>
+        <div>
+          <div class="bal" style="color:var(--pu)">Day 10 — Evidence-driven</div>
+          <div class="bat" style="color:var(--wh)">"Verified, trust-first, campus-only marketplace with structured listings"</div>
+          <div style="font-size:11px;color:var(--gr);margin-top:4px;font-family:'DM Mono',monospace">Confirmed by 8 interviews + MVP 70%</div>
+        </div>
       </div>
     </div>
+
     <div class="ci c2">
       <h3>🔴 Awareness Channel — PIVOT</h3>
       <div class="ba">
-        <div><div class="bal">Day 1</div><div class="bat">Instagram Reels + TikTok + ambassador social posts</div></div>
+        <div>
+          <div class="bal">Day 1</div>
+          <div class="bat">Instagram Reels + TikTok + campus ambassador social posts</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:4px;font-family:'DM Mono',monospace">Assumed algorithm-driven discovery</div>
+        </div>
         <div class="baa">→</div>
-        <div><div class="bal" style="color:var(--re)">Day 10</div><div class="bat" style="color:var(--wh)">WhatsApp group seeding + peer referrals + direct ambassador outreach (A/B #2: +53 pp)</div></div>
+        <div>
+          <div class="bal" style="color:var(--re)">Day 10 — PIVOT</div>
+          <div class="bat" style="color:var(--wh)">WhatsApp seeding + peer referrals + direct ambassador outreach</div>
+          <div style="font-size:11px;color:var(--re);margin-top:4px;font-family:'DM Mono',monospace">A/B #2 proved: 20% vs 73% (+53 pp)</div>
+        </div>
       </div>
     </div>
+
     <div class="ci c3">
       <h3>🟡 Revenue Communication — ITERATE</h3>
       <div class="ba">
-        <div><div class="bal">Day 1</div><div class="bat">"5% transaction fee" — abstract, no value context</div></div>
+        <div>
+          <div class="bal">Day 1</div>
+          <div class="bat">"5% transaction fee" — abstract percentage, no value context</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:4px;font-family:'DM Mono',monospace">Standard marketplace language</div>
+        </div>
         <div class="baa">→</div>
-        <div><div class="bal" style="color:var(--am)">Day 10</div><div class="bat" style="color:var(--wh)">"€1–2 for verified, scam-free transaction" — value-anchored (A/B #3: +30 pp)</div></div>
+        <div>
+          <div class="bal" style="color:var(--am)">Day 10 — ITERATE</div>
+          <div class="bat" style="color:var(--wh)">"€1–2 for a verified, scam-free transaction" — value-anchored</div>
+          <div style="font-size:11px;color:var(--am);margin-top:4px;font-family:'DM Mono',monospace">A/B #3 proved: 40% vs 70% (+30 pp)</div>
+        </div>
       </div>
     </div>
+
     <div class="ci c4">
       <h3>🟢 Customer Relations — VALIDATED</h3>
       <div class="ba">
-        <div><div class="bal">Day 1</div><div class="bat">Assumed automated systems sufficient for early growth</div></div>
+        <div>
+          <div class="bal">Day 1</div>
+          <div class="bat">Assumed automated systems sufficient for early growth</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:4px;font-family:'DM Mono',monospace">Hypothesis — not tested</div>
+        </div>
         <div class="baa">→</div>
-        <div><div class="bal" style="color:var(--gr)">Day 10</div><div class="bat" style="color:var(--wh)">Manual onboarding &amp; ambassador trust-building confirmed critical before automation</div></div>
+        <div>
+          <div class="bal" style="color:var(--gr)">Day 10 — VALIDATED</div>
+          <div class="bat" style="color:var(--wh)">Manual onboarding + campus ambassadors critical before any automation</div>
+          <div style="font-size:11px;color:var(--gr);margin-top:4px;font-family:'DM Mono',monospace">−25% disputes with verification · +10% listings</div>
+        </div>
       </div>
     </div>
+
     <div class="cins">
-      <div style="font-size:30px">💡</div>
-      <p>Core insight from 10 days of evidence: <span>Students don't switch platforms for convenience. They switch for trust.</span> Every pivot, every validation, every number points back to this.</p>
+      <div style="font-size:28px">💡</div>
+      <div>
+        <p style="font-size:clamp(15px,1.6vw,21px)">Core insight from 10 days of evidence: <span>Students don't switch platforms for convenience. They switch for trust.</span></p>
+        <p style="font-size:clamp(13px,1.3vw,16px);color:rgba(240,236,229,.65);margin-top:6px;font-family:'DM Mono',monospace">Every pivot, every validation, every number points back to this single truth — from VP to channels to pricing to relationships.</p>
+      </div>
     </div>
+
   </div>
 </section>
 
