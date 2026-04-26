@@ -705,32 +705,78 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s8">
   <div class="lbl">Slide 08 — A/B Test #1</div>
   <div class="aln fi d1"></div>
-  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,44px)">A/B TEST #1 — VALUE PROPOSITION FRAMING</div>
-  <div class="abl fi d2">
-    <div class="abv">
-      <div class="av va"><div class="avl">Version A — Control</div><p>"Buy &amp; sell second-hand goods on campus"<br><span style="color:var(--mu);font-size:13px">Generic marketplace message. No trust language.</span></p></div>
-      <div class="av vb"><div class="avl">Version B — Variant (one change only)</div><p>"Trade with verified students only — no scams, no ghosting"<br><span style="color:var(--mu);font-size:13px">Trust-first framing. Explicit safety promise.</span></p></div>
-      <div class="ahy"><h4>Hypothesis — written &amp; dated April 17, before execution</h4><p>"We believe Version B will outperform Version A on sign-up intent rate because students' primary pain point is trust, not access to a marketplace."</p></div>
-      <div class="achips"><span class="achip">📅 Designed: Apr 17</span><span class="achip">▶ Run: Apr 18–19</span><span class="achip">👥 10 students/version</span><span class="achip">📊 Sign-up intent %</span></div>
-      <div class="adb dp"><div class="adl">✓ PERSEVERE</div><p>Lead with trust &amp; verification in all messaging. Generic framing is insufficient.</p></div>
+  <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">A/B TEST #1 — VALUE PROPOSITION FRAMING</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+
+    <!-- DESIGN -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bl);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--blg);border:1px solid rgba(91,156,248,.3);border-radius:4px;padding:2px 8px">DESIGN</span>
+        <span style="color:var(--mu);font-size:10px">Written &amp; dated BEFORE execution</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">📅 April 17, 2026 — 9:00am</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Element tested</div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:var(--wh)">Message framing of the Value Proposition headline shown to potential users</p>
+        <div class="av va" style="margin:0;padding:12px"><div class="avl">Version A — Control</div><p style="font-size:clamp(13px,1.3vw,16px)">"Buy &amp; sell second-hand goods on campus" — generic marketplace headline, no trust language</p></div>
+        <div class="av vb" style="margin:0;padding:12px"><div class="avl">Version B — Variant <span style="color:var(--mu);font-size:11px">(one change only)</span></div><p style="font-size:clamp(13px,1.3vw,16px)">"Trade with verified students only — no scams, no ghosting" — trust-first, explicit safety promise</p></div>
+        <div class="ahy" style="padding:11px"><h4>Hypothesis</h4><p style="font-size:clamp(13px,1.3vw,16px)">"We believe Version B will outperform Version A on sign-up intent rate because students' primary pain point is trust &amp; accountability, not access to a marketplace."</p></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:auto">
+          <div class="aib"><div class="ail">Success metric</div><div class="aiv" style="font-size:14px">Sign-up intent %</div></div>
+          <div class="aib"><div class="ail">Sample plan</div><div class="aiv" style="font-size:14px">10 students/version</div></div>
+          <div class="aib"><div class="ail">Split method</div><div class="aiv" style="font-size:14px">Random, in-person</div></div>
+          <div class="aib"><div class="ail">Timeline</div><div class="aiv" style="font-size:14px">Apr 18–19, 2 days</div></div>
+        </div>
+      </div>
     </div>
-    <div class="abr2">
-      <div class="ares">
-        <h4>Results — Raw data: A: 3/10 positive · B: 7/10 positive</h4>
+
+    <!-- EXECUTION -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--am);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--amg);border:1px solid rgba(252,211,77,.3);border-radius:4px;padding:2px 8px">EXECUTION</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">▶ Run: April 18–19, 2026</div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Approached 20 Bocconi students individually on campus (library, cafeteria). Each was shown a single version of the headline on a phone screen and asked: <em>"Would you sign up for this platform?"</em></p>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Students were split randomly (first 10 → version A, next 10 → version B). No follow-up questions during the test to avoid priming.</p>
+        <div style="background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:12px">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--am);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Deviations from plan</div>
+          <p style="font-size:clamp(13px,1.3vw,16px);color:rgba(240,236,229,.75)">None. Test ran exactly as planned. All 20 students responded. No interpretation bias — responses recorded immediately as Yes/No.</p>
+        </div>
+        <div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="aib" style="text-align:center"><div class="ail">Exposed to A</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--re)">10</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Exposed to B</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--gr)">10</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Positive A</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--re)">3</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Positive B</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--gr)">7</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--grg);border:1px solid rgba(93,219,107,.3);border-radius:4px;padding:2px 8px">RESULTS &amp; INTERPRETATION</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
         <div class="abar">
           <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" data-w="30"><span class="abp">30%</span></div></div></div>
           <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" data-w="70"><span class="abp">70%</span></div></div></div>
         </div>
-        <div class="adlt">↑ +40 percentage points in favour of Version B · Winner: B</div>
-        <div class="air">
-          <div class="aib"><div class="ail">Conv. A</div><div class="aiv" style="color:var(--re)">3/10 = 30%</div></div>
-          <div class="aib"><div class="ail">Conv. B</div><div class="aiv" style="color:var(--gr)">7/10 = 70%</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="aib"><div class="ail">Conv. A (3÷10×100)</div><div class="aiv" style="color:var(--re)">= 30%</div></div>
+          <div class="aib"><div class="ail">Conv. B (7÷10×100)</div><div class="aiv" style="color:var(--gr)">= 70%</div></div>
           <div class="aib"><div class="ail">Difference</div><div class="aiv" style="color:var(--gr)">+40 pp</div></div>
-          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
+          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B ✓</div></div>
+        </div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Version B won convincingly. Students respond twice as strongly to explicit trust language. Generic marketplace framing fails to differentiate UniSwap from free existing alternatives.</p>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">This tells us: <strong style="color:var(--wh)">messaging is a competitive advantage.</strong> The way we describe the product must lead with verification &amp; safety — not features or convenience.</p>
+        <div class="adb dp" style="margin-top:auto">
+          <div class="adl">✓ PERSEVERE</div>
+          <p style="font-size:clamp(13px,1.3vw,16px)">Keep trust-first messaging across all channels &amp; MVP. No change to core model needed — this validates our VP refinement direction.</p>
         </div>
       </div>
-      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>Language matters enormously. Students respond twice as strongly to explicit trust language. All subsequent messaging now leads with verification and safety as the primary hook.</p></div>
     </div>
+
   </div>
 </section>
 
@@ -738,32 +784,78 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s9">
   <div class="lbl">Slide 09 — A/B Test #2</div>
   <div class="aln fi d1"></div>
-  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,44px)">A/B TEST #2 — ACQUISITION CHANNEL</div>
-  <div class="abl fi d2">
-    <div class="abv">
-      <div class="av va"><div class="avl">Version A — Control</div><p>Cold Instagram DM outreach to students<br><span style="color:var(--mu);font-size:13px">Message from a stranger. Standard digital marketing.</span></p></div>
-      <div class="av vb"><div class="avl">Version B — Variant (one change only: channel)</div><p>WhatsApp group seeding via campus ambassador (trusted peer)<br><span style="color:var(--mu);font-size:13px">Recommendation within an existing trusted community.</span></p></div>
-      <div class="ahy"><h4>Hypothesis — written &amp; dated April 18, before execution</h4><p>"We believe Version B will generate a higher 24h response rate because it leverages existing trust networks rather than cold outreach to strangers."</p></div>
-      <div class="achips"><span class="achip">📅 Designed: Apr 18</span><span class="achip">▶ Run: Apr 19–21</span><span class="achip">👥 15 students/version</span><span class="achip">📊 24h response rate</span></div>
-      <div class="adb dv"><div class="adl">🔴 PIVOT</div><p>Drop Instagram DM entirely. All acquisition through WhatsApp seeding &amp; campus ambassadors.</p></div>
+  <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">A/B TEST #2 — ACQUISITION CHANNEL</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+
+    <!-- DESIGN -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bl);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--blg);border:1px solid rgba(91,156,248,.3);border-radius:4px;padding:2px 8px">DESIGN</span>
+        <span style="color:var(--mu);font-size:10px">Written &amp; dated BEFORE execution</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">📅 April 18, 2026 — 10:30am</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Element tested</div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:var(--wh)">Acquisition channel used to reach new users — the exact channel, format, and messenger</p>
+        <div class="av va" style="margin:0;padding:12px"><div class="avl">Version A — Control</div><p style="font-size:clamp(13px,1.3vw,16px)">Cold Instagram DM from the UniSwap account to Bocconi students found via public profiles</p></div>
+        <div class="av vb" style="margin:0;padding:12px"><div class="avl">Version B — Variant <span style="color:var(--mu);font-size:11px">(one change only: channel)</span></div><p style="font-size:clamp(13px,1.3vw,16px)">Message seeded by a trusted campus ambassador inside an existing Bocconi WhatsApp student group</p></div>
+        <div class="ahy" style="padding:11px"><h4>Hypothesis</h4><p style="font-size:clamp(13px,1.3vw,16px)">"We believe Version B will generate a higher 24h response rate because it leverages existing trust networks — a peer recommending it — rather than cold outreach from an unknown account."</p></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:auto">
+          <div class="aib"><div class="ail">Success metric</div><div class="aiv" style="font-size:14px">24h response rate</div></div>
+          <div class="aib"><div class="ail">Sample plan</div><div class="aiv" style="font-size:14px">15 students/version</div></div>
+          <div class="aib"><div class="ail">Split method</div><div class="aiv" style="font-size:14px">Sequential, same message</div></div>
+          <div class="aib"><div class="ail">Timeline</div><div class="aiv" style="font-size:14px">Apr 19–21, 3 days</div></div>
+        </div>
+      </div>
     </div>
-    <div class="abr2">
-      <div class="ares">
-        <h4>Results — Raw data: A: 3/15 positive · B: 11/15 positive</h4>
+
+    <!-- EXECUTION -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--am);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--amg);border:1px solid rgba(252,211,77,.3);border-radius:4px;padding:2px 8px">EXECUTION</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">▶ Run: April 19–21, 2026</div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)"><strong>Version A:</strong> Sent 15 cold Instagram DMs from the UniSwap student account to Bocconi students found via hashtags and public profiles. Same introductory message for all.</p>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)"><strong>Version B:</strong> A campus ambassador dropped the same text message into a Bocconi student WhatsApp group (approx. 80 members). We tracked which of the next 15 replies engaged with the concept.</p>
+        <div style="background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:12px">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--am);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Deviations from plan</div>
+          <p style="font-size:clamp(13px,1.3vw,16px);color:rgba(240,236,229,.75)">WhatsApp group had 80 members but we tracked only first 15 replies to maintain equal sample size. This slightly underrepresents the full reach of Version B — actual reach was broader.</p>
+        </div>
+        <div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="aib" style="text-align:center"><div class="ail">Exposed to A</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--re)">15</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Exposed to B</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--gr)">15</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Positive A</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--re)">3</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Positive B</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--gr)">11</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--grg);border:1px solid rgba(93,219,107,.3);border-radius:4px;padding:2px 8px">RESULTS &amp; INTERPRETATION</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
         <div class="abar">
           <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" data-w="20"><span class="abp">20%</span></div></div></div>
           <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" data-w="73"><span class="abp">73%</span></div></div></div>
         </div>
-        <div class="adlt">↑ +53 percentage points in favour of Version B · Winner: B</div>
-        <div class="air">
-          <div class="aib"><div class="ail">Conv. A</div><div class="aiv" style="color:var(--re)">3/15 = 20%</div></div>
-          <div class="aib"><div class="ail">Conv. B</div><div class="aiv" style="color:var(--gr)">11/15 = 73%</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="aib"><div class="ail">Conv. A (3÷15×100)</div><div class="aiv" style="color:var(--re)">= 20%</div></div>
+          <div class="aib"><div class="ail">Conv. B (11÷15×100)</div><div class="aiv" style="color:var(--gr)">= 73%</div></div>
           <div class="aib"><div class="ail">Difference</div><div class="aiv" style="color:var(--gr)">+53 pp</div></div>
-          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
+          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B ✓</div></div>
+        </div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">The most impactful result of our 10 days. Peer-seeded WhatsApp outperforms cold Instagram DMs by +53 pp. Students adopt platforms recommended by someone they already trust — not strangers on social media.</p>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">This tells us: <strong style="color:var(--wh)">our go-to-market strategy must be community-led.</strong> Network effects are built-in, not paid for. Paying for social ads would be both expensive and ineffective.</p>
+        <div class="adb dv" style="margin-top:auto">
+          <div class="adl">🔴 PIVOT</div>
+          <p style="font-size:clamp(13px,1.3vw,16px)">Drop Instagram DM outreach entirely. Invest in campus ambassador network &amp; WhatsApp seeding. Deprioritise paid/organic social for launch.</p>
         </div>
       </div>
-      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>The most impactful finding of our 10 days. Discovery is social and trust-dependent — not algorithm-driven. Students adopt tools recommended by someone they know. Network effects are built-in, not paid for.</p></div>
     </div>
+
   </div>
 </section>
 
@@ -771,32 +863,78 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="slide" id="s10">
   <div class="lbl">Slide 10 — A/B Test #3</div>
   <div class="aln fi d1"></div>
-  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,44px)">A/B TEST #3 — PRICING COMMUNICATION</div>
-  <div class="abl fi d2">
-    <div class="abv">
-      <div class="av va"><div class="avl">Version A — Control</div><p>Abstract percentage: <strong>"5% transaction fee"</strong><br><span style="color:var(--mu);font-size:13px">Standard marketplace language. No value context.</span></p></div>
-      <div class="av vb"><div class="avl">Version B — Variant (one change only: framing)</div><p>Value-anchored: <strong>"€1–2 for a verified, scam-free transaction"</strong><br><span style="color:var(--mu);font-size:13px">Connects cost to a specific, tangible benefit.</span></p></div>
-      <div class="ahy"><h4>Hypothesis — written &amp; dated April 19, before execution</h4><p>"We believe Version B will increase willingness to pay because anchoring on concrete value reduces fee aversion vs. an abstract percentage."</p></div>
-      <div class="achips"><span class="achip">📅 Designed: Apr 19</span><span class="achip">▶ Run: Apr 20–22</span><span class="achip">👥 10 students/version</span><span class="achip">📊 Willingness to pay %</span></div>
-      <div class="adb di"><div class="adl">🟡 ITERATE</div><p>Price communication matters as much as price level. Always anchor on value delivered.</p></div>
+  <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">A/B TEST #3 — PRICING COMMUNICATION</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+
+    <!-- DESIGN -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bl);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--blg);border:1px solid rgba(91,156,248,.3);border-radius:4px;padding:2px 8px">DESIGN</span>
+        <span style="color:var(--mu);font-size:10px">Written &amp; dated BEFORE execution</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--bl);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">📅 April 19, 2026 — 2:00pm</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-top:2px">Element tested</div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:var(--wh)">How the transaction fee is framed and communicated to potential users at point of sign-up</p>
+        <div class="av va" style="margin:0;padding:12px"><div class="avl">Version A — Control</div><p style="font-size:clamp(13px,1.3vw,16px)">"UniSwap charges a 5% transaction fee" — abstract percentage, standard marketplace language, no explanation of value received</p></div>
+        <div class="av vb" style="margin:0;padding:12px"><div class="avl">Version B — Variant <span style="color:var(--mu);font-size:11px">(one change only: framing)</span></div><p style="font-size:clamp(13px,1.3vw,16px)">"Pay €1–2 per transaction for a verified, scam-free exchange" — concrete amount, anchored to specific value</p></div>
+        <div class="ahy" style="padding:11px"><h4>Hypothesis</h4><p style="font-size:clamp(13px,1.3vw,16px)">"We believe Version B will increase willingness to pay because anchoring the fee to a concrete benefit (safety, verification) reduces fee aversion vs. an abstract percentage."</p></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:auto">
+          <div class="aib"><div class="ail">Success metric</div><div class="aiv" style="font-size:14px">"I'd pay this" rate</div></div>
+          <div class="aib"><div class="ail">Sample plan</div><div class="aiv" style="font-size:14px">10 students/version</div></div>
+          <div class="aib"><div class="ail">Split method</div><div class="aiv" style="font-size:14px">Random, in-person</div></div>
+          <div class="aib"><div class="ail">Timeline</div><div class="aiv" style="font-size:14px">Apr 20–22, 3 days</div></div>
+        </div>
+      </div>
     </div>
-    <div class="abr2">
-      <div class="ares">
-        <h4>Results — Raw data: A: 4/10 positive · B: 7/10 positive</h4>
+
+    <!-- EXECUTION -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--am);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--amg);border:1px solid rgba(252,211,77,.3);border-radius:4px;padding:2px 8px">EXECUTION</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--am);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">▶ Run: April 20–22, 2026</div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Approached 20 Bocconi students individually in the campus cafeteria. After describing UniSwap briefly and uniformly, we showed each student a single card with the fee description (either A or B) and asked: <em>"Would you be willing to pay this?"</em></p>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Students were randomly split. Same product description before showing fee card. Responses recorded immediately — Yes/No only, no follow-up probing during the test.</p>
+        <div style="background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:12px">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--am);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Deviations from plan</div>
+          <p style="font-size:clamp(13px,1.3vw,16px);color:rgba(240,236,229,.75)">None material. One student in Version A asked for clarification on the fee base — we restated the question without extra info. This response was counted as "No" to be conservative.</p>
+        </div>
+        <div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="aib" style="text-align:center"><div class="ail">Exposed to A</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--re)">10</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Exposed to B</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--gr)">10</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Positive A</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--re)">4</div></div>
+          <div class="aib" style="text-align:center"><div class="ail">Positive B</div><div class="aiv" style="font-size:clamp(20px,2.5vw,32px);color:var(--gr)">7</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="background:var(--grg);border:1px solid rgba(93,219,107,.3);border-radius:4px;padding:2px 8px">RESULTS &amp; INTERPRETATION</span>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--gr);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;flex:1">
         <div class="abar">
           <div class="abi aa"><div class="al">A</div><div class="abt"><div class="abf" data-w="40"><span class="abp">40%</span></div></div></div>
           <div class="abi ab"><div class="al">B</div><div class="abt"><div class="abf" data-w="70"><span class="abp">70%</span></div></div></div>
         </div>
-        <div class="adlt">↑ +30 percentage points in favour of Version B · Winner: B</div>
-        <div class="air">
-          <div class="aib"><div class="ail">Conv. A</div><div class="aiv" style="color:var(--re)">4/10 = 40%</div></div>
-          <div class="aib"><div class="ail">Conv. B</div><div class="aiv" style="color:var(--gr)">7/10 = 70%</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="aib"><div class="ail">Conv. A (4÷10×100)</div><div class="aiv" style="color:var(--re)">= 40%</div></div>
+          <div class="aib"><div class="ail">Conv. B (7÷10×100)</div><div class="aiv" style="color:var(--gr)">= 70%</div></div>
           <div class="aib"><div class="ail">Difference</div><div class="aiv" style="color:var(--gr)">+30 pp</div></div>
-          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B</div></div>
+          <div class="aib"><div class="ail">Winner</div><div class="aiv" style="color:var(--gr)">Version B ✓</div></div>
+        </div>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">Even Version A's 40% shows latent willingness — but Version B's framing turns "fee aversion" into "value exchange." Students already using free platforms need to see what they're getting, not just what they're paying.</p>
+        <p style="font-size:clamp(14px,1.35vw,17px);color:rgba(240,236,229,.82)">This tells us: <strong style="color:var(--wh)">the price is not the barrier — the framing is.</strong> We do not need to lower fees; we need to anchor them to the trust value UniSwap delivers on every transaction.</p>
+        <div class="adb di" style="margin-top:auto">
+          <div class="adl">🟡 ITERATE</div>
+          <p style="font-size:clamp(13px,1.3vw,16px)">Keep value-anchored framing. Re-test in next sprint with different benefit anchors (e.g. "verified student profile" vs. "scam-free guarantee") to identify which element of trust drives payment most.</p>
         </div>
       </div>
-      <div class="ainfo"><div class="ail2">What this tells us about the business model</div><p>Students have high fee sensitivity but accept the cost when they understand the value — no scams, verified users. How you frame the price is as important as the price itself. Confirms trust-first strategy throughout.</p></div>
     </div>
+
   </div>
 </section>
 
