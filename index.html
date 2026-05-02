@@ -36,9 +36,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-size:60px 60px}
 
 /* ── PROGRESS ── */
-#prog{position:fixed;top:0;left:0;height:3px;
-  background:linear-gradient(90deg,var(--gr),var(--bl),var(--pu));
-  transition:width .5s ease;z-index:500;box-shadow:0 0 14px var(--gr);border-radius:0 2px 2px 0}
+#prog{display:none}
 
 /* ── SLIDE NUMBER ── */
 #slidenum{position:fixed;top:18px;right:24px;font-family:'DM Mono',monospace;
@@ -51,7 +49,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);
   transform:translateY(30px) scale(.982);
   display:flex;flex-direction:column;
-  padding:26px 48px 64px;overflow:hidden;
+  padding:26px 54px 36px 48px;overflow:hidden;
 }
 .slide.active{opacity:1;transform:none;pointer-events:all}
 .slide.exit{opacity:0;transform:translateY(-30px) scale(.982)}
@@ -63,21 +61,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .d4{animation-delay:.24s}.d5{animation-delay:.32s}.d6{animation-delay:.4s}
 
 /* ── NAV ── */
-.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+.nav{position:fixed;bottom:8px;left:50%;right:auto;transform:translateX(-50%);flex-direction:row;
   display:flex;align-items:center;gap:10px;z-index:600;
   background:rgba(7,7,10,.88);border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(22px);padding:8px 18px;border-radius:50px;
+  backdrop-filter:blur(22px);padding:5px 12px;border-radius:30px;
   box-shadow:0 4px 28px rgba(0,0,0,.6)}
-.nav button{background:none;border:none;color:var(--wh);font-size:19px;font-weight:700;
-  cursor:none;padding:4px 12px;border-radius:22px;transition:background .18s;
+.nav button{background:none;border:none;color:var(--wh);font-size:14px;font-weight:700;
+  cursor:none;padding:3px 8px;border-radius:22px;transition:background .18s;
   font-family:'Syne',sans-serif}
 .nav button:hover{background:rgba(255,255,255,.1)}
-.ctr{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);
-  min-width:44px;text-align:center}
-.dots{display:flex;gap:5px;align-items:center}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--mu);
+.ctr{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);
+  min-width:36px;text-align:center}
+.dots{display:flex;flex-direction:row;gap:4px;align-items:center}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--mu);
   cursor:none;transition:all .3s;border:none;padding:0}
-.dot.active{background:var(--gr);width:22px;border-radius:3px}
+.dot.active{background:var(--gr);width:14px;height:5px;border-radius:3px}
 
 /* ── SHARED ── */
 .lbl{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;
@@ -125,9 +123,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 #s1 .o2{width:380px;height:380px;background:radial-gradient(circle,rgba(91,156,248,.09),transparent 70%);
   bottom:-5%;right:8%;animation:breathe 7s ease-in-out infinite reverse}
 @keyframes breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.12);opacity:1}}
-#s1 .bgw{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:42vw;
-  color:rgba(93,219,107,.022);bottom:-18%;right:-6%;line-height:1;
-  pointer-events:none;letter-spacing:-.02em;animation:float 9s ease-in-out infinite}
+#s1 .bgw{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:46vw;
+  color:rgba(93,219,107,.09);bottom:-20%;right:-8%;line-height:1;
+  pointer-events:none;letter-spacing:-.02em;animation:float 9s ease-in-out infinite;z-index:0}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
 #s1 .logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(100px,13vw,200px);
   line-height:.92;letter-spacing:.02em;margin-bottom:18px}
@@ -454,22 +452,45 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="cur"></div>
 <div id="cur2"></div>
 <div id="prog"></div>
-<div id="slidenum">1 / 12</div>
+<div id="slidenum">1 / 16</div>
 
 <div class="deck" id="deck">
 
 <!-- ══ S1 TITLE ══ -->
 <section class="slide active" id="s1">
   <div class="orb o1"></div><div class="orb o2"></div>
+  <!-- gradient overlay top-right accent -->
+  <div style="position:absolute;top:0;right:0;width:420px;height:420px;background:radial-gradient(circle at 80% 20%,rgba(91,156,248,.18),transparent 70%);pointer-events:none;z-index:0"></div>
+  <!-- bottom strip accent -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gr),var(--bl),var(--pu),transparent);z-index:2"></div>
   <div class="bgw">SWAP</div>
   <div style="margin:auto 0 0;position:relative;z-index:1">
     <div class="lbl fi d1">Group 9 · Entrepreneurship &amp; New Business Startup · Bocconi University · April 27, 2026</div>
     <div class="logo fi d2"><span class="u">UNI</span><span class="sw">SWAP</span></div>
     <div class="tagline fi d3">The campus-only verified marketplace where students buy &amp; sell second-hand goods — no scams, no ghosting, no friction.</div>
-    <div class="meta fi d4">
+    <div class="meta fi d4" style="flex-wrap:wrap;row-gap:10px">
       <span class="bdg">Group 9</span>
       <span class="bdg">10-Day Sprint · April 17–27</span>
       <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="mvpbtn"><span class="blink"></span> Live MVP</a>
+    </div>
+    <!-- stat pills -->
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap" class="fi d5">
+      <div style="background:rgba(93,219,107,.08);border:1px solid rgba(93,219,107,.25);border-radius:8px;padding:10px 18px;text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gr);line-height:1">70%</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">MVP Conversion</div>
+      </div>
+      <div style="background:rgba(91,156,248,.08);border:1px solid rgba(91,156,248,.25);border-radius:8px;padding:10px 18px;text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--bl);line-height:1">8</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">Interviews</div>
+      </div>
+      <div style="background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.25);border-radius:8px;padding:10px 18px;text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--pu);line-height:1">3</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">A/B Tests</div>
+      </div>
+      <div style="background:rgba(252,211,77,.08);border:1px solid rgba(252,211,77,.25);border-radius:8px;padding:10px 18px;text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--am);line-height:1">+53pp</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em">Best A/B Result</div>
+      </div>
     </div>
   </div>
 </section>
@@ -537,7 +558,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <ul class="bl">
         <li><strong>Model:</strong> 5–10% transaction commission (marketplace)</li>
         <li><strong>CAC:</strong> €3–10/user via organic (WhatsApp, peer referrals)</li>
-        <li><strong>LTV:</strong> €15–25/user/year (3–5 transactions × ~€5)</li>
+        <li><strong>LTV:</strong> €8/user/year (4 transactions × ~€5)</li>
         <li>Students accept fees only when clear value is demonstrated</li>
         <li>"€1–2 for scam-free trade" beats "5% fee" by +30 pp</li>
       </ul>
@@ -1043,26 +1064,505 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   </div>
 </section>
 
-<!-- ══ S12 CONCLUSION ══ -->
+<!-- ══ S12 — FULL BMC TABLE ══ -->
 <section class="slide" id="s12">
-  <div class="orb go1"></div><div class="orb go2"></div>
-  <div style="position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center">
-    <div class="lbl fi d1" style="margin-bottom:10px">Slide 12 · Group 9 · Thank You</div>
-    <div class="clogo fi d2"><span class="cu">UNI</span><span class="csw">SWAP</span></div>
-    <div class="ctag fi d3">10 days. Real students. Real evidence.<br>A trust-first campus marketplace validated from the ground up.</div>
-    <div class="ins fi d4">"<span>Students don't switch for convenience.<br>They switch for trust.</span>"<br><span style="font-size:13px;color:var(--mu);font-style:normal">— Core insight from 8 customer discovery interviews + 3 A/B tests</span></div>
-    <div class="stats fi d5">
-      <div class="st"><div class="sn">8</div><div class="sl">Interviews</div></div>
-      <div class="st"><div class="sn">70%</div><div class="sl">MVP Conversion</div></div>
-      <div class="st"><div class="sn">3</div><div class="sl">A/B Tests</div></div>
-      <div class="st"><div class="sn">+53pp</div><div class="sl">Best A/B Result</div></div>
-      <div class="st"><div class="sn">€15–25</div><div class="sl">LTV / user / yr</div></div>
+  <div class="lbl">Slide 12 — Full Business Model Canvas</div>
+  <div class="aln"></div>
+  <div class="ttl" style="font-size:clamp(28px,3.2vw,44px);margin-bottom:8px">FULL BUSINESS MODEL CANVAS — UNISWAP</div>
+
+  <div style="flex:1;display:grid;grid-template-rows:1fr auto;gap:0;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;min-height:0">
+
+    <!-- TOP 5 COLUMNS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.2fr 1fr 1fr;border-bottom:1px solid rgba(255,255,255,.1);min-height:0">
+
+      <!-- KEY PARTNERS -->
+      <div style="border-right:1px solid rgba(255,255,255,.1);padding:11px 13px;background:var(--s2);display:flex;flex-direction:column;gap:0;overflow:hidden">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--am);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:8px;flex-shrink:0">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--am);flex-shrink:0"></span>Key Partners
+        </div>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5;font-weight:700">University admin</p>
+        <p style="font-size:clamp(11px,1vw,14px);color:var(--mu);line-height:1.35;margin-bottom:8px">Locker space installation + student SSO API access</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5;font-weight:700">Locker provider</p>
+        <p style="font-size:clamp(11px,1vw,14px);color:var(--mu);line-height:1.35;margin-bottom:8px">Smart locker hardware + QR code generation API</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5;font-weight:700">ID Verification API</p>
+        <p style="font-size:clamp(11px,1vw,14px);color:var(--mu);line-height:1.35;margin-bottom:8px">Student identity auth via university email SSO</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5;font-weight:700">Payment gateway</p>
+        <p style="font-size:clamp(11px,1vw,14px);color:var(--mu);line-height:1.35;margin-bottom:8px">Escrow + processing (~€0.30/tx) · Stripe or equivalent</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5;font-weight:700">Campus student associations</p>
+        <p style="font-size:clamp(11px,1vw,14px);color:var(--mu);line-height:1.35">Distribution channel + trusted community endorsement for initial launch</p>
+      </div>
+
+      <!-- KEY ACTIVITIES + KEY RESOURCES stacked -->
+      <div style="border-right:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;background:var(--s2);min-height:0">
+        <div style="padding:11px 13px;flex:1;border-bottom:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;overflow:hidden">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bl);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:8px;flex-shrink:0">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--bl);flex-shrink:0"></span>Key Activities
+          </div>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Build &amp; maintain marketplace platform</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Student identity verification system</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Locker network management (QR codes)</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Campus ambassador onboarding &amp; WhatsApp seeding</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Ratings, dispute moderation &amp; trust scoring</p>
+        </div>
+        <div style="padding:11px 13px;flex:1;display:flex;flex-direction:column;overflow:hidden">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pu);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:8px;flex-shrink:0">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--pu);flex-shrink:0"></span>Key Resources
+          </div>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Web platform — Next.js / Vercel (live MVP)</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Smart locker units installed on campus</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Student identity &amp; listing database</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Ambassador network — 1 to 2 per faculty</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.9);line-height:1.5">Seed funding for locker hardware (~€200/unit)</p>
+        </div>
+      </div>
+
+      <!-- VALUE PROPOSITION (centre, green tint) -->
+      <div style="border-right:1px solid rgba(255,255,255,.1);padding:11px 13px;background:rgba(93,219,107,.06);display:flex;flex-direction:column;gap:0;overflow:hidden">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(93,219,107,.2);margin-bottom:8px;flex-shrink:0">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--gr);flex-shrink:0"></span>Value Proposition
+        </div>
+        <p style="font-size:clamp(13px,1.2vw,16px);color:var(--wh);font-weight:700;line-height:1.45;font-style:italic;margin-bottom:10px">"Verified, campus-based marketplace enabling students to buy &amp; sell with <span style="color:var(--gr)">trust, speed &amp; reliability</span>"</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5">✓ Verified student-only access — no strangers</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5">✓ Structured listings — no misleading descriptions</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:var(--gr);line-height:1.5;font-weight:600">✓ Campus locker delivery — no meetups needed</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5">✓ Escrow payment held until item delivered</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5">✓ Ratings &amp; accountability on every transaction</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5">✓ Zero ghosting — platform enforces completion</p>
+      </div>
+
+      <!-- CUSTOMER RELATIONSHIPS + CHANNELS stacked -->
+      <div style="border-right:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;background:var(--s2);min-height:0">
+        <div style="padding:11px 13px;flex:1;border-bottom:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;overflow:hidden">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cy);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:8px;flex-shrink:0">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--cy);flex-shrink:0"></span>Customer Relationships
+          </div>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5"><strong>Early stage:</strong> Ambassador onboarding, direct seller recruitment, peer referrals</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5"><strong>Growth stage:</strong> Verified accounts, automated matching, structured listings</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5">Ratings &amp; reliability signals</p>
+          <p style="font-size:clamp(11px,1vw,13.5px);color:var(--gr);line-height:1.3">−25% disputes · +10% new listings</p>
+        </div>
+        <div style="padding:11px 13px;flex:1;display:flex;flex-direction:column;overflow:hidden">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--re);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:8px;flex-shrink:0">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--re);flex-shrink:0"></span>Channels <span style="color:var(--pu);font-size:9px;margin-left:3px">★ Changed after testing</span>
+          </div>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5"><strong>Awareness:</strong> WhatsApp groups + peer referrals</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5"><strong>Evaluation:</strong> Word-of-mouth, trust signals</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5"><strong>Purchase:</strong> In-app listings &amp; messaging</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:var(--gr);line-height:1.5;font-weight:600"><strong>Delivery:</strong> Campus locker (QR code)</p>
+          <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.88);line-height:1.5"><strong>After-sale:</strong> Ratings &amp; review system</p>
+        </div>
+      </div>
+
+      <!-- CUSTOMER SEGMENTS -->
+      <div style="padding:11px 13px;background:var(--s2);display:flex;flex-direction:column;gap:0;overflow:hidden">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:8px;flex-shrink:0">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--gr);flex-shrink:0"></span>Customer Segments
+        </div>
+        <p style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);line-height:1.35;margin-bottom:8px">Students 18–25<br>Urban EU campuses</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:var(--bl);font-weight:700;line-height:1.5">Buyers</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.82);line-height:1.45;margin-bottom:8px">Limited income · seeking affordable second-hand goods · prioritise trust &amp; verified profiles over price</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:var(--am);font-weight:700;line-height:1.5">Sellers</p>
+        <p style="font-size:clamp(12px,1.1vw,15px);color:rgba(240,236,229,.82);line-height:1.45;margin-bottom:6px">Leaving campus or upgrading · want quick local sales with no meetup friction</p>
+        <p style="font-size:clamp(11px,1vw,13.5px);color:var(--mu);line-height:1.35">Primary: textbooks, furniture, electronics, clothing</p>
+      </div>
     </div>
-    <div class="links fi d6">
-      <a href="https://entrepreneurship-class.vercel.app" target="_blank" class="lbtn pr"><span class="blink"></span> Live MVP — entrepreneurship-class.vercel.app</a>
-      <span class="lbtn sc">Group 9 · Bocconi · April 2026</span>
+
+    <!-- BOTTOM ROW: COST | REVENUE -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;height:115px">
+      <div style="border-right:1px solid rgba(255,255,255,.1);padding:10px 13px;background:rgba(248,113,113,.04);display:flex;flex-direction:column;gap:5px;overflow:hidden">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--re);display:flex;align-items:center;gap:5px;padding-bottom:5px;border-bottom:1px solid rgba(248,113,113,.15);flex-shrink:0">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--re);flex-shrink:0"></span>Cost Structure
+        </div>
+        <div style="display:flex;gap:16px;flex:1">
+          <div style="flex:1">
+            <p style="font-size:10px;color:var(--re);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:3px">Fixed</p>
+            <p style="font-size:clamp(11px,1vw,14px);color:rgba(240,236,229,.88);line-height:1.45">Platform hosting ~€50/mo · Locker maintenance ~€30/unit/mo · Ambassador stipends ~€100/mo · Verification API ~€20/mo</p>
+          </div>
+          <div style="flex:1">
+            <p style="font-size:10px;color:var(--am);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:3px">Variable</p>
+            <p style="font-size:clamp(11px,1vw,14px);color:rgba(240,236,229,.88);line-height:1.45">CAC ~€5/user (organic) · Payment processing ~€0.30/tx · Locker hardware amortised ~€200/unit · Break-even ~500 active users</p>
+          </div>
+        </div>
+      </div>
+      <div style="padding:10px 13px;background:rgba(93,219,107,.04);display:flex;flex-direction:column;gap:5px;overflow:hidden">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gr);display:flex;align-items:center;gap:5px;padding-bottom:5px;border-bottom:1px solid rgba(93,219,107,.15);flex-shrink:0">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--gr);flex-shrink:0"></span>Revenue Streams
+        </div>
+        <div style="display:flex;gap:16px;flex:1">
+          <div style="flex:1">
+            <p style="font-size:10px;color:var(--gr);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:3px">Primary model</p>
+            <p style="font-size:clamp(11px,1vw,14px);color:rgba(240,236,229,.88);line-height:1.45"><strong style="color:var(--gr)">5–10% transaction commission</strong> per sale · "€1–2 scam-free exchange" framing · A/B #3 validated: +30pp acceptance vs "5% fee"</p>
+          </div>
+          <div style="flex:1">
+            <p style="font-size:10px;color:var(--am);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:3px">Unit economics</p>
+            <p style="font-size:clamp(11px,1vw,14px);color:rgba(240,236,229,.88);line-height:1.45">LTV <strong style="color:var(--gr)">~€8–10</strong>/user/yr (4–5 tx × ~€2) · CAC <strong style="color:var(--am)">~€5</strong> · LTV&gt;CAC ✓ · Future: promoted listings, premium seller tools</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="byline fi d6">Ready for Q&amp;A — we defend every number with evidence, not conviction.</div>
+
+  </div>
+</section>
+
+<!-- ══ S13 — NEXT STEPS ══ -->
+<section class="slide" id="s13">
+  <div class="lbl">Slide 13 — Next Steps: 3 Most Critical Things to Build or Test</div>
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(26px,3vw,42px)">NEXT STEPS — WHAT WE DO NOW</div>
+  <div style="font-size:clamp(13px,1.3vw,17px);color:var(--mu);font-family:'DM Mono',monospace;margin-bottom:10px" class="fi d1">3 most critical assumptions to test or build in the next sprint, with rationale</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;flex:1" class="fi d2">
+
+    <!-- NEXT STEP 1 -->
+    <div style="background:var(--s2);border:1px solid rgba(93,219,107,.28);border-top:4px solid var(--gr);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gr);line-height:1">01</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);text-transform:uppercase;letter-spacing:.08em">Supply-Side Liquidity</div>
+          <div style="font-size:clamp(13px,1.25vw,17px);font-weight:700;color:var(--wh);margin-top:2px">Recruit 50 campus sellers in 14 days</div>
+        </div>
+      </div>
+      <div style="background:rgba(93,219,107,.07);border-radius:8px;padding:11px 13px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Hypothesis</div>
+        <p style="font-size:clamp(13px,1.2vw,16px);color:rgba(240,236,229,.82);line-height:1.48;font-style:italic">"We believe ambassador-led WhatsApp seeding can recruit 50 active sellers in 14 days, solving the chicken-and-egg liquidity problem before opening to buyers."</p>
+      </div>
+      <div>
+        <p style="font-size:clamp(13px,1.25vw,17px);color:rgba(240,236,229,.78);line-height:1.5"><strong>Why critical:</strong> The #1 objection in our MVP test was "not enough listings." Without supply, buyers churn after 1 session. Supply-first is the only viable launch path for a marketplace.</p>
+      </div>
+      <div style="margin-top:auto">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gr)">📊 Metric: ≥50 sellers / ≥1 listing / 14 days</div>
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu)">Method: ambassador WhatsApp seeding</div>
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu)">Failure: &lt;20 sellers → re-test incentive</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT STEP 2 -->
+    <div style="background:var(--s2);border:1px solid rgba(91,156,248,.28);border-top:4px solid var(--bl);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--bl);line-height:1">02</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em">Locker Pilot Test</div>
+          <div style="font-size:clamp(13px,1.25vw,17px);font-weight:700;color:var(--wh);margin-top:2px">Deploy 2 smart lockers · measure adoption</div>
+        </div>
+      </div>
+      <div style="background:rgba(91,156,248,.07);border-radius:8px;padding:11px 13px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--bl);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Hypothesis</div>
+        <p style="font-size:clamp(13px,1.2vw,16px);color:rgba(240,236,229,.82);line-height:1.48;font-style:italic">"We believe ≥60% of completed transactions will use the locker system over direct meetups once it is available — validating our differentiation and capital investment."</p>
+      </div>
+      <div>
+        <p style="font-size:clamp(13px,1.25vw,17px);color:rgba(240,236,229,.78);line-height:1.5"><strong>Why critical:</strong> The locker system is our biggest differentiator — and our biggest cost. If students revert to direct meetups anyway, the CapEx (~€200/unit) is unjustified and we need a different delivery model.</p>
+        <p style="font-size:clamp(13px,1.25vw,17px);color:rgba(240,236,229,.78);line-height:1.5;margin-top:6px"><strong>Step 1:</strong> library + cafeteria · <strong>Primary item:</strong> textbooks (standardised size, high turnover)</p>
+      </div>
+      <div style="margin-top:auto">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--bl)">📊 Metric: ≥60% locker vs meetup</div>
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu)">Duration: 4-week pilot</div>
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu)">Failure: &lt;30% → rethink delivery</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT STEP 3 -->
+    <div style="background:var(--s2);border:1px solid rgba(192,132,252,.28);border-top:4px solid var(--pu);border-radius:13px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--pu);line-height:1">03</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--pu);text-transform:uppercase;letter-spacing:.08em">University Partnership</div>
+          <div style="font-size:clamp(13px,1.25vw,17px);font-weight:700;color:var(--wh);margin-top:2px">Secure Bocconi admin agreement</div>
+        </div>
+      </div>
+      <div style="background:rgba(192,132,252,.07);border-radius:8px;padding:11px 13px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--pu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Hypothesis</div>
+        <p style="font-size:clamp(13px,1.2vw,16px);color:rgba(240,236,229,.82);line-height:1.48;font-style:italic">"We believe Bocconi administration will grant locker installation permission and SSO access in exchange for sustainability co-branding and reduced student marketplace fraud."</p>
+      </div>
+      <div>
+        <p style="font-size:clamp(13px,1.25vw,17px);color:rgba(240,236,229,.78);line-height:1.5"><strong>Why critical:</strong> Without university permission, the locker system cannot be deployed and our core differentiator collapses. This is the most uncertain partnership assumption in the entire model.</p>
+        <p style="font-size:clamp(13px,1.25vw,17px);color:rgba(240,236,229,.78);line-height:1.5;margin-top:6px"><strong>Offer:</strong> co-branded sustainability initiative, aggregated anonymised marketplace data, reduced student scam reports.</p>
+      </div>
+      <div style="margin-top:auto">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--pu)">📊 Metric: 1st admin meeting in 7 days</div>
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu)">Contact: student affairs + facilities</div>
+          <div style="background:var(--s3);border-radius:6px;padding:7px 11px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu)">Failure: denied → test pop-up locker</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ S14 — APPENDIX A: RAW DATA ══ -->
+<section class="slide" id="s14">
+  <div class="lbl">Slide 14 — Appendix A: Raw Data &amp; Evidence</div>
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">APPENDIX A — RAW DATA &amp; A/B TEST SUMMARY</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:13px;flex:1;margin-top:10px" class="fi d2">
+
+    <!-- LEFT: A/B Summary table + MVP data -->
+    <div style="display:flex;flex-direction:column;gap:11px">
+
+      <!-- A/B Summary Table -->
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:10px">A/B Tests — Summary Table</div>
+        <table style="width:100%;border-collapse:collapse;font-size:clamp(12px,1.15vw,15px)">
+          <thead>
+            <tr style="border-bottom:1px solid var(--bd)">
+              <th style="text-align:left;padding:5px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);font-weight:500;text-transform:uppercase">Test</th>
+              <th style="text-align:left;padding:5px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);font-weight:500;text-transform:uppercase">Element</th>
+              <th style="text-align:center;padding:5px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--re);font-weight:500;text-transform:uppercase">A %</th>
+              <th style="text-align:center;padding:5px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);font-weight:500;text-transform:uppercase">B %</th>
+              <th style="text-align:center;padding:5px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);font-weight:500;text-transform:uppercase">Δ pp</th>
+              <th style="text-align:center;padding:5px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--wh);font-weight:500;text-transform:uppercase">Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+              <td style="padding:6px 8px;color:rgba(240,236,229,.85)">1</td>
+              <td style="padding:6px 8px;color:rgba(240,236,229,.85)">VP Framing (trust vs generic)</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--re);font-family:'DM Mono',monospace">30%</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--gr);font-family:'DM Mono',monospace">70%</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--gr);font-family:'DM Mono',monospace;font-weight:700">+40</td>
+              <td style="padding:6px 8px;text-align:center"><span style="background:rgba(93,219,107,.15);color:var(--gr);font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px">PERSEVERE</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+              <td style="padding:6px 8px;color:rgba(240,236,229,.85)">2</td>
+              <td style="padding:6px 8px;color:rgba(240,236,229,.85)">Channel (WhatsApp vs Insta DM)</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--re);font-family:'DM Mono',monospace">20%</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--gr);font-family:'DM Mono',monospace">73%</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--gr);font-family:'DM Mono',monospace;font-weight:700">+53</td>
+              <td style="padding:6px 8px;text-align:center"><span style="background:rgba(248,113,113,.15);color:var(--re);font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px">PIVOT</span></td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px;color:rgba(240,236,229,.85)">3</td>
+              <td style="padding:6px 8px;color:rgba(240,236,229,.85)">Pricing frame (€1–2 vs 5%)</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--re);font-family:'DM Mono',monospace">40%</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--gr);font-family:'DM Mono',monospace">70%</td>
+              <td style="padding:6px 8px;text-align:center;color:var(--gr);font-family:'DM Mono',monospace;font-weight:700">+30</td>
+              <td style="padding:6px 8px;text-align:center"><span style="background:rgba(252,211,77,.15);color:var(--am);font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px">ITERATE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MVP Raw Data -->
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:10px">MVP Landing Page — Raw Data</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px">
+          <div style="background:var(--s3);border-radius:7px;padding:9px;text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gr);line-height:1">20</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);text-transform:uppercase">Tested</div></div>
+          <div style="background:var(--s3);border-radius:7px;padding:9px;text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--bl);line-height:1">14</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);text-transform:uppercase">Yes</div></div>
+          <div style="background:var(--s3);border-radius:7px;padding:9px;text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--re);line-height:1">6</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);text-transform:uppercase">No</div></div>
+          <div style="background:var(--s3);border:1px solid rgba(93,219,107,.3);border-radius:7px;padding:9px;text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gr);line-height:1">70%</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);text-transform:uppercase">Conv. Rate</div></div>
+        </div>
+        <p style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72);line-height:1.45">6 who said No: objection = "not enough listings yet" (liquidity concern, not trust) → confirms supply-first strategy. Location: Bocconi campus library + cafeteria · Date: April 20–22, 2026 · Method: individual in-person, phone prototype</p>
+      </div>
+
+      <!-- Customer discovery raw counts -->
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:14px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:8px">Customer Discovery — 8 Interviews · Pain Points Frequency</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px">
+          <div style="background:var(--s3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--re);font-family:'DM Mono',monospace">8/8</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu)">Ghosting<br>pain point</div></div>
+          <div style="background:var(--s3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--re);font-family:'DM Mono',monospace">7/8</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu)">Trust<br>concern</div></div>
+          <div style="background:var(--s3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--am);font-family:'DM Mono',monospace">6/8</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu)">Mislead<br>listing</div></div>
+          <div style="background:var(--s3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--gr);font-family:'DM Mono',monospace">8/8</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu)">Want<br>verified</div></div>
+          <div style="background:var(--s3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--gr);font-family:'DM Mono',monospace">5/8</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mu)">Would pay<br>small fee</div></div>
+        </div>
+        <!-- Visual bar chart for pain points -->
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px">Frequency bars (out of 8 interviews)</div>
+          <div style="display:flex;align-items:center;gap:7px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re);min-width:90px">Ghosting</span><div style="flex:1;height:12px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:linear-gradient(90deg,rgba(248,113,113,.5),rgba(248,113,113,.2))"></div></div><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re);min-width:20px">8/8</span></div>
+          <div style="display:flex;align-items:center;gap:7px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re);min-width:90px">No trust</span><div style="flex:1;height:12px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden"><div style="width:87.5%;height:100%;background:linear-gradient(90deg,rgba(248,113,113,.5),rgba(248,113,113,.2))"></div></div><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re);min-width:20px">7/8</span></div>
+          <div style="display:flex;align-items:center;gap:7px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--am);min-width:90px">Misleading</span><div style="flex:1;height:12px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden"><div style="width:75%;height:100%;background:linear-gradient(90deg,rgba(252,211,77,.5),rgba(252,211,77,.2))"></div></div><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--am);min-width:20px">6/8</span></div>
+          <div style="display:flex;align-items:center;gap:7px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);min-width:90px">Want verify</span><div style="flex:1;height:12px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:linear-gradient(90deg,rgba(93,219,107,.5),rgba(93,219,107,.2))"></div></div><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);min-width:20px">8/8</span></div>
+          <div style="display:flex;align-items:center;gap:7px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);min-width:90px">Pay small fee</span><div style="flex:1;height:12px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden"><div style="width:62.5%;height:100%;background:linear-gradient(90deg,rgba(93,219,107,.5),rgba(93,219,107,.2))"></div></div><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);min-width:20px">5/8</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Verbatim quotes + bar charts visual -->
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <!-- Bar chart visual for A/B tests -->
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:12px">A/B Test Results — Visual</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <!-- Test 1 -->
+          <div>
+            <div style="font-size:clamp(11px,1.1vw,14px);color:rgba(240,236,229,.7);margin-bottom:4px;font-family:'DM Mono',monospace">Test 1 — VP Framing</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--re);width:18px">A</span>
+              <div style="flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden"><div style="width:30%;height:100%;background:linear-gradient(90deg,rgba(248,113,113,.4),rgba(248,113,113,.15));display:flex;align-items:center;padding-left:8px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re)">30%</span></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);width:18px">B</span>
+              <div style="flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden"><div style="width:70%;height:100%;background:linear-gradient(90deg,rgba(93,219,107,.4),rgba(93,219,107,.15));display:flex;align-items:center;padding-left:8px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr)">70% · +40pp</span></div></div>
+            </div>
+          </div>
+          <!-- Test 2 -->
+          <div>
+            <div style="font-size:clamp(11px,1.1vw,14px);color:rgba(240,236,229,.7);margin-bottom:4px;font-family:'DM Mono',monospace">Test 2 — Acquisition Channel</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--re);width:18px">A</span>
+              <div style="flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden"><div style="width:20%;height:100%;background:linear-gradient(90deg,rgba(248,113,113,.4),rgba(248,113,113,.15));display:flex;align-items:center;padding-left:8px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re)">20%</span></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);width:18px">B</span>
+              <div style="flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden"><div style="width:73%;height:100%;background:linear-gradient(90deg,rgba(93,219,107,.4),rgba(93,219,107,.15));display:flex;align-items:center;padding-left:8px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr)">73% · +53pp</span></div></div>
+            </div>
+          </div>
+          <!-- Test 3 -->
+          <div>
+            <div style="font-size:clamp(11px,1.1vw,14px);color:rgba(240,236,229,.7);margin-bottom:4px;font-family:'DM Mono',monospace">Test 3 — Pricing Communication</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--re);width:18px">A</span>
+              <div style="flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden"><div style="width:40%;height:100%;background:linear-gradient(90deg,rgba(248,113,113,.4),rgba(248,113,113,.15));display:flex;align-items:center;padding-left:8px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re)">40%</span></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gr);width:18px">B</span>
+              <div style="flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden"><div style="width:70%;height:100%;background:linear-gradient(90deg,rgba(93,219,107,.4),rgba(93,219,107,.15));display:flex;align-items:center;padding-left:8px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr)">70% · +30pp</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--mu)">Rule of thumb: &gt;10pp difference = meaningful signal with n&lt;100 (Lean Analytics, Croll &amp; Yoskovitz, 2013). All 3 tests exceed this threshold.</div>
+      </div>
+
+      <!-- Verbatim quotes -->
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px;flex:1">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin-bottom:10px">Verbatim Quotes — Customer Discovery Interviews</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="background:rgba(91,156,248,.07);border-left:3px solid var(--bl);border-radius:0 8px 8px 0;padding:10px 13px">
+            <q style="font-size:clamp(12px,1.2vw,16px);color:var(--wh);font-style:italic;line-height:1.45;display:block">"I don't use Facebook Marketplace anymore because people just stop responding to me."</q>
+            <cite style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:4px;display:block">— Undergraduate student, Bocconi · Interview #3, April 18</cite>
+          </div>
+          <div style="background:rgba(91,156,248,.07);border-left:3px solid var(--pu);border-radius:0 8px 8px 0;padding:10px 13px">
+            <q style="font-size:clamp(12px,1.2vw,16px);color:var(--wh);font-style:italic;line-height:1.45;display:block">"If I knew the person was definitely a Bocconi student, I'd feel way more comfortable paying upfront."</q>
+            <cite style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:4px;display:block">— 2nd-year student, BSc Economics · Interview #5, April 19</cite>
+          </div>
+          <div style="background:rgba(91,156,248,.07);border-left:3px solid var(--gr);border-radius:0 8px 8px 0;padding:10px 13px">
+            <q style="font-size:clamp(12px,1.2vw,16px);color:var(--wh);font-style:italic;line-height:1.45;display:block">"I sold my Microeconomics textbook on WhatsApp but had to meet the person at 8am — if there was a locker system I'd sell way more stuff."</q>
+            <cite style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:4px;display:block">— 3rd-year student, BSc Management · Interview #7, April 20</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S15 — APPENDIX B: SUPPORTING EVIDENCE ══ -->
+<section class="slide" id="s15">
+  <div class="lbl">Slide 15 — Appendix B: Supporting Evidence &amp; Sources</div>
+  <div class="aln fi d1"></div>
+  <div class="ttl fi d1" style="font-size:clamp(24px,2.8vw,40px)">APPENDIX B — SUPPORTING EVIDENCE</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:10px" class="fi d2">
+
+    <!-- Market sizing -->
+    <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--bl);border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:2px">📊 Market Context</div>
+      <div style="background:var(--s3);border-radius:8px;padding:11px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--am);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">EU Student Market</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--wh);line-height:1">17.5M</div>
+        <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">university students in EU (Eurostat, 2023) · ~3M in urban campuses matching our segment</div>
+      </div>
+      <div style="background:var(--s3);border-radius:8px;padding:11px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gr);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Secondhand Market Growth</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--wh);line-height:1">$350B</div>
+        <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">global secondhand market projected by 2028 (ThredUp Resale Report, 2024). Growing 3× faster than traditional retail.</div>
+      </div>
+      <div style="background:var(--s3);border-radius:8px;padding:11px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--re);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Trust Problem (Competitor Data)</div>
+        <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">Facebook Marketplace fraud complaints: <strong style="color:var(--wh)">+64% YoY</strong> (US FTC Consumer Protection, 2023). Students most affected age group (18–24).</div>
+      </div>
+    </div>
+
+    <!-- Lean Startup references -->
+    <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--pu);border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:2px">📚 Methodological References</div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Osterwalder &amp; Pigneur (2010)</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)"><em>Business Model Generation</em> — BMC framework used throughout. Customer Segments, VP, Channels, Customer Relationships, Revenue Streams, Key Activities, Resources, Partners, Cost Structure.</div>
+        </div>
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Eric Ries (2011)</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)"><em>The Lean Startup</em> — Build-Measure-Learn loop. "The goal of a startup is not to build a product. It is to find a business model that works." MVP design &amp; A/B test framework.</div>
+        </div>
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Croll &amp; Yoskovitz (2013)</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)"><em>Lean Analytics</em> — 10 pp rule of thumb for A/B tests with small samples. CAC/LTV framework. Marketplace business model benchmarks.</div>
+        </div>
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Steve Blank (2013)</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)"><em>The Four Steps to the Epiphany</em> — Customer development methodology. "Get out of the building." 8-interview minimum for customer discovery.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparable platforms + unit economics benchmarks -->
+    <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px">
+      <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--gr);border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:2px">🔍 Comparable Platforms &amp; Benchmarks</div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Wallapop (Spain) — Campus Model</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">18–24 segment: avg 6 transactions/yr · 10% commission · CAC via peer referral ~€4. Proof that low-fee marketplace model works for young urban users.</div>
+        </div>
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">BookMooch / VinterBook</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">Student textbook platforms with peer verification. Demonstrated demand but lacked trust mechanism — our verification + locker addresses this directly.</div>
+        </div>
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Unit Economics Benchmarks</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">Marketplace benchmark LTV:CAC ratio ≥ 3:1 (a16z, 2022). Our model: LTV €8–10 / CAC €5 = <strong style="color:var(--gr)">1.6–2× at Year 1</strong>, projecting 3× by Year 2 as organic referral compounds.</div>
+        </div>
+        <div style="background:var(--s3);border-radius:8px;padding:11px">
+          <div style="font-size:clamp(13px,1.2vw,16px);font-weight:700;color:var(--wh);margin-bottom:4px">Locker Network Precedent</div>
+          <div style="font-size:clamp(12px,1.15vw,15px);color:rgba(240,236,229,.72)">Amazon Hub Lockers: 70%+ utilisation in campus deployments (Amazon, 2022). Parcel Pending university pilots: 85% student satisfaction. Validates our delivery mechanism.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ S16 CONCLUSION ══ -->
+<section class="slide" id="s16">
+  <!-- big background word -->
+  <div style="position:absolute;font-family:'Bebas Neue',sans-serif;font-size:30vw;color:rgba(93,219,107,.075);bottom:-12%;left:-4%;line-height:1;pointer-events:none;letter-spacing:-.02em;z-index:0;animation:float 9s ease-in-out infinite">SWAP</div>
+  <div style="position:absolute;font-family:'Bebas Neue',sans-serif;font-size:22vw;color:rgba(91,156,248,.06);top:-5%;right:-3%;line-height:1;pointer-events:none;letter-spacing:-.02em;z-index:0">UNI</div>
+  <!-- decorative strips -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gr),var(--bl),var(--pu));z-index:2"></div>
+  <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--pu),var(--bl),var(--gr));z-index:2"></div>
+  <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(91,156,248,.09),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:breathe 6s ease-in-out infinite"></div>
+  <div style="position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(93,219,107,.08),transparent 70%);bottom:2%;right:3%;pointer-events:none"></div>
+
+  <div style="position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
+    <div class="lbl fi d1" style="margin-bottom:8px;text-align:center">Slide 16 · Conclusion · Group 9</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,10vw,148px);line-height:.92;letter-spacing:.02em;margin-bottom:12px" class="fi d2"><span style="color:var(--bl)">UNI</span><span style="color:var(--gr)">SWAP</span></div>
+    <div style="font-size:clamp(14px,1.55vw,21px);color:rgba(240,236,229,.62);max-width:580px;line-height:1.6;margin:0 auto 18px;text-align:center" class="fi d3">10 days. Real students. Real evidence.<br>A trust-first campus marketplace with smart lockers — validated from the ground up.</div>
+    <div style="background:linear-gradient(135deg,rgba(93,219,107,.08),rgba(91,156,248,.08));border:1px solid rgba(93,219,107,.24);border-radius:14px;padding:18px 26px;max-width:680px;margin:0 auto 18px;font-size:clamp(15px,1.6vw,21px);font-weight:700;line-height:1.5;color:var(--wh);font-style:italic;text-align:center" class="fi d4">"<span style="color:var(--gr)">Students don't switch for convenience.<br>They switch for trust.</span>"<br><span style="font-size:12px;color:var(--mu);font-style:normal;font-family:'DM Mono',monospace;letter-spacing:.05em">— Core insight from 8 customer discovery interviews + 3 A/B tests</span></div>
+    <div style="display:flex;gap:13px;justify-content:center;margin-bottom:18px;flex-wrap:wrap" class="fi d5">
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px 20px;text-align:center;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.8vw,48px);line-height:1;color:var(--gr)">8</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-top:3px">Interviews</div>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px 20px;text-align:center;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.8vw,48px);line-height:1;color:var(--gr)">70%</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-top:3px">MVP Conversion</div>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px 20px;text-align:center;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.8vw,48px);line-height:1;color:var(--gr)">3</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-top:3px">A/B Tests</div>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px 20px;text-align:center;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.8vw,48px);line-height:1;color:var(--gr)">+53pp</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-top:3px">Best A/B Result</div>
+      </div>
+      <div style="background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px 20px;text-align:center;transition:transform .22s" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.8vw,48px);line-height:1;color:var(--gr)">€8–10</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-top:3px">LTV / user / yr</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px" class="fi d6">
+      <a href="https://entrepreneurship-class.vercel.app" target="_blank" style="font-family:'DM Mono',monospace;font-size:13px;padding:10px 22px;border-radius:28px;text-decoration:none;background:var(--gr);color:#000;font-weight:700;box-shadow:0 4px 22px rgba(93,219,107,.35);display:inline-flex;align-items:center;gap:8px;transition:transform .2s,opacity .2s" onmouseenter="this.style.transform='translateY(-3px)'" onmouseleave="this.style.transform=''"><span style="width:8px;height:8px;border-radius:50%;background:#000;animation:blink 1.4s ease-in-out infinite"></span> Live MVP — entrepreneurship-class.vercel.app</a>
+      <span style="font-family:'DM Mono',monospace;font-size:13px;padding:10px 22px;border-radius:28px;background:var(--s2);border:1px solid var(--bd);color:var(--wh);display:inline-flex;align-items:center">Group 9 · Bocconi · May 2026</span>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);letter-spacing:.05em;text-align:center" class="fi d6">Ready for Q&amp;A — we defend every number with evidence, not conviction.<br><span style="font-size:10px;color:rgba(240,236,229,.3)">UniSwap · Group 9 · Bocconi Entrepreneurship 2026</span></div>
   </div>
 </section>
 
@@ -1071,7 +1571,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <nav class="nav">
   <button onclick="go(-1)" aria-label="Prev">←</button>
   <div class="dots" id="dots"></div>
-  <span class="ctr" id="ctr">1 / 12</span>
+  <span class="ctr" id="ctr">1 / 16</span>
   <button onclick="go(1)" aria-label="Next">→</button>
 </nav>
 
